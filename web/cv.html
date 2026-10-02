@@ -312,6 +312,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
   .print-foot { position: fixed; right: 0; bottom: -10mm; left: 0; display: flex; justify-content: space-between; color: #587080; font-size: 9px; }
 }
 </style>
+<script src="assets/transicion.js"></script>
 </head>
 <body>
 
@@ -840,6 +841,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 
   leerHash();
   render(false);
+  if(window.icewellTransicion) icewellTransicion.listo();
   precargarPdf();
   if(location.hash.length > 1){ setTimeout(function(){ document.getElementById('obras').scrollIntoView(); }, 60); }
 })();

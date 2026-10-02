@@ -608,7 +608,7 @@
 
   // Las hojas se paginan midiendo el texto: esperar las fuentes antes del primer armado
   leerHash();
-  var iniciar = function(){ render(false); if(hayFiltro(state)) setTimeout(function(){ var m = visor.querySelectorAll('.hoja-marco')[3]; m && m.scrollIntoView(); }, 80); };
+  var iniciar = function(){ render(false); if(window.icewellTransicion) icewellTransicion.listo(); if(hayFiltro(state)) setTimeout(function(){ var m = visor.querySelectorAll('.hoja-marco')[3]; m && m.scrollIntoView(); }, 80); };
   if(document.fonts && document.fonts.ready){ document.fonts.ready.then(iniciar); } else { iniciar(); }
   window.icewellPresentacion = { construir: construir, state: state };
 })();
