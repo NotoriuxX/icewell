@@ -74,7 +74,11 @@ final class Imagenes
     private static function orientar($im, string $bin)
     {
         if (!function_exists('exif_read_data')) return $im;
-        $exif = @exif_read_data('data://image/jpeg;base64,' . base64_encode($bin));
+        $tmp = tempnam(sys_get_temp_dir(), 'icw');
+        if ($tmp === false) return $im;
+        file_put_contents($tmp, $bin);
+        $exif = @exif_read_data($tmp);
+        @unlink($tmp);
         $o = (int)($exif['Orientation'] ?? 1);
         return match ($o) { 3 => imagerotate($im, 180, 0), 6 => imagerotate($im, -90, 0), 8 => imagerotate($im, 90, 0), default => $im };
     }

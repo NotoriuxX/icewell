@@ -17,8 +17,10 @@ Empresa: **Icewell SpA**, asesorías, ingeniería y montajes térmicos (HVAC), S
 | CV interactivo | `proyecto/web/cv.html` |
 | CV versión presentación (idéntica al PDF corporativo) | `proyecto/web/cv-presentacion.html` + `assets/cv-presentacion.js` (hojas A4, paginación por medición, PDF por html2canvas) |
 | Cola/avisos de PDF compartidos | `proyecto/web/assets/pdf-cola.js` (`PdfCola.encolar({etiqueta, ejecutar(ctx)})`) |
-| Datos del CV (única fuente de verdad) | `proyecto/web/assets/cv-data.js` (`SECTORES`, `REGIONES`, `PERIODOS`, `PROYECTOS`) |
-| Años + aniversario | `proyecto/web/assets/aniversario.js` → `ICEWELL_FUNDACION` (⚠ placeholder `2009-01-01`) |
+| **Panel de administración** | `web/admin/` (entrar/registro/recuperar deslizante + editor) · API `web/api/index.php` → `servidor/` (PHP, fuera de public_html). Local: `php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php` → `/admin/` → "Entrar como desarrollador" |
+| Contenido (fuente de verdad) | BD del panel → al **Publicar** genera `web/assets/sitio-data.js` (empresa, cifras, textos, secciones) y `web/assets/cv-data.js` (`SECTORES`, `REGIONES`, `PERIODOS`, `PROYECTOS`). Semilla: `servidor/semilla.json`. **No editar los JS generados a mano** |
+| Render compartido | `web/assets/sitio-render.js` (`data-t`, `data-empresa`, `data-wa`, `data-cifra`, `data-lista`) |
+| Años + aniversario | `proyecto/web/assets/aniversario.js` → `ICEWELL_FUNDACION` = `ICEWELL_SITIO.config.fundacion` (⚠ placeholder `2009-01-01`, se edita en el panel) |
 | PDF corporativo (fuente del copy) | `Desktop/icewell/Icewell-Presentacion-Corporativa.pdf` (copia en `web/assets/`) |
 | Prototipos históricos 00–08 | `Desktop/icewell/0X-*/` (no tocar; 08 es la base de `proyecto/`) |
 | Assets de marca originales | `Desktop/icewell/_recursos-fuente/` (logo e isotipo SVG) |
@@ -33,7 +35,7 @@ Empresa: **Icewell SpA**, asesorías, ingeniería y montajes térmicos (HVAC), S
 
 ## Datos reales (regla de copy: todo texto debe ser trazable al PDF o al sitio)
 
-- WhatsApp `56964074519` · Tel `+56 2 2847 0610` · `contacto@icewell.cl`, `gonzalo.diaz@icewell.cl` · Román Díaz #1363, Providencia · RUT 76.059.117-3.
+- WhatsApp `56964074519` · Tel `+56 2 2847 0610` · `contacto@icewell.cl`, `gonzalo.diaz@icewell.cl` · Román Díaz #1363, Providencia · RUT 76.059.117-3. **Viven en el panel (Empresa y contacto)**: nunca escribirlos de nuevo en HTML/JS, usar `data-empresa` / `icewellSitio.empresa()`.
 - **Cifras oficiales = PDF**: 51 obras registradas, +170.000 m² en obras destacadas, 12 regiones (Tarapacá–Los Lagos). **No** usar +150 ni +400k (se eliminaron por decisión de Manuel).
 - Años de experiencia: nunca van hardcodeados. Se usa `<x data-anios>` y `<x data-desde>`.
 
@@ -53,7 +55,7 @@ Empresa: **Icewell SpA**, asesorías, ingeniería y montajes térmicos (HVAC), S
     - **Segundo plano**: `generar()` es `async` y cede el hilo entre filas. Devuelve `{blob, nombre, paginas}` (no llama `doc.save`). En `cv.html`, `encolarPdf()` y `procesarCola()` manejan la cola, el aviso `#pdfToasts` y la descarga con `bajarBlob()`. Cada pedido toma una foto de la selección al hacer clic.
     - Precarga con `precargarPdf()` (idle a los 2.5 s). `cargarAssetsConProgreso()` usa `fetch` + stream para el %, y en `file://` cae a `<script src>`. Hay guard `beforeunload` mientras hay cola. `?pdfLento=1` sirve para probar.
     - Test: `test_pdf.js` en el scratchpad genera los PDF reales vía jsdom (parchea `jsPDF.API.save`) y se revisan renderizando con PyMuPDF.
-  - Agregar una obra = un objeto más en `PROYECTOS`. Su sector y región deben existir en los catálogos.
+  - Agregar una obra = en el panel (pestaña Obras). Su sector y región deben existir en los catálogos. Regla: tarjeta = obra con foto; Trayectoria = todas; portada del index exige foto.
 - **Gotcha sticky**: `overflow-x:hidden` en html y body rompe `position:sticky`. En el CV se usa `overflow-x: clip` solo en body.
 
 ## Dos versiones del CV
@@ -85,6 +87,12 @@ Toda mejora de experiencia que se haga en una versión (`cv.html` / `cv-presenta
    - para ver el PDF: forzar las `CSSMediaRule` con media `print` a `all`.
 3. Verificar que exista toda ruta `assets/...` referenciada.
 
+## Panel: reglas al tocarlo
+- Todo dato que entra se valida en el servidor (`servidor/lib/Contenido.php::validar`); un campo nuevo del contenido = agregarlo ahí, en `semilla.json` y en el editor.
+- En el navegador nunca `innerHTML` con datos del usuario (`textContent` / `icewellSitio.rico`). Panel sin JS en línea (CSP).
+- Seguridad: cambios → caso nuevo en `herramientas/tests/test_api.php` (`php herramientas/tests/test_api.php`).
+- Detalle de auth, seguridad y cómo publicarlo en un hosting PHP: `README.md` § Panel de administración.
+
 ## Pendientes abiertos
 
-Ver `proyecto/README.md` § Pendiente: fecha real de fundación, sectores y regiones `// revisar` en `cv-data.js`, fusión Fast Air, fotos `n-*` sacadas de Noticias. Idiomas quedan para después. La publicación en Wix se hace a mano.
+Ver `proyecto/README.md` § Pendiente: fecha real de fundación, obras con nota «Revisar» (panel → Obras → filtro), fusión Fast Air, fotos `n-*` sacadas de Noticias, dominio definitivo (icewell.net vs icewell.cl) y migración desde Wix al hosting PHP. Idiomas quedan para después.

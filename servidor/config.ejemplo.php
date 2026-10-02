@@ -61,6 +61,10 @@ return [
         'de_nombre' => 'Icewell · Panel del sitio',
     ],
 
+    // Carpeta pública (la que tiene assets/, admin/, api/). Se detecta sola: web/, public_html/,
+    // www/ o htdocs/ al lado de servidor/. Solo si el hosting usa otra, escribirla acá:
+    // 'dir_web' => '/home/usuario/public_html',
+
     // Solo si el hosting está detrás de un proxy/CDN que pone la IP real en X-Forwarded-For
     // (p.ej. Cloudflare). Lista de IPs del proxy; vacío = se usa REMOTE_ADDR (lo seguro).
     'proxies_confiables' => [],

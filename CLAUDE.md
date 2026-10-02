@@ -9,8 +9,10 @@ Proyecto Icewell: sitio modernizado de icewell.net (hoy en Wix) + currículum in
 Todas las rutas son relativas a la raíz del proyecto (`Desktop/icewell/proyecto/`).
 
 ```bash
-# Servir el sitio (necesario para html2canvas con fotos, fetch con % de carga y deep-links; con doble clic también funciona)
-python -m http.server 8765 --directory web       # → http://localhost:8765/index.html | cv.html | cv-presentacion.html
+# Servir el sitio + el panel (modo local: SQLite, correos a /admin/bandeja.html, "Entrar como desarrollador")
+php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php   # → /index.html | /cv.html | /cv-presentacion.html | /admin/
+# Solo el sitio estático (sin panel; con doble clic también funciona)
+python -m http.server 8765 --directory web
 
 # Pruebas (jsdom, corren el JS real de las páginas). Instalar una vez:
 npm install --prefix herramientas/tests
@@ -18,12 +20,19 @@ npm test --prefix herramientas/tests             # las 3 suites encadenadas con 
 node herramientas/tests/test_icewell.js          # una sola: index + aniversario (+ botón de vista previa) + filtros/hash de cv.html
 node herramientas/tests/test_web_ux.js           # tarjetas Público/Privado, filtro = todas tarjeta, barra fija, recuento
 node herramientas/tests/test_pdf.js              # genera PDFs reales de cv.html (modo 'dibujo') → herramientas/tests/salida/
+node herramientas/tests/test_sitio.js            # sitio-data.js → index/cv/presentación/PDF, XSS, portada desde datos
+php herramientas/tests/test_api.php              # servidor del panel: auth, CSRF, límites, tokens, Google, 2FA, subidas (copia temporal)
 
-# Regenerar fuentes/fotos embebidas del PDF (OBLIGATORIO al agregar o cambiar una foto en cv-data.js)
+# Panel por consola
+php herramientas/admin-cli.php crear-admin correo@icewell.cl "Nombre"   # (listar | aprobar | bloquear | resetear-clave | migrar)
+php herramientas/admin-cli.php publicar-semilla  # regenera sitio-data.js + cv-data.js desde servidor/semilla.json
+node herramientas/semilla.js                     # reimporta un cv-data.js editado a mano → servidor/semilla.json
+
+# Regenerar fuentes/fotos embebidas del PDF (el panel lo hace solo al Publicar; esto es sin panel)
 python herramientas/build_pdf_assets.py          # → web/assets/vendor/cv-pdf-assets.js
 ```
 
-Lo que jsdom **no** puede validar (no tiene layout ni canvas): la paginación por medición de `cv-presentacion.html`, las hojas A4 del modo 'foto' y las animaciones. Eso se verifica en Chrome real: con la extensión claude-in-chrome contra el servidor local, o con `msedge --headless=new --print-to-pdf=... URL` + render con PyMuPDF. En una pestaña oculta el scroll suave y las animaciones CSS/rAF no corren, así que no son bug.
+Lo que jsdom **no** puede validar (ni test_api.php) (no tiene layout ni canvas): la paginación por medición de `cv-presentacion.html`, las hojas A4 del modo 'foto' y las animaciones. Eso se verifica en Chrome real: con la extensión claude-in-chrome contra el servidor local, o con `msedge --headless=new --print-to-pdf=... URL` + render con PyMuPDF. En una pestaña oculta el scroll suave y las animaciones CSS/rAF no corren, así que no son bug.
 
 ## Arquitectura
 
@@ -34,19 +43,28 @@ Lo que jsdom **no** puede validar (no tiene layout ni canvas): la paginación po
 
 Las dos versiones del CV comparten los datos, el formato del hash de filtros (`#sector=a,b&periodo=…&region=…&q=…`) y un selector "Versión web / Versión presentación" que conserva el filtro. **Regla del usuario: toda mejora de experiencia en una versión se porta a la otra** (ver `/icewell` § Paridad entre versiones).
 
-### Datos: `assets/cv-data.js` (única fuente de verdad)
+### Panel (`web/admin/` + `servidor/`)
+- **Fuente de verdad = BD del panel** (versiones del contenido JSON). `servidor/semilla.json` es el contenido inicial. **Publicar** escribe `assets/sitio-data.js` y `assets/cv-data.js` (`servidor/lib/Contenido.php`: validación de TODO lo que llega + generación) y regenera `vendor/cv-pdf-assets.js` (`PdfAssets.php`). **No editar esos 2 JS a mano**: se pisan al publicar (para cambios a mano: editar, `node herramientas/semilla.js`, `php herramientas/admin-cli.php publicar-semilla`).
+- API: `web/api/index.php?r=<ruta>` → `servidor/api.php`. Todo POST exige `X-Requested-With: icewell` + Origin propio + JSON; con sesión, `X-CSRF-Token`. Clases en `servidor/lib/` (Auth, Sesion, Tokens, Limites, Google, Totp, Correo, Cripto, Imagenes, Panel, Auditoria). Config: `servidor/config.php` (no va a git; sin él → modo local solo en `php -S`/CLI).
+- Editor: `editor.js` (núcleo, guardar/publicar, deshacer, copia local), `editor-campos.js` (campos enlazados al borrador, siempre `textContent`), `editor-secciones.js`, `editor-obras.js`, `editor-cuenta.js`, `editor-vista.js` (iframe `?borrador=1` + `assets/borrador.js` lee `parent.icewellBorrador()`). Sin JS en línea: CSP `script-src 'self'` (`servidor/lib/Cabeceras.php` en local = `web/admin/.htaccess` en el hosting; cambiar los dos).
+- `assets/sitio-render.js` aplica `ICEWELL_SITIO` al HTML: `data-t` (textos con formato `*énfasis*`, `**negrita**`, `{anios}`…), `data-empresa`, `data-wa`, `data-cifra`, `data-img`, `data-lista` (servicios, sectores, metodo, hitos, portada, equipo, socios, cv-servicios, cv-cert), `data-edit` (para el clic → campo). Los PDF y la presentación usan `icewellSitio.plano/html/empresa/campoEmpresa`. Cargar en orden: `borrador.js`, `sitio-data.js`, `aniversario.js`, `cv-data.js`, `sitio-render.js`.
+
+### Datos: `assets/cv-data.js` (generado por el panel)
 `SECTORES`, `REGIONES`, `PERIODOS` y `PROYECTOS` (68 obras). Campos clave de cada obra:
 - `sectores[]`, `regiones[]`: ids de los catálogos;
 - `m2`, `foto` (archivo en `assets/`);
 - `estado`: 'ejecucion' | 'ejecutado';
 - `cliente`: 'Público' | 'Privado'. Es la etiqueta de las tarjetas;
 - `trabajo`, `detalle`: del CV original de Wix;
-- `destacado: true`: las 9 del PDF corporativo; la vista sin filtro de la presentación depende de esto.
+- `destacado: true`: las 9 del PDF corporativo; la vista sin filtro de la presentación depende de esto;
+- `id` (estable, va en el panel), `portada`/`ordenPortada`/`portadaAncha`/`textoPortada` (portafolio del index; **exige foto**), `alt`, `revisar` (nota pendiente, antes `// revisar`).
 
-Las cifras institucionales (51 obras, +170.000 m², 12 regiones) van escritas en el HTML y no se calculan. Los casos dudosos llevan `// revisar`.
+**Regla de obras (Manuel, 02-oct)**: tarjeta = obra **con foto**; "Trayectoria" lista **todas** (con y sin foto). Igual en cv.html, presentación y ambos PDF.
+
+Las cifras institucionales (51 obras, +170.000 m², 12 regiones) se escriben en el panel (`ICEWELL_SITIO.cifras`) y no se calculan.
 
 ### Años automáticos: `assets/aniversario.js`
-`ICEWELL_FUNDACION` (placeholder `2009-01-01`) → `window.icewellAniversario.anios`. Rellena `[data-anios]`/`[data-desde]` y activa el tema aniversario durante un mes. Botón flotante **"Vista previa · Aniversario · N años"** abajo al centro en las 3 páginas (siempre visible mientras `MOSTRAR_BOTON = true`; ponerlo en `false` al publicar; `?preview=0` lo oculta en una visita). Parámetros: `?hoy=aaaa-mm-dd`, `?aniversario=1` (queda en la URL al activar el botón, así el link se comparte ya activado). **Orden de carga:** hay que llamar `icewellAniversario.rellenar()` antes de que el contador animado del index lea su objetivo.
+`ICEWELL_FUNDACION` (= `ICEWELL_SITIO.config.fundacion`, placeholder `2009-01-01`, se edita en el panel) → `window.icewellAniversario.anios`. Rellena `[data-anios]`/`[data-desde]` y activa el tema aniversario durante un mes. Botón flotante **"Vista previa · Aniversario · N años"** abajo al centro en las 3 páginas (`MOSTRAR_BOTON` = `config.botonAniversario` del panel; apagarlo al publicar; `?preview=0` lo oculta en una visita). Parámetros: `?hoy=aaaa-mm-dd`, `?aniversario=1` (queda en la URL al activar el botón, así el link se comparte ya activado). **Orden de carga:** hay que llamar `icewellAniversario.rellenar()` antes de que el contador animado del index lea su objetivo.
 
 ### Filtros y render
 - Filtro: OR dentro de un grupo, AND entre grupos. Los chips muestran un **conteo facetado** (`contarEn(st, grupo, id)`: obras que habría con esa opción y los otros filtros), se desactivan en 0 y animan el recuento (`recontar()` + `ultimoConteo`).
@@ -84,6 +102,7 @@ Las cifras institucionales (51 obras, +170.000 m², 12 regiones) van escritas en
 - Contraste mínimo WCAG AA; piso tipográfico de 11 px mono y 12 px texto.
 - Logo sobre fondo oscuro: **nunca en un recuadro o placa blanca**. Isotipo con sus 3 colores y la palabra "icewell" recoloreada a crema (`#f5efe0`), recoloreando los trazos 3–4 de `icewell-logo.svg` en un SVG en línea. Ejemplo: `LOGO_MODAL` en `aniversario.js`.
 - Documentar decisiones y hallazgos en `README.md`. Comentarios en español, con el "por qué".
+- Panel: todo dato que entra se valida en el servidor (`Contenido::validar`); en el navegador, nunca `innerHTML` con datos del usuario. Cambios de seguridad → agregar el caso a `test_api.php`.
 
 ## Sesiones en la nube (claude.ai/code)
 

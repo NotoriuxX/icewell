@@ -8,27 +8,48 @@ Proyecto formal de Icewell, en la misma línea que CUVOLT. Toma el prototipo ele
 
 ```
 proyecto/
-  README.md
-  web/
-    index.html      ← sitio principal (evolución de 08-industrial-luminoso)
-    cv.html         ← currículum interactivo (filtros + PDF de lo filtrado)
+  README.md · CLAUDE.md
+  web/                      ← lo público (public_html en el hosting)
+    index.html              ← sitio principal (evolución de 08-industrial-luminoso)
+    cv.html                 ← currículum interactivo (filtros + PDF de lo filtrado)
+    cv-presentacion.html    ← CV versión presentación (hojas A4)
+    admin/                  ← PANEL: entrar/crear cuenta/recuperar + editor del sitio
+    api/index.php           ← única puerta de la API (el código vive en servidor/)
     assets/
-      aniversario.js   ← años automáticos + tema aniversario (portado de cuvolt)
-      cv-data.js       ← ÚNICA fuente de datos del CV (63 obras)
-      icewell-presentacion-corporativa.pdf  ← descarga "Presentación completa"
+      sitio-data.js         ← GENERADO por el panel: empresa, cifras, textos, secciones
+      cv-data.js            ← GENERADO por el panel: sectores, regiones, períodos, 68 obras
+      sitio-render.js       ← aplica sitio-data.js al HTML de las 3 páginas
+      borrador.js           ← vista previa del editor (lee el borrador sin publicar)
+      aniversario.js        ← años automáticos + tema aniversario (portado de cuvolt)
+      obras/                ← fotos subidas desde el panel
       (logos, fotos de proyectos, logos de socios: copia de 08/assets)
+  servidor/                 ← PHP del panel, FUERA de public_html
+    config.ejemplo.php      ← copiar a config.php en el hosting (no va a git)
+    semilla.json            ← contenido inicial (lo que estaba escrito a mano)
+    lib/                    ← Auth, Sesion, Google, Correo, Contenido, PdfAssets…
+    datos/                  ← SQLite local, correos de prueba, respaldos (no va a git)
+  herramientas/
+    servidor-local.php      ← php -S para la beta en tu PC
+    admin-cli.php           ← crear admin, aprobar, resetear clave, publicar-semilla
+    semilla.js              ← (re)importa cv-data.js + textos → servidor/semilla.json
+    tests/                  ← jsdom (npm test) + test_api.php (servidor)
 ```
 
 `08-industrial-luminoso/` no se tocó: queda como histórico.
 
 ## Cómo abrir
 
-Con doble clic funciona. Para probar deep-links y la impresión conviene levantar un servidor:
+Con doble clic funciona (el sitio público sigue siendo estático). Con el panel incluido, en tu PC:
 
 ```bash
-cd Desktop/icewell/proyecto/web && python -m http.server 8765
-# http://localhost:8765/index.html   ·   http://localhost:8765/cv.html#sector=mineria
+php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php
+# http://localhost:8765/              sitio
+# http://localhost:8765/admin/        panel → "Entrar como desarrollador"
+# http://localhost:8765/admin/bandeja.html   correos de prueba (recuperar, verificar)
 ```
+
+Sin PHP instalado (solo mirar el sitio): `python -m http.server 8765 --directory web`.
+En Windows, PHP se instala una vez con `winget install PHP.PHP.8.3` (o el zip de windows.php.net, agregando la carpeta al PATH).
 
 ## Qué cambió respecto de 08
 
@@ -47,6 +68,53 @@ cd Desktop/icewell/proyecto/web && python -m http.server 8765
   - link en el nav, en el menú móvil y en el footer;
   - CTA "Ver currículum completo" en Proyectos;
   - 10 links de sector en Servicios, que abren `cv.html#sector=<id>`.
+
+## Panel de administración (`/admin`) — 02-oct
+
+Pedido de Manuel: entrar con cuenta de la empresa y editar todo el sitio sin tocar código (secciones, obras, CV, datos de contacto), con recuperación de contraseña y Google. Decisiones: **hosting compartido con PHP**, correos **@icewell.cl**, **registro + aprobación de un admin**, correo por **SMTP de la empresa**, sin IA por ahora. Base: el editor de CUVOLT, adaptado y mejorado.
+
+### Cómo funciona
+- **El sitio público sigue estático.** La BD guarda el contenido y sus versiones; **Publicar** escribe `assets/sitio-data.js` + `assets/cv-data.js` (escritura atómica, respaldo previo en `servidor/datos/respaldos/`) y regenera las fotos del PDF. Doble clic, pruebas y PDF siguen igual.
+- **Un dato, un lugar**: teléfono, WhatsApp (y sus mensajes), correos, dirección, RUT, redes, cifras institucionales y fecha de fundación se editan en «Empresa y contacto» y llegan a index, CV, presentación y los 3 generadores de PDF (`sitio-render.js`: `data-t`, `data-empresa`, `data-wa`, `data-cifra`, `data-lista`). El HTML conserva el texto escrito como respaldo si falta el JS.
+- **Formato de los textos** (seguro, sin HTML): `*énfasis*` (azul), `**negrita**`, salto de línea, y `{anios}` `{desde}` `{obras}` `{m2}` `{regiones}` → valores automáticos.
+- **Obras**: lista con filtros (portada, con/sin foto, destacadas, en ejecución, revisar, ocultas), ficha con «Dónde aparece», portada **solo con foto** (si se quita la foto, sale de la portada), tarjeta ancha, orden de la portada, destacada (presentación), ocultar sin borrar, duplicar, nota interna «revisar».
+- **Currículum**: títulos, bajadas, servicios (texto web + texto corto para PDF), certificaciones y todos los textos de la presentación. Los datos de la empresa se ven en solo lectura y se editan en su pestaña.
+- **Guardar ≠ Publicar**: Guardar crea un borrador (cualquier editor); Publicar (admin, configurable) cambia el sitio. Bloqueo optimista (si otra persona guardó, no se pisan), historial de 150 versiones con «Cargar al borrador», deshacer/rehacer, y **copia local del borrador** si se corta la sesión o se cierra la pestaña.
+- **Vista previa real** (iframe con `?borrador=1`, `assets/borrador.js`): Inicio / CV web / CV presentación, escritorio/tablet/móvil; clic en un texto → su campo; foco en un campo → se marca en la vista previa. Textos al vuelo; obras y presentación recargan conservando el scroll.
+
+### Seguridad (todo se valida en el servidor)
+- Correo: solo `@icewell.cl` exacto (sin subdominios ni Unicode). Registro → verificar correo → **aprobación de un admin** (aviso por correo a los admins). `admin_inicial` en config sirve para el primer acceso en un hosting sin consola.
+- Contraseñas: mínimo 12, sin las más comunes ni el nombre/correo; **Argon2id** (bcrypt si el hosting no lo tiene) sobre HMAC con un *pepper* que vive en `config.php`, fuera de la BD.
+- Recuperar: enlace `restablecer.html?id=<selector>&t=<verificador>`, en la BD solo el SHA-256, **30 min, un solo uso**; la página valida el enlace antes de mostrar el formulario y lo saca de la barra de direcciones; al cambiar la clave se cierran **todas** las sesiones y llega un correo de aviso. Respuestas que no revelan si un correo existe (login, registro, recuperar), con tiempo parecido.
+- Google: el ID token se verifica en el servidor (firma RS256 con las llaves de Google, `aud`, `iss`, vencimiento, `email_verified`, claim `hd` **y** dominio del correo). Cuenta nueva → espera aprobación.
+- Sesiones propias en la BD (no archivos de PHP, que en un hosting compartido pueden ser legibles por otros sitios): cookie `__Host-`, HttpOnly, SameSite=Strict, 30 min de inactividad / 8 h máximo, revalidación por petición (bloquear o cambiar la clave corta al instante). CSRF por sesión + cabecera propia + chequeo de Origin. Límites de intentos por IP y por correo.
+- **2FA opcional** (app autenticadora, TOTP) con secreto cifrado con libsodium; cada código sirve una vez. Muy recomendado para admins.
+- Imágenes: solo JPG/PNG/WebP ≤ 8 MB, tipo real por bytes, **re-codificadas con GD** (se pierde EXIF/GPS y cualquier contenido escondido), nombre aleatorio, carpeta sin ejecución de PHP. Nada de SVG.
+- CSP estricta en el panel (sin JavaScript en línea), `X-Frame-Options`, `Referrer-Policy: no-referrer` (los enlaces llevan token), HSTS, auditoría de entradas, intentos fallidos, guardados y publicaciones (pestaña Usuarios).
+- Pruebas: `php herramientas/tests/test_api.php` (89 chequeos de flujos y ataques: dominio ajeno, clave débil, CSRF, origen ajeno, fuerza bruta, enlaces reutilizados/vencidos, sesiones que deben morir, Google falso, 2FA repetido, PHP disfrazado de foto, modo desarrollador en producción).
+
+### Beta en tu PC (sin servidor)
+`php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php` → sin `config.php` arranca en **modo local**: SQLite en `servidor/datos/`, secretos generados solos, correos a `/admin/bandeja.html` y botón **«Entrar como desarrollador»** (solo modo local **y** solo desde 127.0.0.1; en producción no existe). Publicar en local escribe los JS de `web/assets/` del repo: después se hace commit como siempre.
+Para crear una cuenta real de admin por consola: `php herramientas/admin-cli.php crear-admin correo@icewell.cl "Nombre"`.
+
+### Publicar el panel (hosting compartido con PHP 8.1+)
+1. Subir `web/` a `public_html/` y `servidor/` **al lado** (no adentro): `/home/usuario/servidor`. Si el hosting no deja, va dentro con su `.htaccess` (Require all denied).
+2. Crear la base MySQL/MariaDB y su usuario (cPanel → Bases de datos).
+3. Copiar `servidor/config.ejemplo.php` a `servidor/config.php` y completar: `url_base` (https), BD, `pepper` y `clave_cifrado` (`php -r "echo bin2hex(random_bytes(32));"` cada uno, **no cambiarlos después**), `admin_inicial`, SMTP.
+4. SMTP de Google Workspace: `smtp.gmail.com`, 587, tls, usuario = la cuenta, clave = **contraseña de aplicación** (requiere verificación en dos pasos en esa cuenta).
+5. Google (opcional): Google Cloud Console → Credenciales → ID de cliente OAuth «Aplicación web», origen autorizado = `url_base` → pegar en `google_client_id`.
+6. Permisos de escritura para PHP en `web/assets/sitio-data.js`, `web/assets/cv-data.js`, `web/assets/vendor/cv-pdf-assets.js`, `web/assets/obras/` y `servidor/datos/`.
+7. HTTPS activo (los `.htaccess` redirigen y ponen HSTS). Entrar a `/admin/`, registrarse con el correo de `admin_inicial`, confirmar el correo → queda admin. Activar 2FA. Dejar `admin_inicial` vacío.
+8. Antes de abrirlo al público: «Empresa → Aniversario» → apagar el botón de vista previa y poner la fecha real de fundación.
+
+### Lo que se estaba pasando por alto (y quedó resuelto o anotado)
+- El portafolio del index estaba escrito a mano y no usaba `destacado` → ahora sale de `portada` en los datos.
+- Los datos de contacto estaban copiados en ~30 lugares (incluidos los PDF) → una sola fuente.
+- Las fotos nuevas no llegaban al PDF hasta correr Python → se regeneran al publicar.
+- Los `// revisar` se habrían perdido al generar `cv-data.js` → campo `revisar`.
+- Los logos de socios estaban duplicados a mano para la marquesina → se duplican solos.
+- Faltaban: texto alternativo de las fotos, SEO editable, redes sociales, fotos del equipo (sin foto se ven las iniciales), respaldos al publicar, historial, papelera (ocultar), concurrencia entre dos editores, auditoría y 2FA.
+- Pendiente de decidir: dominio definitivo (icewell.net vs icewell.cl) y migración desde Wix; respaldo periódico de la BD (cPanel → copias de seguridad).
 
 ## Dos versiones del CV (para mostrarle a Icewell)
 
@@ -82,7 +150,7 @@ Las dos comparten los datos (`cv-data.js`) y los filtros por hash (`#sector=hote
   - la línea de la tarjeta dice "año · sector · tipo de trabajo" (el sector es el filtrado si corresponde);
   - "En ejecución" va como texto verde;
   - las tarjetas sin foto muestran los m² o el año en grande.
-- **Con filtro, todas las obras como tarjeta** en una grilla ("14 obras · Industrial"), sin lista aparte. Sin filtro: "Obras destacadas y recientes" (foto, m² o 2023+) + "Trayectoria" en lista.
+- **Con filtro, todas las obras como tarjeta** en una grilla ("14 obras · Industrial"), sin lista aparte. Sin filtro: "Obras destacadas y recientes" = **las obras con foto** + "Trayectoria" en lista con **todas** las obras (regla de Manuel, 02-oct: una obra con foto sale en los dos lados; sin foto, solo en Trayectoria; si después se le agrega foto, pasa a estar en los dos). Igual en ambos PDF y en la versión presentación (su trayectoria también lista todas).
 - **Sin salto + dominó**: el resultado se arma aparte y se cambia de una vez. Salen de abajo hacia arriba las que ya no aplican y entran de arriba hacia abajo las nuevas; las que se quedan no se mueven. Con `prefers-reduced-motion` no hay animación.
 - **Recuento animado** en los números de los chips: sube en verde, baja en gris; en 0 quedan gris y bloqueados.
 - **Filtros a mano en la barra fija**: pastillas × del filtro activo, "Limpiar" y "Filtros ↑" (sube a los chips). Filtrar desde ahí no mueve la página.
@@ -118,12 +186,14 @@ Las dos comparten los datos (`cv-data.js`) y los filtros por hash (`#sector=hote
     - **Precarga**: 2.5 s después de abrir `cv.html`, jsPDF y los assets (~2.4 MB) se bajan en segundo plano, salvo con "Ahorro de datos" activo. Así el clic suele ser casi instantáneo. El % de carga es real (con `fetch`); con doble clic (`file://`) la barra queda indeterminada.
     - Para ver la carga lenta: `cv.html?pdfLento=1` agrega 3 s de demora.
   - Si algo falla, cae al diálogo de impresión como respaldo. `Ctrl+P` sigue funcionando con el CSS `@media print`.
-  - **Al agregar o cambiar una foto** en `cv-data.js` hay que correr `python proyecto/herramientas/build_pdf_assets.py`. Regenera `assets/vendor/cv-pdf-assets.js` (fuentes + logo + fotos recortadas a 3:2 en base64). Van embebidas porque leerlas en vivo con canvas falla al abrir con doble clic (file://).
+  - **Fotos del PDF**: van embebidas en `assets/vendor/cv-pdf-assets.js` (fuentes + logo + fotos recortadas a 3:2 en base64) porque leerlas en vivo con canvas falla con doble clic (file://). **El panel lo regenera solo al Publicar** (`servidor/lib/PdfAssets.php`, solo procesa las fotos nuevas). Sin panel: `python herramientas/build_pdf_assets.py`.
   - Muestras generadas: `proyecto/muestras-pdf/` (completo de 7 págs, Hotelería de 2 págs, Minería 2010–2013).
 - **"Presentación completa"** descarga el PDF corporativo tal cual.
 - **Cobertura territorial**: tocar una región filtra y baja al listado.
 
 ### Datos (`assets/cv-data.js`)
+
+> **Desde el 02-oct `cv-data.js` lo genera el panel** (mismo formato: `const SECTORES/REGIONES/PERIODOS/PROYECTOS`). No editarlo a mano: se pisa al publicar. Los antiguos comentarios `// revisar` son ahora el campo `revisar` de cada obra (insignia "Revisar" en el panel). Campos nuevos: `id`, `portada`/`ordenPortada`/`portadaAncha`/`textoPortada` (portafolio del index), `alt`. Las obras ocultas en el panel no se publican.
 
 - **68 obras** de 3 fuentes:
   1. el PDF corporativo nuevo (`Icewell-Presentacion-Corporativa.pdf`);
@@ -147,14 +217,15 @@ Las dos comparten los datos (`cv-data.js`) y los filtros por hash (`#sector=hote
 
 ## Pendiente — confirmar con Icewell
 
-- **Fecha real de fundación**: hoy es el placeholder `ICEWELL_FUNDACION = '2009-01-01'` en `assets/aniversario.js`. Con esa fecha, hoy da **17 años**. El PDF solo dice "principios de 2009".
-- Casos marcados `// revisar` en `cv-data.js`:
+- **Fecha real de fundación**: sigue el placeholder 2009-01-01, ahora en el panel (Empresa y contacto → Aniversario). Con esa fecha, hoy da **17 años**. El PDF solo dice "principios de 2009".
+- **Dominio**: el sitio actual es icewell.net (Wix), pero todos los correos y el "Sitio web" dicen icewell.cl. El panel exige correos @icewell.cl (decisión de Manuel). Confirmar cuál será el dominio del sitio nuevo.
+- Obras con nota «Revisar» en el panel (antes `// revisar` en `cv-data.js`):
   - **Sector**: Línea 7 Metro, Estaciones Metro y Metro S.A. (van como Gobierno; ¿es mejor "Transporte"?); DK Home (Retail); Casino Enjoy Pucón (Hotelería); Block La Dehesa (Oficinas); Torre del Sol (Residencial); Cerro Dominador (Industrial/energía).
   - **Región**: Aduana de Quillagua (el sitio dice Tarapacá; Quillagua está en el límite con Antofagasta); Caserones (el PDF dice Coquimbo); Soprole Rukan (sin región en el PDF).
   - **Fusión**: "Oficinas Fast Air Aeropuerto" + "Centro de Importaciones Fast Air" se unieron en una sola obra. Confirmar que sea la misma.
   - **Fotos** tomadas de Noticias del sitio: `n-sanantonio.jpg` y `n-torax.jpg` coinciden con su obra. `n-calama.jpg` quedó bien asignada a la Planta Solar CPS. `n-uc.jpg` es de otro edificio UC (Campus San Joaquín): pendiente de sacar o reemplazar.
 - Cambio de idioma: fuera de alcance por ahora.
-- Publicación: el sitio real está en Wix. Esto es un prototipo local, no se publica solo.
+- Publicación: el sitio real está en Wix. El panel necesita un hosting con PHP (ver «Publicar el panel»): hay que mover el dominio desde Wix.
 
 ## Verificación hecha (2026-09-27)
 

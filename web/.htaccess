@@ -8,7 +8,8 @@ DirectoryIndex index.html index.php
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !=https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  # Archivos ocultos y temporales de publicación: nunca
+  # Archivos ocultos y temporales de publicación: nunca (salvo .well-known, que usa el certificado HTTPS)
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
   RewriteRule (^|/)\. - [F]
   RewriteRule \.tmp- - [F]
 </IfModule>

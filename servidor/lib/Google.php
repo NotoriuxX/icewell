@@ -68,14 +68,25 @@ final class Google
             $c = json_decode((string)file_get_contents($cache), true);
             if (is_array($c) && ($c['vence'] ?? 0) > time()) return $c['llaves'];
         }
-        $ctx = stream_context_create(['http' => ['timeout' => 5, 'ignore_errors' => true], 'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]]);
-        $cuerpo = @file_get_contents(self::JWKS_URL, false, $ctx);
+        // curl si existe (muchos hostings apagan allow_url_fopen); si no, file_get_contents
+        $cuerpo = ''; $cabeceras = '';
+        if (function_exists('curl_init')) {
+            $c = curl_init(self::JWKS_URL);
+            curl_setopt_array($c, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 5, CURLOPT_SSL_VERIFYPEER => true, CURLOPT_SSL_VERIFYHOST => 2,
+                CURLOPT_HEADERFUNCTION => function ($ch, $h) use (&$cabeceras) { $cabeceras .= $h; return strlen($h); }]);
+            $cuerpo = (string)curl_exec($c);
+            curl_close($c);
+        } else {
+            $ctx = stream_context_create(['http' => ['timeout' => 5, 'ignore_errors' => true], 'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]]);
+            $cuerpo = (string)@file_get_contents(self::JWKS_URL, false, $ctx);
+            $cabeceras = implode("\n", $http_response_header ?? []);
+        }
         $d = $cuerpo ? json_decode($cuerpo, true) : null;
         if (!is_array($d) || empty($d['keys'])) return [];
         $llaves = [];
         foreach ($d['keys'] as $k) if (!empty($k['kid'])) $llaves[$k['kid']] = $k;
         $vida = 3600;
-        foreach (($http_response_header ?? []) as $h) if (preg_match('/max-age=(\d+)/i', $h, $m)) $vida = min((int)$m[1], 86400);
+        if (preg_match('/max-age=(\d+)/i', $cabeceras, $m)) $vida = min((int)$m[1], 86400);
         @file_put_contents($cache, json_encode(['vence' => time() + $vida, 'llaves' => $llaves]), LOCK_EX);
         return $llaves;
     }

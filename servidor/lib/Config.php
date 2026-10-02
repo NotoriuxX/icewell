@@ -33,7 +33,7 @@ final class Config
             'google_client_id' => '',
             'smtp' => [],
             'proxies_confiables' => [],
-            'dir_web' => realpath(self::DIR . '/../web') ?: self::DIR . '/../web',
+            'dir_web' => self::buscarWeb(),
             'dir_datos' => self::DIR . '/datos',
         ];
         if ($local) {
@@ -50,6 +50,17 @@ final class Config
         }
         $c['dominios_permitidos'] = array_map('strtolower', (array)$c['dominios_permitidos']);
         return self::$c = $c;
+    }
+
+    /** Carpeta pública: web/ en el repo; public_html (o www, htdocs) en el hosting, al lado de servidor/;
+        o la carpeta que contiene a servidor/ si quedó adentro de public_html. */
+    private static function buscarWeb(): string
+    {
+        foreach (['/../web', '/../public_html', '/../www', '/../htdocs', '/..'] as $c) {
+            $r = realpath(self::DIR . $c);
+            if ($r && is_file($r . '/assets/sitio-render.js')) return $r;
+        }
+        return self::DIR . '/../web';
     }
 
     private static function secretosLocales(string $dir): array
