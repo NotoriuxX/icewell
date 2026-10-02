@@ -11,7 +11,7 @@ function pagina(url, storage){
   let d = pagina('http://localhost/'); let c = d.window.document.querySelector('.tr-cortina');
   ok(c && !c.classList.contains('on'), 'cortina creada y oculta en carga normal');
   d.window.document.getElementById('cv').click();
-  ok(c.classList.contains('on') && c.querySelector('img[src$="isotipo.svg"]'), 'clic a /curriculum → cortina con el isotipo del preloader');
+  ok(c.classList.contains('on') && c.querySelector('img[src$="isotipo-volumen.svg"]'), 'clic a /curriculum → cortina con el isotipo del preloader');
   ok(d.window.sessionStorage.getItem('icewellTr') === '1', 'deja marca para la llegada');
   d = pagina('http://localhost/curriculum'); c = d.window.document.querySelector('.tr-cortina');
   d.window.document.getElementById('pr').click();

@@ -216,7 +216,7 @@ Pedidos de Manuel:
 - **El botón «Vista previa · Aniversario»** ya no tapa el final del pie: agrega espacio abajo solo mientras se muestra.
 
 ## Logo sobre fondo oscuro (02-oct)
-Logo con volumen (kit de marca `icewell-logo-volumen.svg`, sin el bloque `<metadata>` C2PA de 8 KB) con la palabra «icewell» en **blanco** (antes crema `#f5efe0`, que se veía amarilla). Archivos: `web/assets/icewell-logo-oscuro.svg` y `web/admin/logo-oscuro.svg`, referenciados con `?v=2` (cache-busting). El logo en línea del modal del aniversario (`LOGO_MODAL`) sigue plano, con la palabra en blanco.
+Logo con volumen (kit de marca `icewell-logo-volumen.svg`, sin el bloque `<metadata>` C2PA de 8 KB) con la palabra «icewell» en **blanco** (antes crema `#f5efe0`, que se veía amarilla). Archivos: `web/assets/icewell-logo-oscuro.svg` y `web/admin/logo-oscuro.svg`, referenciados con `?v=2` (cache-busting). El logo en línea del modal del aniversario (`LOGO_MODAL`) sigue plano, con la palabra en blanco. La pantalla de carga (preloader del index + cortina de `transicion.js`) gira el **isotipo con volumen** solo (`assets/isotipo-volumen.svg`); el favicon sigue con `isotipo.svg` plano.
 
 ## Vista previa pública con Docker (02-oct)
 `powershell -File herramientas/tunel.ps1` → link `*.trycloudflare.com` del sitio que corre en el Docker de la PC (`docker-compose.tunel.yml` + `docker/Caddyfile.tunel`). Solo sale el sitio: el proxy bloquea `/admin`, `/api` y `/servidor`, porque en desarrollo «Entrar como desarrollador» vale para cualquier IP. El link es temporal (`-Apagar` lo baja). Detalle en `DESPLIEGUE-DOCKER.md`. Los 250 USD de Docker Sandboxes no sirven para hosting (son para agentes).

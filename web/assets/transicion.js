@@ -45,7 +45,7 @@
   var cortina = document.createElement('div');
   cortina.className = 'tr-cortina';
   cortina.setAttribute('role', 'status');
-  cortina.innerHTML = '<img src="assets/isotipo.svg" alt="Cargando">';
+  cortina.innerHTML = '<img src="assets/isotipo-volumen.svg" alt="Cargando">';
   document.documentElement.appendChild(cortina);
 
   function leer(){ try{ return sessionStorage.getItem(CLAVE); }catch(e){ return null; } }
