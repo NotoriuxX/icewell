@@ -285,7 +285,7 @@
 
   window.icewellSitio = {
     datos: S, t: t, rico: rico, html: html, plano: plano, valor: valor,
-    empresa: empresa, campoEmpresa: campoEmpresa, waUrl: waUrl, iniciales: iniciales
+    empresa: empresa, campoEmpresa: campoEmpresa, waUrl: waUrl, iniciales: iniciales, proyectos: proyectos
   };
   window.icewellRender = render;
   render();

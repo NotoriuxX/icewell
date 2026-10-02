@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Icewell — Editor del sitio</title>
+<link rel="icon" type="image/svg+xml" href="../assets/isotipo.svg">
+<link rel="stylesheet" href="panel.css">
+<link rel="stylesheet" href="editor.css">
+</head>
+<body class="ed">
+
+<header class="ed-cab">
+  <a class="ed-cab__logo" href="../index.html" target="_blank" rel="noopener" title="Ver el sitio publicado"><img src="logo-oscuro.svg" alt="Icewell" width="118" height="30"></a>
+  <div class="ed-cab__titulo">
+    <strong>Editor del sitio</strong>
+    <span class="ed-estado" id="estado" aria-live="polite">Cargando…</span>
+  </div>
+  <div class="ed-cab__acciones">
+    <button class="ed-icono" type="button" id="btnDeshacer" disabled title="Deshacer (Ctrl+Z)" aria-label="Deshacer">↶</button>
+    <button class="ed-icono" type="button" id="btnRehacer" disabled title="Rehacer (Ctrl+Shift+Z)" aria-label="Rehacer">↷</button>
+    <button class="btn btn--oscuro" type="button" id="btnDescartar" disabled>Descartar</button>
+    <button class="btn btn--oscuro" type="button" id="btnGuardar" disabled title="Guarda un borrador (no cambia el sitio todavía) — Ctrl+S">Guardar</button>
+    <button class="btn btn--verde" type="button" id="btnPublicar" disabled title="Hace visibles en el sitio los cambios guardados">Publicar</button>
+    <div class="ed-usuario">
+      <button class="ed-usuario__btn" type="button" id="btnUsuario" aria-haspopup="true" aria-expanded="false"><span class="ed-avatar" id="avatar">·</span><span class="ed-usuario__nombre" id="nombreUsuario"></span></button>
+      <div class="ed-menu" id="menuUsuario" hidden>
+        <p class="ed-menu__correo" id="correoUsuario"></p>
+        <button type="button" data-tab="cuenta">Mi cuenta</button>
+        <button type="button" id="btnSalir">Salir</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="ed-tabs" id="tabs" aria-label="Secciones del editor">
+  <button type="button" data-tab="inicio">Página principal</button>
+  <button type="button" data-tab="obras">Obras</button>
+  <button type="button" data-tab="cv">Currículum</button>
+  <button type="button" data-tab="empresa">Empresa y contacto</button>
+  <button type="button" data-tab="catalogos">Sectores y regiones</button>
+  <button type="button" data-tab="usuarios" data-solo-admin hidden>Usuarios <b class="ed-tabs__n" id="pendientes" hidden></b></button>
+  <button type="button" data-tab="historial">Historial</button>
+</nav>
+
+<div class="ed-cuerpo">
+  <main class="ed-panel" id="panel" aria-live="polite">
+    <p class="ed-cargando" id="cargando">Cargando contenido…</p>
+  </main>
+
+  <aside class="ed-vista" id="vista" aria-label="Vista previa">
+    <div class="ed-vista__barra">
+      <div class="ed-grupo" role="group" aria-label="Página">
+        <button type="button" class="activo" data-pagina="index.html">Inicio</button>
+        <button type="button" data-pagina="cv.html">CV web</button>
+        <button type="button" data-pagina="cv-presentacion.html">CV presentación</button>
+      </div>
+      <div class="ed-grupo" role="group" aria-label="Tamaño">
+        <button type="button" class="activo" data-ancho="escritorio" title="Escritorio">Escritorio</button>
+        <button type="button" data-ancho="tablet" title="Tablet">Tablet</button>
+        <button type="button" data-ancho="movil" title="Celular">Móvil</button>
+      </div>
+    </div>
+    <p class="ed-vista__ayuda" id="ayudaVista">Vista previa con tus cambios sin publicar. Haz clic en un texto para ir a su campo.</p>
+    <div class="ed-vista__marco" id="marco">
+      <iframe id="frame" title="Vista previa del sitio" src="about:blank"></iframe>
+      <div class="ed-marca-sel" id="marcaSel" hidden></div>
+    </div>
+  </aside>
+</div>
+
+<button class="ed-fab" type="button" id="btnVerPanel" aria-controls="panel"><span class="ed-fab__editar">Editar</span><span class="ed-fab__ver">Ver sitio</span></button>
+<div class="ed-toasts" id="toasts" aria-live="polite"></div>
+
+<dialog class="ed-dialogo" id="dialogo">
+  <form method="dialog">
+    <h2 id="dialogoTitulo"></h2>
+    <div id="dialogoCuerpo"></div>
+    <div class="ed-dialogo__acciones">
+      <button class="btn btn--secundario" value="no" id="dialogoNo">Cancelar</button>
+      <button class="btn btn--primario" value="si" id="dialogoSi">Aceptar</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="comun.js"></script>
+<script src="editor.js"></script>
+<script src="editor-campos.js"></script>
+<script src="editor-secciones.js"></script>
+<script src="editor-obras.js"></script>
+<script src="editor-cuenta.js"></script>
+<script src="editor-vista.js"></script>
+<script src="editor-inicio.js"></script>
+</body>
+</html>

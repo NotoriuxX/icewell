@@ -7,8 +7,9 @@ en el navegador. jsPDF necesita las fuentes (TTF) y las fotos como base64.
 Leerlas en vivo con canvas/fetch falla al abrir la página con doble clic (file://),
 así que se embeben en un .js que se carga recién cuando alguien pide el PDF.
 
-Correr de nuevo cada vez que se agregue o cambie una foto en cv-data.js:
-    python proyecto/herramientas/build_pdf_assets.py
+El panel (/admin → Publicar) ya lo regenera solo (servidor/lib/PdfAssets.php, mismo recorte).
+Este script queda para uso local sin servidor:
+    python herramientas/build_pdf_assets.py
 """
 import base64
 import io
@@ -62,7 +63,8 @@ def foto_recortada(ruta: Path) -> str:
 
 def main():
     datos_cv = (ASSETS / "cv-data.js").read_text(encoding="utf-8")
-    fotos = sorted(set(re.findall(r"foto:\s*'([^']+)'", datos_cv)))
+    # cv-data.js lo genera el panel en formato JSON ("foto":"x.jpg"); se acepta también el formato viejo (foto: 'x.jpg')
+    fotos = sorted(set(re.findall(r"""["']?foto["']?\s*:\s*["']([^"']+)["']""", datos_cv)))
 
     salida = {"fuentes": {}, "fotos": {}, "logo": None}
     for nombre, archivo in FUENTES.items():
