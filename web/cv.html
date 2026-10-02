@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currículum Icewell — Obras y proyectos HVAC</title>
+<link rel="icon" type="image/svg+xml" href="assets/isotipo.svg">
+<meta name="description" content="Currículum interactivo de Icewell SpA: obras de climatización, ventilación y calefacción en todo Chile desde 2009, filtrables por sector, período y región.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #112536;
+  --ink-soft: #4b6474;
+  --blue: #0062a8;
+  --blue-deep: #004a80;
+  --ice: #dff3fa;
+  --snow: #f6fbfd;
+  --dark: #082436;
+  --green: #1a9614;
+  --red: #d01726;
+  --line: rgba(17, 37, 54, 0.13);
+  --tri: linear-gradient(90deg, #0062a8 0 33.34%, #1a9614 33.34% 66.67%, #d01726 66.67% 100%);
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --body: "IBM Plex Sans", Arial, sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+/* overflow-x: clip (no hidden): hidden en html+body convierte body en contenedor de scroll y rompe el header sticky */
+body { margin: 0; background: var(--snow); color: var(--ink); font-family: var(--body); overflow-x: clip; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+img { display: block; max-width: 100%; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; letter-spacing: -0.025em; text-transform: uppercase; }
+::selection { background: #bde4f2; }
+
+.wrap { width: min(100%, 1240px); margin: 0 auto; padding: 0 32px; }
+.eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; color: var(--blue); font: 500 11.5px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.eyebrow::before { width: 26px; height: 1px; background: currentColor; content: ""; }
+.eyebrow--light { color: #bce7f6; }
+.tri-strip { height: 5px; background: var(--tri); }
+
+/* ---------- header ---------- */
+.cv-header { position: sticky; top: 0; z-index: 50; background: rgba(247, 252, 254, 0.92); box-shadow: 0 1px 0 rgba(17,37,54,0.08), 0 8px 30px rgba(9,67,99,0.07); backdrop-filter: blur(16px); }
+.cv-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 68px; }
+.brand img { height: 27px; width: auto; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); font-size: 13px; font-weight: 600; transition: color 160ms; }
+.back-link:hover { color: var(--blue); }
+.version-switch { display: inline-flex; padding: 3px; border: 1px solid rgba(0,98,168,0.25); border-radius: 999px; background: #fff; }
+.version-switch a { padding: 6px 12px; border-radius: 999px; color: var(--ink-soft); font-size: 12.5px; font-weight: 600; }
+.version-switch a[aria-current] { color: #fff; background: var(--blue); }
+.version-switch a:not([aria-current]):hover { color: var(--blue); }
+@media (max-width: 900px) { .version-switch { display: none; } }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 42px; padding: 0 16px; border: 1px solid transparent; border-radius: 7px; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform 160ms var(--ease-out), background 180ms, box-shadow 180ms; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.97); }
+.btn--primary { color: #fff; background: var(--blue); box-shadow: 0 10px 20px rgba(0,98,168,0.22); }
+.btn--primary:hover { background: var(--blue-deep); }
+.btn--ghost { border-color: rgba(0,98,168,0.35); color: var(--blue); background: rgba(255,255,255,0.7); }
+.btn--ghost:hover { background: #fff; }
+.btn svg { flex: none; }
+
+/* ---------- portada ---------- */
+.cover { position: relative; overflow: hidden; padding: 84px 0 70px; background: radial-gradient(900px 520px at 105% 0%, rgba(133,214,240,0.5), transparent 58%), linear-gradient(135deg, #fff 0%, #f0faff 50%, #e6f6fb 100%); }
+.cover::before { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,98,168,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,98,168,0.045) 1px, transparent 1px); background-size: 74px 74px; content: ""; mask-image: linear-gradient(to bottom, transparent, black 30%, black 75%, transparent); }
+.cover-layout { position: relative; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(32px, 6vw, 90px); align-items: center; }
+.cover h1 { font-size: clamp(50px, 6.2vw, 86px); }
+.cover h1 em { color: var(--blue); font-style: normal; }
+.cover-lead { max-width: 560px; margin: 24px 0 30px; color: var(--ink-soft); font-size: 17px; line-height: 1.62; }
+.cover-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px 26px; padding-top: 22px; border-top: 1px solid rgba(17,37,54,0.14); }
+.kpi strong { display: block; margin-bottom: 10px; color: var(--blue); font: 800 clamp(44px, 4.6vw, 66px)/0.8 var(--display); letter-spacing: -0.03em; }
+.kpi span { display: block; max-width: 210px; color: var(--ink-soft); font-size: 12px; line-height: 1.35; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---------- servicios ---------- */
+.services { padding: 80px 0; color: #effbff; background: var(--dark); }
+.services-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 40px; }
+.services-head h2 { max-width: 640px; font-size: clamp(42px, 4.8vw, 66px); }
+.services-head p { max-width: 440px; color: rgba(215,241,249,0.86); font-size: 15px; line-height: 1.65; }
+.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(204,239,251,0.22); border-left: 1px solid rgba(204,239,251,0.22); }
+.service { padding: 26px 24px 28px; border-right: 1px solid rgba(204,239,251,0.22); border-bottom: 1px solid rgba(204,239,251,0.22); }
+.service > span { color: #9fdff4; font: 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.service h3 { margin: 26px 0 12px; font: 800 36px/0.95 var(--display); text-transform: uppercase; }
+.service p { color: rgba(215,241,249,0.86); font-size: 14px; line-height: 1.62; }
+.service ul { margin: 20px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(204,239,251,0.18); list-style: none; }
+.service li { padding: 3px 0; color: #9fdff4; font: 11.5px/1.5 var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
+
+/* ---------- explorador ---------- */
+.explorer { padding: 84px 0 70px; background: #fff; }
+.explorer-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 30px; }
+.explorer-head h2 { font-size: clamp(46px, 5.4vw, 76px); }
+.explorer-head p { max-width: 400px; color: var(--ink-soft); font-size: 15px; line-height: 1.6; }
+.filters { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.filter-group { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.filter-group > span { padding-top: 11px; color: var(--blue); font: 500 11px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 15px; border: 1px solid rgba(0,98,168,0.28); border-radius: 999px; color: var(--ink); background: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 160ms, border-color 160ms, color 160ms, transform 160ms var(--ease-out); }
+.chip:hover { border-color: var(--blue); color: var(--blue); }
+.chip:active { transform: scale(0.97); }
+.chip b { color: var(--ink-soft); font: 500 11px var(--mono); font-variant-numeric: tabular-nums; transition: color 200ms; }
+.chip b.cnt--sube { color: var(--green); } .chip b.cnt--baja { color: #a4b0bc; }
+.chip[aria-pressed="true"] { border-color: var(--blue); color: #fff; background: var(--blue); box-shadow: 0 8px 18px rgba(0,98,168,0.22); }
+.chip[aria-pressed="true"] b { color: #cdeaf7; }
+.chip:disabled { opacity: 0.38; cursor: default; }
+.chip:disabled:hover { border-color: rgba(0,98,168,0.28); color: var(--ink); }
+.filter-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-top: 18px; }
+.search { flex: 1 1 260px; display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid rgba(17,37,54,0.18); border-radius: 7px; background: #fff; }
+.search:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,98,168,0.14); }
+.search svg { color: var(--ink-soft); flex: none; }
+.search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 14px; }
+.clear-btn { min-height: 42px; padding: 0 14px; border: 0; border-radius: 7px; color: var(--ink-soft); background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; }
+.clear-btn:hover { color: var(--red); }
+
+.summary { position: sticky; top: 68px; z-index: 20; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin: 26px 0 22px; padding: 12px 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.94); backdrop-filter: blur(10px); }
+.summary p { color: var(--ink-soft); font-size: 14px; }
+.summary p strong { color: var(--ink); font: 800 26px/1 var(--display); letter-spacing: -0.01em; }
+/* filtros a mano en la barra fija: pastillas ×, Limpiar y Filtros ↑ (no hay que subir) */
+.sum-izq { display: grid; gap: 8px; min-width: 0; }
+.sum-filtros { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.sum-filtros:empty { display: none; }
+.sum-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 8px 0 11px; border: 1px solid rgba(0,98,168,0.3); border-radius: 999px; color: var(--blue); background: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.sum-pill span { color: var(--ink-soft); font-size: 14px; line-height: 1; }
+.sum-pill:hover span { color: var(--red); }
+.sum-link { min-height: 28px; padding: 0 8px; border: 0; color: var(--ink-soft); background: none; font-size: 12.5px; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.sum-link:hover { color: var(--blue); }
+.sum-mas { color: var(--ink-soft); font: 500 11.5px var(--mono); }
+
+.result-title { display: flex; align-items: center; gap: 10px; margin: 10px 0 18px; color: var(--blue); font: 500 11.5px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.result-title::before { width: 26px; height: 1px; background: currentColor; content: ""; }
+.card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; margin-bottom: 56px; }
+.card { position: relative; min-height: 380px; overflow: hidden; color: #fff; background: var(--dark); }
+.card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 550ms var(--ease-out); }
+.card:hover > img { transform: scale(1.06); }
+.card--solid { background: radial-gradient(520px 320px at 100% 0%, rgba(57,178,220,0.42), transparent 65%), var(--dark); }
+.card--solid::before { position: absolute; inset: 0; background-image: linear-gradient(rgba(159,223,244,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(159,223,244,0.07) 1px, transparent 1px); background-size: 44px 44px; content: ""; }
+.card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,23,36,0.05) 22%, rgba(3,23,36,0.92) 100%); }
+.card-big { position: absolute; z-index: 1; top: 26px; left: 24px; color: #fff; font: 800 clamp(54px, 5vw, 72px)/0.8 var(--display); letter-spacing: -0.035em; }
+.card-big small { font-size: 0.45em; letter-spacing: 0; }
+.card-index { position: absolute; z-index: 2; top: 19px; right: 19px; color: #d7f4fc; font: 11px var(--mono); }
+/* etiqueta de la tarjeta: solo Público / Privado (como la versión presentación y el PDF corporativo) */
+.card-cli { position: absolute; z-index: 2; top: 16px; left: 16px; padding: 5px 9px; color: #fff; background: var(--blue); font: 500 10.5px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.card-cli--pub { background: var(--green); }
+.card-content .card-vivo { color: #8fe38a; }
+.card--solid .card-big { top: 58px; }
+/* dominó al filtrar */
+.entra { animation: domino-in 320ms cubic-bezier(.2,.8,.2,1) both; }
+.sale { animation: domino-out 200ms cubic-bezier(.4,0,1,1) both; }
+@keyframes domino-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes domino-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(8px) scale(0.98); } }
+.preparacion { position: fixed; left: -10000px; top: 0; width: min(100vw, 1240px); visibility: hidden; pointer-events: none; }
+.card-content { position: absolute; z-index: 1; right: 24px; bottom: 23px; left: 24px; }
+.card-content > span { display: block; margin-bottom: 8px; color: #b4e8f8; font: 11px/1.45 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.card h3 { margin-bottom: 8px; font: 800 30px/0.92 var(--display); letter-spacing: -0.01em; text-transform: uppercase; }
+.card p { color: rgba(235,250,255,0.9); font-size: 13.5px; line-height: 1.5; }
+.card-m2 { margin-top: 10px; color: #fff; font: 800 22px/1 var(--display); }
+.card-m2 small { color: #b4e8f8; font: 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* trayectoria: filas con línea fina, como .method-list del index */
+.year-block { display: grid; grid-template-columns: 110px 1fr; gap: 20px; border-top: 1px solid var(--line); }
+.year-block > h3 { padding-top: 20px; color: var(--blue); font: 800 40px/0.9 var(--display); letter-spacing: -0.02em; }
+.rows { display: grid; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row h4 { margin: 0; font: 800 23px/1 var(--display); text-transform: uppercase; letter-spacing: -0.01em; }
+.row p { grid-column: 1; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+.row-meta { grid-column: 2; grid-row: 1 / span 2; align-self: start; padding-top: 3px; color: var(--blue); font: 11px/1.5 var(--mono); letter-spacing: 0.06em; text-align: right; text-transform: uppercase; }
+
+.empty { padding: 50px 20px; border: 1px dashed rgba(17,37,54,0.2); border-radius: 10px; text-align: center; }
+.empty p { margin-bottom: 14px; color: var(--ink-soft); font-size: 15px; }
+
+/* ---------- certificaciones / cobertura / empresa ---------- */
+.extras { padding: 70px 0 80px; background: #edf8fc; }
+.extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; }
+.extras h2 { margin-bottom: 20px; font-size: clamp(34px, 3.6vw, 48px); }
+.extras p.note { margin-bottom: 14px; color: var(--ink-soft); font-size: 14px; }
+.cert-list { border-top: 1px solid var(--line); }
+.cert-list div { display: flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 64px; border-bottom: 1px solid var(--line); font: 800 22px/1 var(--display); text-transform: uppercase; }
+.cert-list div::after { width: 18px; height: 10px; margin-top: -5px; border-bottom: 2px solid var(--blue); border-left: 2px solid var(--blue); transform: rotate(-45deg); content: ""; }
+.company { padding: 70px 0; color: #fff; background: radial-gradient(640px 400px at 97% 10%, rgba(57,178,220,0.35), transparent 65%), var(--dark); }
+.company-layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 50px; align-items: start; }
+.company h2 { font-size: clamp(46px, 5.4vw, 74px); }
+.company h2 + p { margin: 20px 0 26px; color: #c4e4ef; font-size: 16px; line-height: 1.6; }
+.company dl { display: grid; grid-template-columns: 130px 1fr; gap: 12px 20px; margin: 0; }
+.company dt { padding-top: 3px; color: #8fd7ee; font: 500 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.company dd { margin: 0; color: #fff; font-size: 15.5px; line-height: 1.5; }
+.company dd a:hover { color: #94e3fc; }
+.btn--light { color: var(--dark); background: #c9ecf8; }
+.btn--light:hover { background: #fff; }
+
+.cv-footer { position: relative; padding: 26px 0; color: #93b7c4; background: #062132; font: 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.cv-footer::before { position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--tri); content: ""; }
+.cv-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+.cv-footer a:hover { color: #fff; }
+
+/* ---------- WhatsApp (patrón cuvolt) ---------- */
+.wa-float { position: fixed; z-index: 60; right: 24px; bottom: 24px; display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; border-radius: 50%; background: #25d366; box-shadow: 0 10px 26px rgba(0,0,0,0.28); transition: transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease, background 0.2s ease; }
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 14px 32px rgba(0,0,0,0.35); background: #22c15e; }
+.wa-float:active { transform: scale(0.96); }
+.wa-float::before { position: absolute; z-index: -1; inset: 0; border-radius: 50%; background: #25d366; content: ""; animation: wa-pulse 2.4s ease-out infinite; }
+@keyframes wa-pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.9); opacity: 0; } }
+.wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+.print-only { display: none; }
+
+
+
+@media (max-width: 1000px) {
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .wrap { padding: 0 20px; }
+  .back-link span { display: none; }
+  .cover { padding: 54px 0 50px; }
+  .cover-layout, .extras-grid, .company-layout { grid-template-columns: 1fr; }
+  .services-head, .explorer-head { display: grid; gap: 16px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .filter-group { grid-template-columns: 1fr; gap: 8px; }
+  .filter-group > span { padding-top: 0; }
+  .summary { top: 60px; }
+  .cv-header .wrap { min-height: 60px; }
+  .row { grid-template-columns: 1fr; }
+  .row-meta { grid-column: 1; grid-row: auto; text-align: left; }
+  .filter-group { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 16px; }
+  .brand img { height: 23px; }
+  .header-actions .btn--ghost { display: none; }
+  .btn { padding: 0 12px; }
+  .cover h1 { font-size: clamp(40px, 11.5vw, 52px); }
+  .cover-buttons { display: grid; }
+  .kpis { gap: 26px 16px; }
+  .kpi strong { font-size: 42px; }
+  .card { min-height: 360px; }
+  .year-block { gap: 0; }
+  .year-block > h3 { padding-top: 16px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .filters { padding: 16px; }
+  .year-block { grid-template-columns: 1fr; gap: 10px; }
+  .company dl { grid-template-columns: 1fr; gap: 2px 0; }
+  .company dd { margin-bottom: 10px; }
+  .wa-float { right: 16px; bottom: 16px; width: 50px; height: 50px; }
+  .wa-float svg { width: 24px; height: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ---------- PDF (Imprimir / Guardar como PDF) ---------- */
+@page { size: A4; margin: 14mm 12mm 18mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #fff; }
+  .cv-header, .filters, .summary, .cover-buttons, .wa-float, .cv-footer, .company .btn, .explorer-head p, .no-print { display: none !important; }
+  .print-only { display: block; }
+  .wrap { width: 100%; padding: 0; }
+  .cover { padding: 0 0 18px; background: none; }
+  .cover::before { display: none; }
+  .cover-layout { grid-template-columns: 1.2fr 1fr; gap: 24px; }
+  .cover h1 { font-size: 44px; }
+  .cover-lead { margin: 12px 0 0; font-size: 12.5px; }
+  .kpis { gap: 14px; }
+  .kpi strong { font-size: 34px; }
+  .kpi span { font-size: 9.5px; }
+  .services, .company { padding: 22px 18px; border-radius: 6px; }
+  .services { margin-bottom: 16px; }
+  .services-head { margin-bottom: 14px; }
+  .services-head h2 { font-size: 30px; }
+  .services-head p, .service p { font-size: 11px; }
+  .service { padding: 14px; }
+  .service h3 { margin: 10px 0 6px; font-size: 24px; }
+  .explorer { padding: 10px 0 0; }
+  .explorer-head { margin-bottom: 12px; }
+  .explorer-head h2 { font-size: 34px; }
+  .card-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+  .card { min-height: 190px; break-inside: avoid; page-break-inside: avoid; }
+  .card:hover > img { transform: none; }
+  .card-big { top: 14px; left: 14px; font-size: 38px; }
+  .card-content { right: 12px; bottom: 11px; left: 12px; }
+  .card-content > span { font-size: 8.5px; margin-bottom: 4px; }
+  .card h3 { font-size: 17px; margin-bottom: 4px; }
+  .card p { font-size: 9.5px; }
+  .card-m2 { font-size: 14px; margin-top: 5px; }
+  .card-index { font-size: 9px; top: 10px; right: 10px; }
+  .year-block { grid-template-columns: 60px 1fr; gap: 12px; }
+  .year-block > h3 { padding-top: 8px; font-size: 26px; }
+  .row { break-inside: avoid; grid-template-columns: 1fr auto; }
+  .row { padding: 7px 0; }
+  .row h4 { font-size: 15px; }
+  .row p { font-size: 10.5px; }
+  .row-meta { font-size: 8.5px; }
+  .cert-list div { min-height: 36px; font-size: 15px; }
+  .extras { padding: 18px 0; background: none; break-inside: avoid; }
+  .extras h2 { font-size: 26px; margin-bottom: 10px; }
+  .company { break-inside: avoid; margin-top: 10px; }
+  .company h2 { font-size: 34px; }
+  .company-layout { grid-template-columns: 0.8fr 1.2fr; gap: 20px; }
+  .company dd { font-size: 12px; }
+  /* Con filtro activo el PDF es una ficha enfocada: sin portada ni servicios */
+  body.has-filter .cover, body.has-filter .services, body.has-filter .extras { display: none; }
+  .print-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 3px solid transparent; border-image: var(--tri) 1; }
+  .print-head img { height: 26px; width: auto; }
+  .print-head div { text-align: right; }
+  .print-head strong { display: block; font: 800 22px/1 var(--display); text-transform: uppercase; }
+  .print-head span { color: var(--ink-soft); font-size: 11px; }
+  .print-foot { position: fixed; right: 0; bottom: -10mm; left: 0; display: flex; justify-content: space-between; color: #587080; font-size: 9px; }
+}
+</style>
+</head>
+<body>
+
+<header class="cv-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Icewell, volver al sitio"><img src="assets/icewell-logo.svg" alt="Icewell"></a>
+    <div class="header-actions">
+      <a class="back-link" href="index.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Volver al sitio</span>
+      </a>
+      <nav class="version-switch" aria-label="Versión del currículum"><a href="cv.html" aria-current="page">Versión web</a><a href="cv-presentacion.html" class="js-version">Versión presentación</a></nav>
+      <button class="btn btn--primary js-pdf-cv" type="button" title="CV completo (no depende de los filtros)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+        Descargar CV
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap print-only print-head">
+  <img src="assets/icewell-logo.svg" alt="Icewell">
+  <div><strong>Currículum Icewell</strong><span id="printFilter">Todas las obras</span></div>
+</div>
+<div class="print-only print-foot"><span>Icewell SpA · Román Díaz 1363, Providencia · +56 2 2847 0610 · contacto@icewell.cl</span><span>www.icewell.cl</span></div>
+
+<main>
+  <section class="cover">
+    <div class="wrap cover-layout">
+      <div>
+        <p class="eyebrow">Currículum corporativo · Icewell SpA</p>
+        <h1>Ingeniería y montaje de sistemas <em>HVAC.</em></h1>
+        <p class="cover-lead">Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde 2009.</p>
+        <div class="cover-buttons">
+          <a class="btn btn--primary" href="#obras">Explorar obras por sector
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          </a>
+          <button class="btn btn--ghost js-pdf-cv" type="button">Descargar CV en PDF</button>
+        </div>
+      </div>
+      <div class="kpis" aria-label="Cifras de Icewell">
+        <div class="kpi"><strong data-anios>17</strong><span>Años de experiencia · desde <span data-desde>2009</span></span></div>
+        <div class="kpi"><strong>51</strong><span>Obras y proyectos registrados</span></div>
+        <div class="kpi"><strong>+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
+        <div class="kpi"><strong>12</strong><span>Regiones, de Tarapacá a Los Lagos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="wrap">
+      <div class="services-head">
+        <div><p class="eyebrow eyebrow--light">Qué hacemos</p><h2>Tres líneas de servicio, un solo responsable.</h2></div>
+        <p>Proyectamos, estudiamos y proponemos soluciones considerando las mejores alternativas de precios y equipos del mercado, cumpliendo plazos, estándares de calidad y presupuestos.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service">
+          <span>01 · Asesoría</span><h3>Asesorías térmicas</h3>
+          <p>Informes a proyectos y evaluaciones técnico-económicas, inspecciones técnicas de obra, cálculos de cargas térmicas y consumo de ACS.</p>
+          <ul><li>Evaluación técnico-económica</li><li>ITO</li><li>Cargas térmicas y ACS</li></ul>
+        </article>
+        <article class="service">
+          <span>02 · Ingeniería</span><h3>Ingeniería</h3>
+          <p>Proyectos de climatización, ventilación y calefacción para el área comercial, residencial e industrial, con experiencia en eficiencia energética y ERNC.</p>
+          <ul><li>Ingeniería básica y de detalles</li><li>Eficiencia energética</li><li>ERNC</li></ul>
+        </article>
+        <article class="service">
+          <span>03 · Montaje</span><h3>Instalaciones</h3>
+          <p>Montaje de sistemas HVAC: sistemas de agua, expansión directa, refrigerante variable, volumen variable e instalaciones solares.</p>
+          <ul><li>Suministro y montaje</li><li>Chiller, fan-coil y UMA</li><li>VRV / VRF y solar térmica</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="explorer" id="obras">
+    <div class="wrap">
+      <div class="explorer-head">
+        <div><p class="eyebrow">Portafolio</p><h2>Obras por sector.</h2></div>
+        <p>Elige uno o más sectores, un período o una región. El PDF se descarga con lo que tengas seleccionado.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filtros de obras">
+        <div class="filter-group"><span>Sector</span><div class="chips" id="chipsSector"></div></div>
+        <div class="filter-group"><span>Período</span><div class="chips chips--plain" id="chipsPeriodo"></div></div>
+        <div class="filter-group"><span>Región</span><div class="chips chips--plain" id="chipsRegion"></div></div>
+        <div class="filter-tools">
+          <label class="search">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="searchInput" type="search" placeholder="Buscar obra, cliente, ciudad o sistema (ej. chiller, VRV, LEED)" aria-label="Buscar obras">
+          </label>
+          <button class="clear-btn" type="button" id="clearBtn">Limpiar filtros</button>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="sum-izq"><p id="summaryText"></p><div class="sum-filtros" id="sumFiltros"></div></div>
+        <button class="btn btn--primary js-pdf-proyectos" type="button" title="Solo las obras de la selección actual">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+          <span id="printLabel">Descargar proyectos</span>
+        </button>
+      </div>
+
+      <div id="results" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="extras">
+    <div class="wrap extras-grid">
+      <div>
+        <p class="eyebrow">Certificaciones y estándares</p>
+        <h2>Obras que exigen más.</h2>
+        <div class="cert-list">
+          <div>Proyectos con certificación LEED</div>
+          <div>Eficiencia energética</div>
+          <div>ERNC y solar térmica</div>
+          <div>Obras sobre 4.800 msnm</div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">Cobertura territorial</p>
+        <h2>De Tarapacá a Los Lagos.</h2>
+        <p class="note">Regiones con proyectos y montajes de Icewell. Toca una para ver sus obras.</p>
+        <div class="chips chips--plain" id="chipsCobertura"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="company">
+    <div class="wrap company-layout">
+      <div>
+        <p class="eyebrow eyebrow--light">Datos de la empresa</p>
+        <h2>Conversemos su próximo proyecto.</h2>
+        <p>Cuéntenos el alcance. Le responderá un ingeniero.</p>
+        <a class="btn btn--light" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20vi%20su%20curr%C3%ADculum%20y%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
+      </div>
+      <dl>
+        <dt>Razón social</dt><dd>Icewell SpA</dd>
+        <dt>Giro</dt><dd>Asesorías, ingeniería y montajes térmicos</dd>
+        <dt>RUT</dt><dd>76.059.117-3</dd>
+        <dt>Dirección</dt><dd>Román Díaz #1363, Providencia<br>Santiago, Chile</dd>
+        <dt>Teléfono</dt><dd><a href="tel:+56228470610">+56 2 2847 0610</a></dd>
+        <dt>Contacto</dt><dd><a href="mailto:contacto@icewell.cl">contacto@icewell.cl</a><br><a href="mailto:gonzalo.diaz@icewell.cl">gonzalo.diaz@icewell.cl</a></dd>
+        <dt>Sitio web</dt><dd>www.icewell.cl</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="cv-footer">
+  <div class="wrap">
+    <p>© <span data-anio-actual>2026</span> Icewell SpA</p>
+    <a href="index.html">icewell · sitio principal</a>
+  </div>
+</footer>
+
+<div class="pdf-toasts" id="pdfToasts" aria-live="polite" aria-label="Descargas de PDF"></div>
+
+<a class="wa-float" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m0 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.82c0 4.55-3.7 8.24-8.24 8.24-1.44 0-2.86-.38-4.1-1.1l-.29-.17-3.14.82.84-3.06-.19-.32a8.19 8.19 0 01-1.26-4.4c0-4.55 3.7-8.25 8.24-8.25M8.53 6.85c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.69 2.7 4.17 3.68 2.06.82 2.48.66 2.93.61.45-.04 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86-.2-.48-.4-.42-.55-.42h-.47z"/></svg>
+</a>
+
+<script src="assets/aniversario.js"></script>
+<script src="assets/cv-data.js"></script>
+<script src="assets/pdf-cola.js"></script>
+<script>
+(function(){
+  if(window.icewellAniversario) icewellAniversario.rellenar();
+  document.querySelectorAll('[data-anio-actual]').forEach(function(el){ el.textContent = new Date().getFullYear(); });
+
+  var SEC = {}; SECTORES.forEach(function(s){ SEC[s.id] = s.label; });
+  var REG = {}; REGIONES.forEach(function(r){ REG[r.id] = r.label; });
+  var PER = {}; PERIODOS.forEach(function(p){ PER[p.id] = p; });
+  var fmtN = new Intl.NumberFormat('es-CL');
+
+  // Estado de filtros: OR dentro de un grupo, AND entre grupos
+  var state = { sector: new Set(), periodo: new Set(), region: new Set(), q: '' };
+
+  function esc(t){ return String(t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function norm(t){ return String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function periodoDe(p){ for(var i = 0; i < PERIODOS.length; i++){ if(p.anio >= PERIODOS[i].desde && p.anio <= PERIODOS[i].hasta) return PERIODOS[i].id; } return null; }
+  PROYECTOS.forEach(function(p){
+    p._periodo = periodoDe(p);
+    p._texto = norm([p.nombre, p.lugar, p.uso, p.sistemas, p.anio, p.tags.join(' '), p.trabajo || '', p.detalle || '',
+      p.sectores.map(function(s){ return SEC[s]; }).join(' '), p.regiones.map(function(r){ return REG[r]; }).join(' ')].join(' '));
+    p._destacado = !!(p.foto || p.m2 || p.anio >= 2023);
+    p._id = PROYECTOS.indexOf(p);
+  });
+
+  // Coincide con todos los filtros, salvo el grupo "excepto" (para los contadores de cada chip)
+  function coincide(p, excepto){
+    if(excepto !== 'sector' && state.sector.size && !p.sectores.some(function(s){ return state.sector.has(s); })) return false;
+    if(excepto !== 'periodo' && state.periodo.size && !state.periodo.has(p._periodo)) return false;
+    if(excepto !== 'region' && state.region.size && !p.regiones.some(function(r){ return state.region.has(r); })) return false;
+    if(state.q){ var palabras = norm(state.q).split(/\s+/).filter(Boolean);
+      for(var i = 0; i < palabras.length; i++){ if(p._texto.indexOf(palabras[i]) < 0) return false; } }
+    return true;
+  }
+
+  function renderChips(contId, grupo, lista, campo){
+    var cont = document.getElementById(contId);
+    var base = PROYECTOS.filter(function(p){ return coincide(p, grupo); });
+    cont.innerHTML = lista.map(function(item){
+      var n = base.filter(function(p){ return campo(p, item.id); }).length;
+      var on = state[grupo].has(item.id);
+      return '<button type="button" class="chip" data-group="' + grupo + '" data-id="' + item.id + '" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + '>' + esc(item.label) + ' <b data-k="' + grupo + ':' + item.id + '">' + n + '</b></button>';
+    }).join('');
+  }
+
+  function renderCobertura(){
+    var cont = document.getElementById('chipsCobertura');
+    cont.innerHTML = REGIONES.map(function(r){
+      var n = PROYECTOS.filter(function(p){ return p.regiones.indexOf(r.id) >= 0; }).length;
+      return '<button type="button" class="chip" data-cobertura="' + r.id + '" aria-pressed="' + state.region.has(r.id) + '">' + esc(r.label) + ' <b>' + n + '</b></button>';
+    }).join('');
+  }
+
+  function descripcionFiltro(){
+    var partes = [];
+    if(state.sector.size) partes.push(Array.from(state.sector).map(function(s){ return SEC[s]; }).join(' + '));
+    if(state.periodo.size) partes.push(Array.from(state.periodo).map(function(p){ return PER[p].label; }).join(', '));
+    if(state.region.size) partes.push(Array.from(state.region).map(function(r){ return REG[r]; }).join(', '));
+    if(state.q) partes.push('"' + state.q + '"');
+    return partes.join(' · ');
+  }
+
+  // "Minería · LEED" en texto mono (sin pastillas)
+  function metaTxt(p){
+    return esc(p.sectores.map(function(s){ return SEC[s]; }).concat(p.tags, p.trabajo ? [p.trabajo] : []).join(' · '));
+  }
+  function lugarHtml(p){
+    var regs = p.regiones.map(function(r){ return REG[r]; }).join(' / ');
+    return esc(p.lugar + (regs && p.lugar.indexOf(regs) < 0 ? ' · ' + regs : ''));
+  }
+
+  // Tarjeta uniforme: etiqueta = Público/Privado; línea mono = año · sector · tipo de trabajo; "En ejecución" como texto.
+  // Sector mostrado: el filtrado si la obra lo tiene, si no el primero (igual que la versión presentación).
+  function cardHtml(p, i){
+    var sec = p.sectores.filter(function(x){ return state.sector.has(x); })[0] || p.sectores[0];
+    var pub = p.cliente === 'Público';
+    var fondo = p.foto
+      ? '<img src="assets/' + esc(p.foto) + '" alt="' + esc(p.nombre) + '" loading="lazy">'
+      : '<span class="card-big">' + (p.m2 ? fmtN.format(p.m2) + ' <small>m²</small>' : p.anio) + '</span>';
+    var meta = [String(p.anio), SEC[sec], p.trabajo || ''].filter(Boolean).map(esc).join(' · ') +
+      (p.estado === 'ejecucion' ? ' · <b class="card-vivo">En ejecución</b>' : '');
+    return '<article class="card' + (p.foto ? '' : ' card--solid') + '" data-id="' + p._id + '">' + fondo + '<div class="card-shade"></div>' +
+      '<span class="card-cli' + (pub ? ' card-cli--pub' : '') + '">' + (pub ? 'Público' : 'Privado') + '</span>' +
+      '<div class="card-content"><span>' + meta + '</span>' +
+      '<h3>' + esc(p.nombre) + '</h3><p>' + lugarHtml(p) + ' · ' + esc(p.detalle || p.sistemas) + '</p>' +
+      (p.foto && p.m2 ? '<div class="card-m2">' + fmtN.format(p.m2) + ' <small>m² intervenidos</small></div>' : '') +
+      '</div><div class="card-index">' + String(i + 1).padStart(2, '0') + '</div></article>';
+  }
+
+  // Render sin salto + dominó (misma lógica que cv-presentacion.js):
+  // el HTML nuevo se arma fuera de pantalla; salen (abajo → arriba) las obras visibles que ya no aplican,
+  // se cambia de una vez con replaceChildren conservando el scroll, y entran (arriba → abajo) las nuevas.
+  // Las que se quedan no se mueven. Sin animación con prefers-reduced-motion. Gana el último filtro (token).
+  var SIN_MOV = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var token = 0, ultimoConteo = {};
+  function visibles(nodos){
+    var alto = window.innerHeight;
+    return nodos.filter(function(n){ var r = n.getBoundingClientRect(); return r.bottom > 80 && r.top < alto; });
+  }
+  // recuento animado de los chips (sube en verde, baja en gris)
+  function recontar(animar){
+    document.querySelectorAll('.chip b[data-k]').forEach(function(b){
+      var k = b.dataset.k, nuevo = +b.textContent, viejo = ultimoConteo[k];
+      ultimoConteo[k] = nuevo;
+      if(!animar || SIN_MOV || viejo == null || viejo === nuevo) return;
+      b.classList.add(nuevo > viejo ? 'cnt--sube' : 'cnt--baja');
+      b.textContent = viejo;
+      var t0 = null, dur = 450;
+      (function paso(t){
+        if(t0 === null) t0 = t;
+        var x = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - x, 3);
+        b.textContent = Math.round(viejo + (nuevo - viejo) * e);
+        if(x < 1) requestAnimationFrame(paso); else setTimeout(function(){ b.classList.remove('cnt--sube', 'cnt--baja'); }, 250);
+      })(performance.now());
+      setTimeout(function(){ if(+b.textContent !== nuevo){ b.textContent = nuevo; b.classList.remove('cnt--sube', 'cnt--baja'); } }, dur + 400);
+    });
+  }
+  function renderSumFiltros(){
+    var html = '', pills = [];
+    state.sector.forEach(function(x){ pills.push(['sector:' + x, SEC[x]]); });
+    state.periodo.forEach(function(x){ pills.push(['periodo:' + x, PER[x].label]); });
+    state.region.forEach(function(x){ pills.push(['region:' + x, REG[x]]); });
+    if(state.q) pills.push(['q:', '"' + state.q + '"']);
+    if(pills.length){
+      var chico = window.innerWidth < 640 && pills.length > 3;
+      (chico ? pills.slice(0, 3) : pills).forEach(function(p){ html += '<button type="button" class="sum-pill" data-quitar="' + esc(p[0]) + '">' + esc(p[1]) + ' <span aria-hidden="true">×</span></button>'; });
+      if(chico) html += '<span class="sum-mas">+' + (pills.length - 3) + '</span>';
+      html += '<button type="button" class="sum-link" data-clear>Limpiar</button>';
+    }
+    html += '<button type="button" class="sum-link" data-subir-filtros>Filtros ↑</button>';
+    document.getElementById('sumFiltros').innerHTML = html;
+  }
+
+  function render(animar){
+    var mio = ++token;
+    renderChips('chipsSector', 'sector', SECTORES, function(p, id){ return p.sectores.indexOf(id) >= 0; });
+    renderChips('chipsPeriodo', 'periodo', PERIODOS, function(p, id){ return p._periodo === id; });
+    renderChips('chipsRegion', 'region', REGIONES, function(p, id){ return p.regiones.indexOf(id) >= 0; });
+    renderCobertura();
+    recontar(animar);
+    renderSumFiltros();
+
+    var lista = PROYECTOS.filter(function(p){ return coincide(p, null); });
+    var hayFiltro = !!(state.sector.size || state.periodo.size || state.region.size || state.q);
+    document.body.classList.toggle('has-filter', hayFiltro);
+    var desc = descripcionFiltro();
+    var m2 = lista.reduce(function(a, p){ return a + (p.m2 || 0); }, 0);
+    document.getElementById('summaryText').innerHTML = '<strong>' + lista.length + '</strong> ' + (lista.length === 1 ? 'obra' : 'obras') +
+      (hayFiltro ? ' · ' + esc(desc) : ' en el currículum') + (m2 ? ' · ' + fmtN.format(m2) + ' m² con superficie registrada' : '');
+    var pl = document.getElementById('printLabel');
+    if(pl) pl.textContent = hayFiltro ? 'Descargar proyectos (' + lista.length + ')' : 'Descargar proyectos';
+    // el link a la otra versión conserva los filtros
+    document.querySelectorAll('.js-version').forEach(function(a){ a.href = 'cv-presentacion.html' + location.hash; });
+    document.getElementById('printFilter').textContent = (hayFiltro ? 'Filtro: ' + desc : 'Todas las obras') + ' · ' + lista.length + ' obras · ' +
+      new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    var orden = function(a, b){ return (b.estado === 'ejecucion') - (a.estado === 'ejecucion') || b.anio - a.anio || (b.m2 || 0) - (a.m2 || 0); };
+    var out = '';
+    if(!lista.length){
+      out = '<div class="empty"><p>No hay obras con esa combinación de filtros.</p><button class="btn btn--ghost" type="button" data-clear>Limpiar filtros</button></div>';
+    } else if(hayFiltro){
+      // con filtro: TODAS como tarjeta, una sola grilla (sin lista aparte)
+      out = '<p class="result-title">' + lista.length + (lista.length === 1 ? ' obra' : ' obras') + ' · ' + esc(desc) + '</p><div class="card-grid">' +
+        lista.slice().sort(orden).map(function(p, i){ return cardHtml(p, i); }).join('') + '</div>';
+    } else {
+      var dest = lista.filter(function(p){ return p._destacado; }).sort(orden);
+      var resto = lista.filter(function(p){ return !p._destacado; });
+      if(dest.length) out += '<p class="result-title">Obras destacadas y recientes · ' + dest.length + '</p><div class="card-grid">' + dest.map(function(p, i){ return cardHtml(p, i); }).join('') + '</div>';
+      if(resto.length){
+        var anios = {}; resto.forEach(function(p){ (anios[p.anio] = anios[p.anio] || []).push(p); });
+        out += '<p class="result-title">Trayectoria · ' + resto.length + ' obras más</p>';
+        Object.keys(anios).sort(function(a, b){ return b - a; }).forEach(function(a){
+          out += '<div class="year-block"><h3>' + a + '</h3><div class="rows">' + anios[a].map(function(p){
+            return '<div class="row" data-id="' + p._id + '"><h4>' + esc(p.nombre) + '</h4><span class="row-meta">' + metaTxt(p) + '</span><p>' + lugarHtml(p) + ' · ' + esc(p.sistemas) + '</p></div>';
+          }).join('') + '</div></div>';
+        });
+      }
+    }
+    escribirHash();
+
+    var res = document.getElementById('results');
+    var prep = document.createElement('div'); prep.className = 'preparacion'; prep.setAttribute('aria-hidden', 'true');
+    prep.innerHTML = out; document.body.appendChild(prep);
+    var nuevos = {}; prep.querySelectorAll('[data-id]').forEach(function(n){ nuevos[n.dataset.id] = 1; });
+    var viejos = {}; res.querySelectorAll('[data-id]').forEach(function(n){ viejos[n.dataset.id] = 1; });
+    var salen = animar && !SIN_MOV ? visibles(Array.from(res.querySelectorAll('[data-id]')).filter(function(n){ return !nuevos[n.dataset.id]; })) : [];
+    salen.sort(function(a, b){ return b.getBoundingClientRect().top - a.getBoundingClientRect().top || b.getBoundingClientRect().left - a.getBoundingClientRect().left; });
+    salen = salen.slice(0, 12);
+    salen.forEach(function(n, i){ n.style.animationDelay = (i * 35) + 'ms'; n.classList.add('sale'); });
+
+    function cambiar(){
+      if(mio !== token){ prep.remove(); return; }
+      var y = window.scrollY;
+      res.replaceChildren.apply(res, Array.from(prep.childNodes));
+      prep.remove();
+      window.scrollTo({ top: Math.min(y, document.documentElement.scrollHeight - window.innerHeight), behavior: 'instant' });
+      if(animar && !SIN_MOV){
+        var entran = visibles(Array.from(res.querySelectorAll('[data-id]')).filter(function(n){ return !viejos[n.dataset.id]; }));
+        entran.sort(function(a, b){ return a.getBoundingClientRect().top - b.getBoundingClientRect().top || a.getBoundingClientRect().left - b.getBoundingClientRect().left; });
+        entran.slice(0, 16).forEach(function(n, i){
+          n.style.animationDelay = (i * 45) + 'ms'; n.classList.add('entra');
+          n.addEventListener('animationend', function fin(){ n.classList.remove('entra'); n.style.animationDelay = ''; n.removeEventListener('animationend', fin); });
+        });
+      }
+    }
+    // si no hay nada que sacar, el cambio es inmediato (síncrono)
+    if(salen.length) setTimeout(cambiar, 200 + (salen.length - 1) * 35); else cambiar();
+  }
+
+  // ---------- estado ↔ URL (#sector=hoteleria,mineria&periodo=2019-2023&region=antofagasta&q=chiller) ----------
+  function escribirHash(){
+    var h = new URLSearchParams();
+    ['sector', 'periodo', 'region'].forEach(function(g){ if(state[g].size) h.set(g, Array.from(state[g]).join(',')); });
+    if(state.q) h.set('q', state.q);
+    var nuevo = h.toString().replace(/%2C/g, ',');
+    if(location.hash.slice(1) !== nuevo){
+      try{ history.replaceState(null, '', nuevo ? '#' + nuevo : location.pathname + location.search); }catch(e){}
+    }
+  }
+  function leerHash(){
+    var h = new URLSearchParams(location.hash.replace(/^#/, ''));
+    var validos = { sector: SEC, periodo: PER, region: REG };
+    ['sector', 'periodo', 'region'].forEach(function(g){
+      state[g] = new Set((h.get(g) || '').split(',').filter(function(x){ return validos[g][x]; }));
+    });
+    state.q = h.get('q') || '';
+    document.getElementById('searchInput').value = state.q;
+  }
+
+  function limpiar(){
+    state.sector.clear(); state.periodo.clear(); state.region.clear(); state.q = '';
+    document.getElementById('searchInput').value = '';
+    render(true);
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('.chip[data-group]');
+    if(chip){
+      var set = state[chip.dataset.group], id = chip.dataset.id;
+      set.has(id) ? set.delete(id) : set.add(id);
+      render(true);
+      return;
+    }
+    var cob = e.target.closest('.chip[data-cobertura]');
+    if(cob){
+      state.region = new Set([cob.dataset.cobertura]);
+      render(true);
+      document.getElementById('obras').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    var q = e.target.closest('[data-quitar]');
+    if(q){ var pz = q.dataset.quitar.split(':'); if(pz[0] === 'q'){ state.q = ''; document.getElementById('searchInput').value = ''; } else state[pz[0]].delete(pz[1]); render(true); return; }
+    if(e.target.closest('[data-subir-filtros]')){ document.querySelector('.filters').scrollIntoView({ behavior: SIN_MOV ? 'auto' : 'smooth', block: 'start' }); return; }
+    if(e.target.closest('[data-clear]') || e.target.closest('#clearBtn')){ limpiar(); return; }
+    if(e.target.closest('.js-pdf-cv')){ encolarPdf('cv'); return; }
+    if(e.target.closest('.js-pdf-proyectos')){ encolarPdf('proyectos'); }
+  });
+
+  var tBusqueda;
+  document.getElementById('searchInput').addEventListener('input', function(e){
+    clearTimeout(tBusqueda);
+    tBusqueda = setTimeout(function(){ state.q = e.target.value.trim(); render(true); }, 160);
+  });
+  window.addEventListener('hashchange', function(){ leerHash(); render(false); });
+
+  // ---------- PDF (estilo web, jsPDF) en segundo plano — cola y avisos: assets/pdf-cola.js ----------
+  // "Descargar CV" = CV completo (ignora filtros). "Descargar proyectos" = solo la selección actual.
+  var DEMORA_PRUEBA = new URLSearchParams(location.search).get('pdfLento') === '1' ? 3000 : 0;   // solo para probar
+  // ===== INTERRUPTOR DEL PDF =====
+  //   'foto'   → PDF igual a la página: hojas A4 con el estilo del sitio, fotografiadas (assets/cv-pdf-foto.js).
+  //              Texto no seleccionable, ~2–3 MB, unos segundos por hoja.
+  //   'dibujo' → PDF anterior dibujado con jsPDF (assets/cv-pdf.js): liviano, texto seleccionable, estilo "documento".
+  // Para volver atrás: cambiar 'foto' por 'dibujo' en la línea de abajo (o probar sin tocar nada con ?pdf=dibujo en la URL).
+  var PDF_MODO = new URLSearchParams(location.search).get('pdf') || 'foto';
+  var assetsListos = null;                                            // promesa compartida (precarga o clic)
+
+  // jsPDF + fuentes/fotos (~2.4 MB). Con fetch informa % real; en file:// (doble clic) cae a <script> sin %.
+  function cargarAssetsPdf(onPct){
+    if(assetsListos) return assetsListos;
+    assetsListos = PdfCola.cargarScript('assets/vendor/jspdf.umd.min.js')
+      .then(function(){ onPct && onPct(12); return PdfCola.esperar(DEMORA_PRUEBA); })
+      .then(function(){ return window.CV_PDF_ASSETS ? null : cargarAssetsConProgreso(onPct); })
+      .then(function(){ return PdfCola.cargarScript('assets/cv-pdf.js'); })
+      .then(function(){ onPct && onPct(100); })
+      .catch(function(err){ assetsListos = null; throw err; });   // permite reintentar
+    return assetsListos;
+  }
+  function cargarAssetsConProgreso(onPct){
+    var url = 'assets/vendor/cv-pdf-assets.js';
+    if(location.protocol === 'file:' || !window.fetch || !window.ReadableStream){ onPct && onPct(-1); return PdfCola.cargarScript(url); }
+    return fetch(url).then(function(resp){
+      if(!resp.ok || !resp.body) throw new Error('HTTP ' + resp.status);
+      var total = +resp.headers.get('Content-Length') || 0, leido = 0, partes = [];
+      if(!total) onPct && onPct(-1);
+      var lector = resp.body.getReader();
+      function leer(){
+        return lector.read().then(function(r){
+          if(r.done) return;
+          partes.push(r.value); leido += r.value.length;
+          if(total) onPct && onPct(12 + Math.round(83 * leido / total));
+          return leer();
+        });
+      }
+      return leer().then(function(){
+        var buf = new Uint8Array(leido), pos = 0;
+        partes.forEach(function(p){ buf.set(p, pos); pos += p.length; });
+        var sc = document.createElement('script');
+        sc.textContent = new TextDecoder('utf-8').decode(buf); sc.dataset.src = url;
+        document.head.appendChild(sc);
+        if(!window.CV_PDF_ASSETS) throw new Error('assets sin definir');
+      });
+    }).catch(function(){ onPct && onPct(-1); return PdfCola.cargarScript(url); });   // respaldo: <script src>
+  }
+
+  // Precarga silenciosa: cuando alguien aprieta el botón, normalmente ya está todo listo
+  function precargarPdf(){
+    try{ if(navigator.connection && navigator.connection.saveData) return; }catch(e){}
+    var go = function(){ cargarAssetsPdf().then(function(){ if(PDF_MODO === 'foto') return PdfCola.cargarScript('assets/vendor/html2canvas.min.js'); }).catch(function(){}); };
+    setTimeout(function(){ ('requestIdleCallback' in window) ? requestIdleCallback(go, { timeout: 4000 }) : go(); }, 2500);
+  }
+
+  // modo 'cv': CV completo con todas las obras | modo 'proyectos': ficha de la selección actual
+  function encolarPdf(modo){
+    var desc = descripcionFiltro();
+    var hayFiltro = !!(state.sector.size || state.periodo.size || state.region.size || state.q);
+    var esCV = modo === 'cv';
+    var slug = desc ? '-' + norm(desc).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+    var opciones = {                                                   // foto de la selección al hacer clic
+      lista: esCV ? PROYECTOS.slice() : PROYECTOS.filter(function(p){ return coincide(p, null); }),
+      // "Descargar proyectos" = el mismo CV completo, solo con las obras seleccionadas
+      hayFiltro: false, desc: '', seleccion: !esCV && hayFiltro ? desc : '', SEC: SEC, REG: REG,
+      sectoresSel: esCV ? [] : Array.from(state.sector),
+      anios: window.icewellAniversario ? icewellAniversario.anios : '', desde: window.icewellAniversario ? icewellAniversario.desde : 2009,
+      nombreArchivo: esCV || !hayFiltro ? 'Icewell-CV.pdf' : 'Icewell-CV' + slug + '.pdf'
+    };
+    PdfCola.encolar({
+      etiqueta: esCV || !hayFiltro ? 'CV completo' : 'CV · ' + desc,
+      ejecutar: function(ctx){
+        return cargarAssetsPdf(function(pct){
+          if(pct < 0) ctx.aviso('Cargando fuentes y fotos…', 'Puedes seguir usando el currículum. No cierres esta pestaña.', -1);
+          else ctx.aviso('Cargando fuentes y fotos…', pct + '% · puedes seguir usando el currículum.', Math.round(pct * 0.5));
+        }).then(function(){
+          if(PDF_MODO === 'foto'){
+            return PdfCola.cargarScript('assets/vendor/html2canvas.min.js')
+              .then(function(){ return PdfCola.cargarScript('assets/cv-pdf-foto.js'); })
+              .then(function(){ return window.icewellPdfFoto.generar(opciones, ctx); });
+          }
+          return window.icewellPDF.generar(Object.assign({}, opciones, {
+            onProgreso: function(p){
+              if(p.etapa === 'armando') ctx.aviso('Armando PDF…', 'Obra ' + Math.min(p.hechas + 1, p.total) + ' de ' + p.total, 50 + Math.round(48 * p.hechas / Math.max(p.total, 1)));
+            }
+          }));
+        });
+      }
+    });
+  }
+
+  leerHash();
+  render(false);
+  precargarPdf();
+  if(location.hash.length > 1){ setTimeout(function(){ document.getElementById('obras').scrollIntoView(); }, 60); }
+})();
+</script>
+</body>
+</html>

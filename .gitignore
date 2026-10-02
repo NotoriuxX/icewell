@@ -1,0 +1,8 @@
+node_modules/
+herramientas/tests/salida/
+__pycache__/
+*.pyc
+secret/
+*.env
+.DS_Store
+Thumbs.db
