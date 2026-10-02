@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Panel Icewell — Confirmar correo</title>
+<link rel="icon" type="image/svg+xml" href="../assets/isotipo.svg">
+<link rel="stylesheet" href="panel.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body class="acceso">
+<main class="acceso-marco">
+  <section class="marca" aria-label="Icewell">
+    <a class="marca__logo" href="../index.html" title="Volver al sitio"><img src="logo-oscuro.svg" alt="Icewell" width="180" height="46"></a>
+    <div class="marca__texto">
+      <p class="eyebrow eyebrow--claro">Panel del sitio</p>
+      <h1>Confirmando tu correo.</h1>
+    </div>
+    <div class="tri" aria-hidden="true"></div>
+  </section>
+  <section class="tarjeta tarjeta--simple" aria-live="polite">
+    <div class="panel">
+      <div class="estado-icono" id="icono" aria-hidden="true">…</div>
+      <h2 id="titulo">Un momento…</h2>
+      <div class="aviso" id="aviso"></div>
+      <p class="cambiar"><a class="btn btn--primario" href="./" id="ir" hidden>Ir a entrar</a></p>
+    </div>
+  </section>
+</main>
+<script src="comun.js"></script>
+<script src="verificar.js"></script>
+</body>
+</html>

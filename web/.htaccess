@@ -1,0 +1,27 @@
+# ICEWELL — reglas del sitio público (Apache / hosting compartido)
+Options -Indexes
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Todo por HTTPS (el panel y las cookies de sesión lo exigen)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Archivos ocultos y temporales de publicación: nunca
+  RewriteRule (^|/)\. - [F]
+  RewriteRule \.tmp- - [F]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  # SAMEORIGIN: la vista previa del panel muestra el sitio en un iframe del mismo dominio
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # Los datos generados por el panel cambian al publicar: que el navegador revalide
+  <FilesMatch "(sitio-data|cv-data)\.js$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

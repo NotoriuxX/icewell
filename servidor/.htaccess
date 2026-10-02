@@ -1,0 +1,2 @@
+# Si por error esta carpeta queda dentro de public_html, no se sirve nada.
+Require all denied

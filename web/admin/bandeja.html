@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Icewell — Correos de prueba (local)</title>
+<link rel="icon" type="image/svg+xml" href="../assets/isotipo.svg">
+<link rel="stylesheet" href="panel.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body class="acceso">
+<main class="acceso-marco acceso-marco--bandeja">
+  <section class="tarjeta tarjeta--simple">
+    <div class="panel">
+      <p class="eyebrow">Solo modo local</p>
+      <h2>Correos de prueba</h2>
+      <p class="bajada">En tu PC el panel no envía correos de verdad: los deja acá. En el hosting se envían por el SMTP de la empresa y esta página no existe.</p>
+      <div class="aviso" id="aviso"></div>
+      <div id="lista" class="bandeja"></div>
+      <p class="cambiar"><a class="enlace" href="./">← Volver a entrar</a> · <button class="enlace" type="button" id="recargar">Actualizar</button></p>
+    </div>
+  </section>
+</main>
+<script src="comun.js"></script>
+<script src="bandeja.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Panel Icewell — Nueva contraseña</title>
+<link rel="icon" type="image/svg+xml" href="../assets/isotipo.svg">
+<link rel="stylesheet" href="panel.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body class="acceso">
+<main class="acceso-marco">
+  <section class="marca" aria-label="Icewell">
+    <a class="marca__logo" href="../index.html" title="Volver al sitio"><img src="logo-oscuro.svg" alt="Icewell" width="180" height="46"></a>
+    <div class="marca__texto">
+      <p class="eyebrow eyebrow--claro">Panel del sitio</p>
+      <h1>Crea una contraseña nueva.</h1>
+      <p>Al guardarla se cierran todas las sesiones abiertas de tu cuenta y te llega un correo de aviso.</p>
+    </div>
+    <div class="tri" aria-hidden="true"></div>
+  </section>
+  <section class="tarjeta tarjeta--simple" aria-live="polite">
+    <div class="panel">
+      <p class="eyebrow">Recuperar acceso</p>
+      <h2>Nueva contraseña</h2>
+      <p class="bajada" id="paraQuien">Revisando el enlace…</p>
+      <div class="aviso" id="aviso"></div>
+      <form id="formClave" novalidate hidden>
+        <div class="campo">
+          <label for="clave">Contraseña nueva</label>
+          <div class="clave-envoltura">
+            <input class="entrada" id="clave" name="clave" type="password" autocomplete="new-password" minlength="12" maxlength="128" required aria-describedby="claveAyuda">
+            <button class="ver-clave" type="button" aria-pressed="false" aria-controls="clave">Mostrar</button>
+          </div>
+          <div class="medidor" id="medidor" data-n="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <small class="medidor-txt" id="claveAyuda" aria-live="polite">Mínimo 12 caracteres.</small>
+        </div>
+        <div class="campo">
+          <label for="clave2">Repítela</label>
+          <input class="entrada" id="clave2" name="clave2" type="password" autocomplete="new-password" maxlength="128" required>
+        </div>
+        <button class="btn btn--primario btn--bloque" type="submit">Guardar contraseña</button>
+      </form>
+      <p class="cambiar"><a class="enlace" href="./" id="volver">Ir a entrar</a> · <a class="enlace" href="./#recuperar">Pedir otro enlace</a></p>
+    </div>
+  </section>
+</main>
+<script src="comun.js"></script>
+<script src="restablecer.js"></script>
+</body>
+</html>

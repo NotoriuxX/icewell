@@ -1,0 +1,81 @@
+/* ==========================================================================
+   ICEWELL — Pantallas de acceso (entrar / crear cuenta / recuperar,
+   restablecer, verificar). Columna de marca oscura + tarjeta clara con un
+   carril de 3 paneles que se desliza de lado.
+   Logo sobre oscuro: isotipo a color + "icewell" en crema, sin placa blanca.
+   ========================================================================== */
+body.acceso {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(159, 223, 244, 0.05) 1px, transparent 1px) 0 0 / 46px 46px,
+    linear-gradient(90deg, rgba(159, 223, 244, 0.05) 1px, transparent 1px) 0 0 / 46px 46px,
+    linear-gradient(160deg, #0b3a57 0%, var(--dark) 55%, #051a28 100%);
+  background-color: var(--dark);
+}
+.acceso-marco {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  width: min(1060px, calc(100% - 32px)); min-height: min(680px, calc(100vh - 48px));
+  margin: 24px auto; overflow: hidden; border-radius: 16px;
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(159, 223, 244, 0.14);
+}
+
+/* ---------- columna de marca ---------- */
+.marca { position: relative; min-width: 0; display: flex; flex-direction: column; gap: 34px; padding: 44px 44px 52px; color: #e6f6fc; background: rgba(4, 22, 35, 0.55); }
+.marca__logo img { display: block; width: 168px; height: auto; }
+.marca__texto { margin-top: auto; }
+.eyebrow--claro { margin-bottom: 18px; color: #9fdff4; }
+.marca h1 { max-width: 420px; color: #fff; font-size: clamp(44px, 5vw, 64px); }
+.marca__texto > p:last-child { max-width: 400px; margin-top: 20px; color: #b9dde9; font-size: 15px; line-height: 1.65; }
+.marca__puntos { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; color: #cfe9f2; font-size: 13.5px; }
+.marca__puntos li { display: flex; gap: 10px; align-items: baseline; }
+.marca__puntos li::before { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #5fd35a; content: ""; transform: translateY(-1px); }
+.tri { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--tri); }
+
+/* ---------- tarjeta con el carril deslizante ---------- */
+.tarjeta { display: flex; align-items: center; min-width: 0; background: var(--snow); }
+.ventana { width: 100%; overflow: hidden; transition: height 420ms var(--ease); }
+.carril { display: flex; width: 300%; transform: translateX(calc(-100% / 3 * var(--i, 1))); transition: transform 520ms var(--ease); }
+.panel { width: calc(100% / 3); padding: 44px clamp(24px, 5vw, 56px); transition: opacity 360ms var(--ease); }
+.panel[inert] { opacity: 0; }
+.panel h2 { margin: 14px 0 12px; font-size: clamp(38px, 4vw, 50px); }
+.bajada { margin-bottom: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+.panel form { margin-top: 18px; }
+.campo-cab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.campo-cab label { font-size: 13px; font-weight: 600; }
+.enlace--chico { font-size: 13px; }
+.entrada--codigo { font: 500 24px var(--mono); letter-spacing: 0.3em; text-align: center; }
+.cambiar { margin-top: 22px; color: var(--ink-soft); font-size: 14px; text-align: center; }
+
+.separador { display: flex; align-items: center; gap: 12px; margin: 22px 0 16px; color: var(--ink-soft); font: 500 11px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.separador::before, .separador::after { flex: 1; height: 1px; background: var(--line); content: ""; }
+.google { display: flex; justify-content: center; min-height: 44px; }
+.nota-google { margin-top: 8px; color: var(--ink-soft); font-size: 12px; text-align: center; }
+.dev { display: grid; gap: 10px; justify-items: center; margin-top: 22px; padding: 14px; border: 1px dashed #c08a00; border-radius: 8px; background: #fff8e6; font-size: 12.5px; line-height: 1.5; text-align: center; }
+.dev p { color: #5c4300; }
+
+/* páginas de un solo panel (restablecer, verificar) */
+.tarjeta--simple .panel { width: 100%; }
+.estado-icono { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 8px; border-radius: 50%; background: var(--ice); color: var(--blue); font: 800 28px var(--display); }
+.estado-icono--ok { background: #e2f5e0; color: var(--green-deep); }
+.estado-icono--error { background: #fdeced; color: #a8101d; }
+
+@media (max-width: 860px) {
+  .acceso-marco { grid-template-columns: minmax(0, 1fr); min-height: 0; width: min(560px, calc(100% - 24px)); margin: 12px auto; }
+  .marca { gap: 18px; padding: 26px 24px 30px; }
+  .marca__logo img { width: 136px; }
+  .marca__texto { margin-top: 0; }
+  .marca h1 { font-size: 36px; }
+  .marca__texto > p:last-child, .marca__puntos { display: none; }
+  .panel { padding: 30px 22px 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carril, .ventana { transition: none; }
+}
+
+/* bandeja de correos de prueba (modo local) */
+.acceso-marco--bandeja { grid-template-columns: 1fr; width: min(820px, calc(100% - 24px)); }
+.bandeja { display: grid; gap: 12px; }
+.correo { padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.correo__cab { color: var(--ink-soft); font: 500 11px var(--mono); letter-spacing: 0.06em; }
+.correo h3 { margin: 6px 0 8px; font-size: 22px; }
+.correo__texto { font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }

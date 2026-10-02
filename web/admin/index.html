@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Icewell — Entrar</title>
+<link rel="icon" type="image/svg+xml" href="../assets/isotipo.svg">
+<link rel="stylesheet" href="panel.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body class="acceso">
+
+<main class="acceso-marco">
+  <section class="marca" aria-label="Icewell">
+    <a class="marca__logo" href="../index.html" title="Volver al sitio"><img src="logo-oscuro.svg" alt="Icewell" width="180" height="46"></a>
+    <div class="marca__texto">
+      <p class="eyebrow eyebrow--claro">Panel del sitio</p>
+      <h1>Edita el sitio sin tocar código.</h1>
+      <p>Proyectos, currículum, datos de contacto y textos. Lo que publicas aquí se ve al instante en icewell.cl.</p>
+    </div>
+    <ul class="marca__puntos">
+      <li>Acceso solo con correo de la empresa</li>
+      <li>Cada cuenta nueva la aprueba un administrador</li>
+      <li>Vista previa antes de publicar</li>
+    </ul>
+    <div class="tri" aria-hidden="true"></div>
+  </section>
+
+  <section class="tarjeta" aria-live="polite">
+    <div class="ventana" id="ventana">
+      <div class="carril" id="carril">
+
+        <!-- ============ Registro ============ -->
+        <div class="panel" id="panelRegistro" data-panel="registro" aria-labelledby="tRegistro">
+          <p class="eyebrow">Cuenta nueva</p>
+          <h2 id="tRegistro">Crear cuenta</h2>
+          <p class="bajada">Usa tu correo <b class="js-dominio">@icewell.cl</b>. Te enviaremos un enlace para confirmarlo y después un administrador aprobará tu acceso.</p>
+          <div class="aviso" id="avisoRegistro"></div>
+          <form id="formRegistro" novalidate>
+            <div class="campo">
+              <label for="regNombre">Nombre y apellido</label>
+              <input class="entrada" id="regNombre" name="nombre" type="text" autocomplete="name" maxlength="80" required>
+            </div>
+            <div class="campo">
+              <label for="regCorreo">Correo de la empresa</label>
+              <input class="entrada" id="regCorreo" name="correo" type="email" autocomplete="email" inputmode="email" maxlength="190" required placeholder="nombre@icewell.cl">
+            </div>
+            <div class="campo">
+              <label for="regClave">Contraseña</label>
+              <div class="clave-envoltura">
+                <input class="entrada" id="regClave" name="clave" type="password" autocomplete="new-password" minlength="12" maxlength="128" required aria-describedby="regClaveAyuda">
+                <button class="ver-clave" type="button" aria-pressed="false" aria-controls="regClave">Mostrar</button>
+              </div>
+              <div class="medidor" id="regMedidor" data-n="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <small class="medidor-txt" id="regClaveAyuda" aria-live="polite">Mínimo 12 caracteres. Una frase de 3 o 4 palabras es fácil de recordar y segura.</small>
+            </div>
+            <div class="campo">
+              <label for="regClave2">Repite la contraseña</label>
+              <input class="entrada" id="regClave2" name="clave2" type="password" autocomplete="new-password" maxlength="128" required>
+            </div>
+            <button class="btn btn--primario btn--bloque" type="submit">Crear cuenta</button>
+          </form>
+          <p class="cambiar">¿Ya tienes cuenta? <button class="enlace" type="button" data-ir="login">Entrar</button></p>
+        </div>
+
+        <!-- ============ Entrar ============ -->
+        <div class="panel" id="panelLogin" data-panel="login" aria-labelledby="tLogin">
+          <p class="eyebrow">Acceso</p>
+          <h2 id="tLogin">Entrar al panel</h2>
+          <div class="aviso" id="avisoLogin"></div>
+          <form id="formLogin" novalidate>
+            <div class="campo">
+              <label for="logCorreo">Correo</label>
+              <input class="entrada" id="logCorreo" name="correo" type="email" autocomplete="username" inputmode="email" maxlength="190" required>
+            </div>
+            <div class="campo">
+              <div class="campo-cab"><label for="logClave">Contraseña</label><button class="enlace enlace--chico" type="button" data-ir="recuperar">¿La olvidaste?</button></div>
+              <div class="clave-envoltura">
+                <input class="entrada" id="logClave" name="clave" type="password" autocomplete="current-password" maxlength="256" required>
+                <button class="ver-clave" type="button" aria-pressed="false" aria-controls="logClave">Mostrar</button>
+              </div>
+            </div>
+            <button class="btn btn--primario btn--bloque" type="submit">Entrar</button>
+          </form>
+
+          <!-- segundo paso (cuentas con verificación en dos pasos) -->
+          <form id="formTotp" novalidate hidden>
+            <p class="bajada">Escribe el código de 6 dígitos de tu app autenticadora.</p>
+            <div class="campo">
+              <label for="totpCodigo">Código</label>
+              <input class="entrada entrada--codigo" id="totpCodigo" name="codigo" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]*" maxlength="7" required>
+            </div>
+            <button class="btn btn--primario btn--bloque" type="submit">Verificar</button>
+            <p class="cambiar"><button class="enlace" type="button" id="totpVolver">Volver</button></p>
+          </form>
+
+          <div class="separador" id="sepGoogle" hidden><span>o</span></div>
+          <div class="google" id="googleBtn" hidden></div>
+          <p class="nota-google" id="notaGoogle" hidden>Solo cuentas de Google de la empresa.</p>
+
+          <div class="dev" id="bloqueDev" hidden>
+            <p><b>Modo local (beta).</b> Este botón solo existe en tu PC; en el hosting no aparece ni funciona.</p>
+            <button class="btn btn--secundario btn--bloque" type="button" id="btnDev">Entrar como desarrollador</button>
+            <a class="enlace" href="bandeja.html">Ver correos de prueba</a>
+          </div>
+
+          <p class="cambiar">¿No tienes cuenta? <button class="enlace" type="button" data-ir="registro">Crear cuenta</button></p>
+        </div>
+
+        <!-- ============ Recuperar ============ -->
+        <div class="panel" id="panelRecuperar" data-panel="recuperar" aria-labelledby="tRecuperar">
+          <p class="eyebrow">Contraseña</p>
+          <h2 id="tRecuperar">Recuperar acceso</h2>
+          <p class="bajada">Escribe tu correo y te enviaremos un enlace para crear una contraseña nueva. Dura 30 minutos y se usa una sola vez.</p>
+          <div class="aviso" id="avisoRecuperar"></div>
+          <form id="formRecuperar" novalidate>
+            <div class="campo">
+              <label for="recCorreo">Correo de la empresa</label>
+              <input class="entrada" id="recCorreo" name="correo" type="email" autocomplete="email" inputmode="email" maxlength="190" required>
+            </div>
+            <button class="btn btn--primario btn--bloque" type="submit">Enviar enlace</button>
+          </form>
+          <p class="cambiar"><button class="enlace" type="button" data-ir="login">← Volver a entrar</button></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="comun.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Fotos subidas desde el panel: nunca se ejecuta código acá, aunque alguien lograra subir un .php
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+  php_flag engine off
+</IfModule>
+RemoveHandler .php .phtml .phar .php5 .php7 .php8 .pht
+RemoveType .php .phtml .phar .php5 .php7 .php8 .pht
+<FilesMatch "(?i)\.(php\d?|phtml|phar|pht|cgi|pl|py|sh|html?|svg|js)$">
+  Require all denied
+</FilesMatch>
+Options -Indexes -ExecCGI
+Header set X-Content-Type-Options "nosniff"
+Header set Content-Security-Policy "default-src 'none'; img-src 'self'"
