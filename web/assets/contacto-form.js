@@ -44,7 +44,7 @@
     raiz.hidden = true;
 
     var top = el('div', 'cf__top');
-    var logo = el('img', 'cf__logo'); logo.src = 'assets/icewell-logo-oscuro.svg'; logo.alt = 'Icewell'; logo.width = 103; logo.height = 26;
+    var logo = el('img', 'cf__logo'); logo.src = 'assets/icewell-logo-oscuro.svg?v=2'; logo.alt = 'Icewell'; logo.width = 103; logo.height = 26;
     var prog = el('div', 'cf__prog');
     var progTxt = el('p', 'cf__progtxt'); progTxt.id = 'cfProgreso';
     var barra = el('div', 'cf__barra'); barra.setAttribute('aria-hidden', 'true'); barra.appendChild(el('span'));

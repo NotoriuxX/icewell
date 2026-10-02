@@ -188,7 +188,7 @@ final class Correo
         return '<!doctype html><html lang="es"><body style="margin:0;background:#eef6f9;font-family:Arial,Helvetica,sans-serif;color:#112536">'
             . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef6f9;padding:24px 12px"><tr><td align="center">'
             . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff">'
-            . '<tr><td style="background:#082436;padding:22px 28px;color:#f5efe0;font:800 22px Arial,sans-serif;letter-spacing:.02em">icewell <span style="color:#9fdff4;font:12px monospace;letter-spacing:.12em;text-transform:uppercase">· panel del sitio</span></td></tr>'
+            . '<tr><td style="background:#082436;padding:22px 28px;color:#ffffff;font:800 22px Arial,sans-serif;letter-spacing:.02em">icewell <span style="color:#9fdff4;font:12px monospace;letter-spacing:.12em;text-transform:uppercase">· panel del sitio</span></td></tr>'
             . '<tr><td style="height:4px;line-height:4px;font-size:0;background:linear-gradient(90deg,#0062a8 0 33%,#1a9614 33% 66%,#d01726 66%);background-color:#0062a8">&nbsp;</td></tr>'
             . '<tr><td style="padding:28px">'
             . '<h1 style="margin:0 0 14px;font:800 24px Arial,sans-serif;color:#112536">' . self::e($titulo) . '</h1>'

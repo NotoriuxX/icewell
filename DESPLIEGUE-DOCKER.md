@@ -37,6 +37,12 @@ No necesita `.env`. El código está montado: los cambios en `web/` y `servidor/
 Publicar desde el panel en desarrollo **escribe los JS del repo** (`web/assets/sitio-data.js`, `cv-data.js`, `vendor/cv-pdf-assets.js`), igual que con `php -S`. Después se hace commit si corresponde.
 Para apagar: `Ctrl+C`, o `docker compose -f docker-compose.yml -f docker-compose.dev.yml down`. Con `down -v` se borra también la BD de prueba.
 
+### Vista previa pública desde tu PC (túnel, solo el sitio)
+Para ver el sitio en el celular o mandárselo a alguien sin servidor: `powershell -File herramientas/tunel.ps1` imprime un link `https://….trycloudflare.com` (Cloudflare Quick Tunnel, gratis, sin cuenta). Se suma `docker-compose.tunel.yml` (Caddy + cloudflared en la red de Docker).
+- **Solo sale el sitio.** `/admin`, `/api` y `/servidor` responden 404 por el túnel (`docker/Caddyfile.tunel`), porque el Docker de desarrollo tiene «Entrar como desarrollador» para cualquier IP. El formulario de contacto cae a su respaldo por correo/WhatsApp.
+- El link cambia cada vez y muere al apagar el túnel o la PC: `powershell -File herramientas/tunel.ps1 -Apagar` (el sitio local sigue).
+- Para algo fijo 24/7 hace falta un servidor (esta guía, parte «En el servidor»). Los créditos de **Docker Sandboxes** (promoción de 250 USD) no sirven para eso: son microVMs para agentes, no hosting web.
+
 ### En el servidor (producción)
 Ver el prompt de abajo: es la lista completa de pasos.
 

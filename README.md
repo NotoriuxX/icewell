@@ -215,6 +215,12 @@ Pedidos de Manuel:
 - **Hero:** se sacó el degradado azul y oscuro sobre la foto (`.frame::after`, 02-oct). La foto sigue con su `filter` (algo desaturada y oscurecida).
 - **El botón «Vista previa · Aniversario»** ya no tapa el final del pie: agrega espacio abajo solo mientras se muestra.
 
+## Logo sobre fondo oscuro (02-oct)
+Logo con volumen (kit de marca `icewell-logo-volumen.svg`, sin el bloque `<metadata>` C2PA de 8 KB) con la palabra «icewell» en **blanco** (antes crema `#f5efe0`, que se veía amarilla). Archivos: `web/assets/icewell-logo-oscuro.svg` y `web/admin/logo-oscuro.svg`, referenciados con `?v=2` (cache-busting). El logo en línea del modal del aniversario (`LOGO_MODAL`) sigue plano, con la palabra en blanco.
+
+## Vista previa pública con Docker (02-oct)
+`powershell -File herramientas/tunel.ps1` → link `*.trycloudflare.com` del sitio que corre en el Docker de la PC (`docker-compose.tunel.yml` + `docker/Caddyfile.tunel`). Solo sale el sitio: el proxy bloquea `/admin`, `/api` y `/servidor`, porque en desarrollo «Entrar como desarrollador» vale para cualquier IP. El link es temporal (`-Apagar` lo baja). Detalle en `DESPLIEGUE-DOCKER.md`. Los 250 USD de Docker Sandboxes no sirven para hosting (son para agentes).
+
 ## Direcciones limpias (02-oct)
 
 Pedido de Manuel: que en la barra no se vea `cv.html`, `admin/editor.html`, etc.

@@ -1,0 +1,17 @@
+# Proxy del túnel de vista previa (docker-compose.tunel.yml): deja pasar el sitio y corta el panel.
+# El Docker de desarrollo tiene "Entrar como desarrollador": /admin y /api NUNCA salen por el túnel.
+{
+	auto_https off
+	admin off
+}
+
+:80 {
+	@privado path /admin /admin/* /api /api/* /servidor /servidor/*
+	respond @privado "No disponible en la vista previa" 404
+
+	# afuera siempre es https (borde de Cloudflare): así las redirecciones de web/.htaccess
+	# (cv.html → /curriculum, etc.) arman https://… y no http://…
+	reverse_proxy web:80 {
+		header_up X-Forwarded-Proto https
+	}
+}

@@ -1,0 +1,27 @@
+# ICEWELL — vista previa pública temporal (*.trycloudflare.com) SOLO del sitio.
+# Se suma a los otros dos (necesita el Docker de desarrollo arriba):
+#   powershell -File herramientas/tunel.ps1            → sube el túnel e imprime la URL
+#   powershell -File herramientas/tunel.ps1 -Apagar    → baja solo el túnel (el sitio local sigue)
+# A mano:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.tunel.yml up -d
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.tunel.yml logs tunel
+#
+# Por qué un proxy delante: el Docker de desarrollo tiene "Entrar como desarrollador" para cualquier IP
+# (ICEWELL_DESARROLLADOR=1). Si el túnel apuntara directo a `web`, cualquiera con el link sería admin.
+# docker/Caddyfile.tunel bloquea /admin, /api y /servidor; el formulario de contacto cae solo a su
+# respaldo por correo/WhatsApp. La URL cambia cada vez que se levanta (Quick Tunnel, sin cuenta).
+services:
+  tunel-proxy:
+    image: caddy:2
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    volumes:
+      - ./docker/Caddyfile.tunel:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - web
+    restart: "no"
+  tunel:
+    image: cloudflare/cloudflared:latest
+    command: ["tunnel", "--no-autoupdate", "--url", "http://tunel-proxy:80"]
+    depends_on:
+      - tunel-proxy
+    restart: "no"

@@ -13,6 +13,7 @@ Todas las rutas son relativas a la raíz del proyecto (`Desktop/icewell/proyecto
 php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php   # → / | /curriculum | /presentacion | /admin/
 # Docker (sitio + panel + MariaDB): PC → http://localhost:8080 ; servidor → ver DESPLIEGUE-DOCKER.md
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+powershell -File herramientas/tunel.ps1          # link público temporal SOLO del sitio (/admin y /api bloqueados); -Apagar lo baja
 # Solo el sitio estático, sin panel. Ojo: no traduce /curriculum (sí el doble clic: transicion.js lleva al .html en file://)
 python -m http.server 8765 --directory web
 
@@ -105,7 +106,7 @@ Las cifras institucionales (51 obras, +170.000 m², 12 regiones) se escriben en 
 - El copy debe ser trazable a un dato real: PDF corporativo, CV original de Wix o sitio actual. No inventar cifras ni obras.
 - Contraste mínimo WCAG AA; piso tipográfico de 11 px mono y 12 px texto.
 - Diseño vigente = **diseño 2** (el que eligió Icewell; ver README § Diseño 2): navy `#0C141C`, fondo `#F1F4F7`, azul `#0062A8`, cian `#5FC4E4`, Big Shoulders en mayúsculas + IBM Plex, botones rectos de 4 px. `index.html` y `cv.html` comparten este sistema; la presentación y los PDF conservan el suyo. El diseño 1 está en git (commit `56416a6`).
-- Logo sobre fondo oscuro: **nunca en un recuadro o placa blanca**. Isotipo con sus 3 colores y la palabra "icewell" recoloreada a crema (`#f5efe0`), recoloreando los trazos 3–4 de `icewell-logo.svg` en un SVG en línea. Ejemplo: `LOGO_MODAL` en `aniversario.js`.
+- Logo sobre fondo oscuro: **nunca en un recuadro o placa blanca**. Isotipo con sus 3 colores y la palabra "icewell" recoloreada a **blanco** (`#ffffff`; antes crema `#f5efe0`, que sobre el navy se veía amarilla — Manuel, 02-oct). Versión vigente: `assets/icewell-logo-oscuro.svg` (= `admin/logo-oscuro.svg`) es el **logo con volumen** (isotipo con degradados radiales, de `icewell-logo-volumen.svg` del kit de marca) con la palabra en blanco; se referencia con `?v=2` para saltar el caché al cambiarlo (subir el número en la próxima versión), recoloreando los trazos 3–4 de `icewell-logo.svg` en un SVG en línea. Ejemplo: `LOGO_MODAL` en `aniversario.js`.
 - Documentar decisiones y hallazgos en `README.md`. Comentarios en español, con el "por qué".
 - Panel: todo dato que entra se valida en el servidor (`Contenido::validar`); en el navegador, nunca `innerHTML` con datos del usuario. Cambios de seguridad → agregar el caso a `test_api.php`.
 
