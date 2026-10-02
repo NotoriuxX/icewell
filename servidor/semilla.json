@@ -177,25 +177,25 @@
         "cargo": "CEO",
         "nombre": "Andrés Mora",
         "texto": "Ingeniero en Climatización (USACH), Ingeniería Civil Industrial (U. Mayor).",
-        "foto": ""
+        "foto": "ceo-andres-mora.jpg"
       },
       {
         "cargo": "CFO",
         "nombre": "Flavio Magnasco",
         "texto": "MBA UC, Magíster en Finanzas UAI, Ingeniero Comercial (U. de Chile).",
-        "foto": ""
+        "foto": "cfo-flavio-magnasco.jpg"
       },
       {
         "cargo": "CCO",
         "nombre": "Gonzalo Díaz W.",
         "texto": "Ingeniero Industrial (USM), Ingeniería Electrónica (U. Mayor), Diplomado en Climatización (U. de Chile).",
-        "foto": ""
+        "foto": "cco-gonzalo-diaz.jpg"
       },
       {
         "cargo": "Gerente de Operaciones",
         "nombre": "José Castillo",
         "texto": "Ing. Civil Industrial, Ing. Mecánico, Diplomado en Climatización y Calefacción. Más de 17 años de experiencia en climatización y calefacción.",
-        "foto": ""
+        "foto": "gerente-jose-castillo.jpg"
       }
     ],
     "socios": [
