@@ -334,5 +334,27 @@ ok(!Http::esHttps() && Http::ip() === '203.0.113.9', 'X-Forwarded-Proto/For de u
 $_SERVER = ['REMOTE_ADDR' => '172.18.0.4', 'HTTP_X_FORWARDED_PROTO' => 'https', 'HTTP_X_FORWARDED_FOR' => '9.9.9.9, 1.2.3.4'];
 ok(Http::esHttps() && Http::ip() === '1.2.3.4', 'desde el proxy de Docker (Caddy) sí se cree https y la IP real');
 
+// ================================================================ migración diseño 2 (esquema 1 → 2)
+// Un panel ya en uso (BD con el contenido del diseño 1) debe pasar a los textos nuevos sin perder lo editado.
+require_once "$TMP/servidor/lib/Contenido.php";
+$nueva = json_decode(file_get_contents("$TMP/servidor/semilla.json"), true);
+$mig = json_decode(file_get_contents("$TMP/servidor/migraciones/diseno2.json"), true);
+$v1 = $nueva; $v1['esquema'] = 1;
+foreach ($mig['textos'] as $k => [$viejo, $nuevo]) { if ($viejo === null) unset($v1['textos'][$k]); else $v1['textos'][$k] = $viejo; }
+foreach ($mig['listas'] as $k => [$viejo, $nuevo]) $v1['inicio'][$k] = $viejo;
+$v1['inicio']['equipo'] = $mig['equipo']['viejo'];
+$v1['inicio']['equipo'][1]['foto'] = 'ceo-andres-mora.jpg';                 // ya le habían subido foto
+$v1['textos']['contacto.titulo'] = 'Texto que alguien editó a mano';
+$v1['inicio']['equipo'][] = ['cargo' => 'Jefa de obra', 'nombre' => 'Persona Agregada', 'texto' => 'Agregada en el panel.', 'foto' => ''];
+$m = Contenido::completar($v1);
+ok($m['textos']['hero.titulo1'] === 'Somos' && $m['textos']['nosotros.titulo'] === $nueva['textos']['nosotros.titulo'], 'migración: los textos sin editar pasan a los del diseño 2 (lema incluido)');
+ok($m['textos']['contacto.titulo'] === 'Texto que alguien editó a mano', 'migración: un texto editado a mano se conserva');
+ok($m['inicio']['metodo'] === $nueva['inicio']['metodo'] && $m['inicio']['hitos'] === $nueva['inicio']['hitos'], 'migración: listas sin editar (por qué, hitos) pasan a las nuevas');
+ok(array_column($m['inicio']['equipo'], 'nombre') === ['Andrés Mora', 'Flavio Magnasco', 'Gonzalo Díaz W.', 'Persona Agregada', 'José Castillo'], 'migración: sale Cristian Castro, entra José Castillo, se respeta a quien agregaron a mano');
+ok($m['inicio']['equipo'][1]['foto'] === 'ceo-andres-mora.jpg' && $m['inicio']['equipo'][1]['texto'] === $nueva['inicio']['equipo'][1]['texto'], 'migración: la foto ya subida se conserva');
+[$limpio, $err] = Contenido::validar($v1, "$TMP/web/assets");
+ok(!$err && $limpio['esquema'] === 2 && $limpio['textos']['hero.casoBadge'] === 'Cliente', 'migración: validar/publicar (y "republicar" de Docker) ya sale en esquema 2');
+ok(Contenido::completar($m) == $m, 'migración: aplicarla dos veces no cambia nada');
+
 echo $fallas ? "\n$fallas FALLAS\n" : "\nTODO OK\n";
 exit($fallas ? 1 : 0);

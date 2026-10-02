@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 final class Contenido
 {
-    const ESQUEMA = 1;
+    const ESQUEMA = 2;   // 2 = diseño 2 (02-oct): ver servidor/migraciones/diseno2.json
     const EXT_IMG = '/^(obras\/)?[A-Za-z0-9][A-Za-z0-9._-]{0,120}\.(jpe?g|png|webp|svg)$/';
     const ID = '/^[a-z0-9][a-z0-9-]{0,63}$/';
 
@@ -44,12 +44,57 @@ final class Contenido
     {
         static $semilla = null;
         if ($semilla === null) $semilla = json_decode((string)@file_get_contents(__DIR__ . '/../semilla.json'), true) ?: [];
+        if ((int)($c['esquema'] ?? 1) < 2) $c = self::migrarDiseno2($c);
         if (isset($semilla['textos'])) $c['textos'] = (is_array($c['textos'] ?? null) ? $c['textos'] : []) + $semilla['textos'];
         foreach (['inicio', 'cv'] as $sec) {
             if (isset($semilla[$sec]['serviciosColumnas']) && is_array($c[$sec] ?? null) && !isset($c[$sec]['serviciosColumnas'])) {
                 $c[$sec]['serviciosColumnas'] = $semilla[$sec]['serviciosColumnas'];
             }
         }
+        return $c;
+    }
+
+    /**
+     * Esquema 1 → 2 (diseño 2, 02-oct). Los paneles que ya estaban en uso guardan los textos del
+     * diseño anterior en la BD; sin esto seguirían mostrándolos. Se cambia SOLO lo que sigue igual
+     * a la semilla anterior: lo que alguien editó a mano se respeta.
+     */
+    private static function migrarDiseno2(array $c): array
+    {
+        $m = json_decode((string)@file_get_contents(__DIR__ . '/../migraciones/diseno2.json'), true);
+        if (!is_array($m)) return $c;
+        $tx = is_array($c['textos'] ?? null) ? $c['textos'] : [];
+        foreach ($m['textos'] as $k => [$viejo, $nuevo]) {
+            if (!array_key_exists($k, $tx) || $tx[$k] === $viejo) $tx[$k] = $nuevo;
+        }
+        $c['textos'] = $tx;
+        if (is_array($c['inicio'] ?? null)) {
+            foreach ($m['listas'] as $k => [$viejo, $nuevo]) {
+                if (($c['inicio'][$k] ?? null) == $viejo) $c['inicio'][$k] = $nuevo;
+            }
+            // Equipo: cada persona que sigue igual a la semilla anterior pasa a su versión nueva
+            // (misma persona por nombre) o sale (Cristian Castro); se conserva la foto si ya tenía.
+            // Quien no esté en la semilla anterior (agregado a mano) queda tal cual.
+            if (is_array($c['inicio']['equipo'] ?? null)) {
+                $porNombre = [];
+                foreach ($m['equipo']['nuevo'] as $x) $porNombre[$x['nombre']] = $x;
+                $sinFoto = fn($x) => array_diff_key((array)$x, ['foto' => 1]);
+                $viejos = array_map($sinFoto, $m['equipo']['viejo']);
+                $equipo = []; $nombres = [];
+                foreach ($c['inicio']['equipo'] as $x) {
+                    if (!is_array($x)) continue;
+                    if (in_array($sinFoto($x), $viejos, false)) {
+                        if (!isset($porNombre[$x['nombre'] ?? ''])) continue;          // salió del equipo
+                        $x = ['foto' => (string)($x['foto'] ?? '')] + $porNombre[$x['nombre']];
+                        if ($x['foto'] === '') $x['foto'] = $porNombre[$x['nombre']]['foto'];
+                    }
+                    $equipo[] = $x; $nombres[$x['nombre'] ?? ''] = true;
+                }
+                foreach ($m['equipo']['nuevo'] as $x) if (!isset($nombres[$x['nombre']])) $equipo[] = $x;   // José Castillo
+                $c['inicio']['equipo'] = $equipo;
+            }
+        }
+        $c['esquema'] = 2;
         return $c;
     }
 
@@ -138,7 +183,7 @@ final class Contenido
             ]),
             'hitos'       => $this->lista($in, 'hitos', 'inicio.hitos', 12, fn($x, $p) => [
                 'fecha'  => $this->txt($x, 'fecha', "$p.fecha", 20, true),
-                'titulo' => $this->txt($x, 'titulo', "$p.titulo", 80, true),
+                'titulo' => $this->txt($x, 'titulo', "$p.titulo", 80),      // opcional desde el diseño 2
                 'texto'  => $this->txt($x, 'texto', "$p.texto", 300),
             ]),
             'equipo'      => $this->lista($in, 'equipo', 'inicio.equipo', 24, fn($x, $p) => [
@@ -338,7 +383,7 @@ final class Contenido
         $v = is_string($v) ? trim($v) : '';
         if ($v === '') { if ($requerido) $this->err($campo, 'Falta la imagen.'); return ''; }
         if (!preg_match(self::EXT_IMG, $v) || str_contains($v, '..')) { $this->err($campo, 'Nombre de imagen inválido.'); return ''; }
-        if (!is_file($this->dirAssets . '/' . $v)) { $this->err($campo, "La imagen «$v» no existe."); return ''; }
+        if (!is_file($this->dirAssets . '/' . $v)) { $this->err($campo, "La imagen «{$v}» no existe."); return ''; }
         return $v;
     }
 

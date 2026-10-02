@@ -127,6 +127,44 @@ Para crear una cuenta real de admin por consola: `php herramientas/admin-cli.php
 - Faltaban: texto alternativo de las fotos, SEO editable, redes sociales, fotos del equipo (sin foto se ven las iniciales), respaldos al publicar, historial, papelera (ocultar), concurrencia entre dos editores, auditoría y 2FA.
 - Pendiente de decidir: dominio definitivo (icewell.net vs icewell.cl) y migración desde Wix; respaldo periódico de la BD (cPanel → copias de seguridad).
 
+## Diseño 2 (02-oct): el diseño que eligió Icewell
+
+Manuel subió un diseño anterior que a Icewell le gustó más, y se rehizo el sitio con él. El currículum **web** (`cv.html`) pasó al mismo estilo. La presentación y los PDF no cambiaron.
+
+- **Diseño 1:** quedó en git, en el commit `56416a6`. Para recuperarlo: `git checkout 56416a6 -- web/index.html web/cv.html`. Se intentó etiquetarlo como `diseno-v1`, pero el proxy de la sesión en la nube rechazó publicar la etiqueta; el commit igual está en la historia de la rama.
+- **Paleta:**
+
+  | Uso | Color |
+  |---|---|
+  | Navy (fondos oscuros y texto) | `#0C141C` |
+  | Fondo claro | `#F1F4F7` |
+  | Banda de números | `#122130` → `#18293A` |
+  | Texto secundario | `#57636F` |
+  | Azul de marca | `#0062A8` (hover `#0A7CD0`) |
+  | Cian hielo (acentos sobre oscuro) | `#5FC4E4` |
+  | Verde | `#1A9614`, solo para el remate «=» |
+
+- **Tipografía y forma:** Big Shoulders en mayúsculas con espaciado `.01em`, IBM Plex Sans y Plex Mono para las cifras y etiquetas. Botones rectos con radio de 4 px.
+- **Logo sobre oscuro:** `assets/icewell-logo-oscuro.svg`, con la palabra en crema y sin placa blanca.
+- **Lema:** «Somos *confianza y profesionalismo* para tus proyectos de climatización». La bajada: «Damos respuesta ágil y responsable a las crecientes necesidades en el mercado relacionado con aire acondicionado».
+- **Textos:** son los del Wix, que trae el diseño.
+- **Cifras:** siguen siendo las reales del panel: años automáticos, 51 obras, 12 regiones y +170.000 m². **No** se usan las 16 / 150+ / 100% / 400.000 del archivo original. `test_sitio.js` lo revisa.
+- **Equipo:** 4 vistas en pestañas (Grid, Organigrama, Fotos, Lista ejecutiva), armadas desde la misma lista del panel. Los builders `equipo`, `equipo-org`, `equipo-fotos` y `equipo-lista` están en `sitio-render.js`.
+  - La foto de cada persona se ve en las 4 vistas.
+  - El organigrama pone a la 1.ª persona arriba y debajo las 3 áreas (`equipo.area1..3Titulo/Texto`).
+  - Cambio de Manuel: sale Cristian Castro y entra José Castillo (Gerente de Operaciones). Las fotos nuevas las sube Manuel en el panel.
+- **Portafolio:** la última tarjeta se estira para completar su fila (`project-card--fin3-*` / `--fin2-*`), así no queda una sola en la última fila.
+- **Otros cambios:**
+  - el título de los hitos y el texto de «Por qué» pasaron a ser opcionales;
+  - nuevos textos: `hero.casoBadge`, `cifras.regionesHero` y `socios.titulo`;
+  - salen de la página `servicios.lead`, `trayectoria.lead` y `socios.texto`.
+- **Migración (esquema 1 → 2), para los paneles ya en uso**, como el Docker:
+  - `Contenido::completar` cambia a lo nuevo solo los textos, listas y personas que **siguen iguales** a la semilla anterior; los valores de referencia están en `servidor/migraciones/diseno2.json`;
+  - lo editado a mano y las fotos ya subidas se conservan;
+  - corre al abrir el panel, al publicar y en `republicar` (reinicio del contenedor);
+  - `test_api.php` cubre la migración.
+- **De pasada se arregló:** en `Contenido::img`, el mensaje «La imagen «…» no existe» no mostraba el nombre, porque PHP tomaba el `»` como parte de la variable.
+
 ## Direcciones limpias (02-oct)
 
 Pedido de Manuel: que en la barra no se vea `cv.html`, `admin/editor.html`, etc.

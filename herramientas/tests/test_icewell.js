@@ -33,8 +33,7 @@ function cargar(archivo, query, hash){
   const { w, d, errores } = cargar('index.html', '?hoy=2026-09-27');
   ok(!errores.length, 'index sin errores JS ' + errores.join(' | '));
   ok(w.icewellAniversario && w.icewellAniversario.anios === 17, 'index: años = 17 (2026-09-27, fundación 2009-01-01)');
-  const vl = d.querySelector('.vertical-label [data-anios]');
-  ok(vl && vl.textContent === '17', 'vertical-label rellena años');
+  ok(/^17 años de obra/i.test(d.querySelector('#trayectoria h2').textContent.trim()), 'trayectoria: el título rellena los años ({anios})');
   const hero = d.querySelector('.hero-metrics [data-anios]');
   ok(hero && hero._countParts && hero._countParts.target === 17, 'contador hero apunta a 17 (rellenado antes de statParts)');
   const m2 = [...d.querySelectorAll('.hero-metrics .js-count')].map(e => e._countParts && e._countParts.target);

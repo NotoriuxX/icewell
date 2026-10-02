@@ -23,12 +23,12 @@
   var reducido = false;
   try{ reducido = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
 
-  /* Misma pantalla de carga que ya tenía el sitio (#preloader de index.html): fondo blanco→celeste,
+  /* Misma pantalla de carga que el sitio (#preloader de index.html, diseño 2): fondo navy,
      isotipo que gira con brillo bajo y fundido de .5 s. Si cambia allá, cambiarlo acá. */
   var css = document.createElement('style');
   css.textContent =
     '.tr-cortina{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;' +
-      'background:linear-gradient(160deg,#FFFFFF,#E7F3FA);opacity:0;visibility:hidden;pointer-events:none;' +
+      'background:#0C141C;opacity:0;visibility:hidden;pointer-events:none;' +
       'transition:opacity .5s cubic-bezier(.23,1,.32,1),visibility .5s cubic-bezier(.23,1,.32,1)}' +
     '.tr-cortina.on{opacity:1;visibility:visible;pointer-events:auto}' +
     '.tr-cortina.ya{opacity:1;visibility:visible;transition:none}' +                       /* puesta desde el primer pintado */

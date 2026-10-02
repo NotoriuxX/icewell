@@ -33,7 +33,7 @@
     T(s, 'Etiqueta superior', 'hero.eyebrow', { max: 80 });
     var g = F.grilla(s);
     T(g, 'Título · parte 1', 'hero.titulo1', { max: 60 });
-    T(g, 'Título · parte destacada (azul)', 'hero.tituloDestacado', { max: 60 });
+    T(g, 'Título · parte destacada (celeste)', 'hero.tituloDestacado', { max: 60 });
     T(g, 'Título · parte 3', 'hero.titulo2', { max: 60 });
     T(s, 'Bajada', 'hero.lead', { multi: true, max: 300 });
     g = F.grilla(s);
@@ -42,10 +42,10 @@
     F.imagen(s, 'Foto grande', ini, 'heroFoto', { tipo: 'hero', ruta: 'lista:inicio.heroFoto', nombre: function(){ return 'portada'; }, ayuda: 'Horizontal, mínimo 1600 px de ancho.' });
     F.texto(s, 'Descripción de la foto (para lectores de pantalla y Google)', ini, 'heroFotoAlt', { max: 200 });
     g = F.grilla(s);
-    T(g, 'Recuadro · etiqueta', 'hero.casoEtiqueta', { max: 40 });
+    T(g, 'Insignia sobre la foto', 'hero.casoBadge', { max: 30 });
     T(g, 'Recuadro · obra', 'hero.casoTitulo', { max: 60 });
     T(g, 'Recuadro · detalle', 'hero.casoTexto', { max: 80 });
-    F.nota(s, 'Las cifras de la portada (años, obras, m²) se editan en «Empresa y contacto → Cifras». Los años se calculan solos desde la fecha de fundación.');
+    F.nota(s, 'Las cifras de la portada (años, obras, regiones, m²) se editan en «Empresa y contacto → Cifras». Los años se calculan solos desde la fecha de fundación.');
 
     s = F.seccion(p, 'Quiénes somos', { clave: 'ini-nos', abierta: false });
     T(s, 'Etiqueta', 'nosotros.eyebrow', { max: 60 });
@@ -56,7 +56,6 @@
     s = F.seccion(p, 'Servicios', { clave: 'ini-serv', abierta: false });
     T(s, 'Etiqueta', 'servicios.eyebrow', { max: 60 });
     T(s, 'Título', 'servicios.titulo', { max: 80 });
-    T(s, 'Bajada', 'servicios.lead', { multi: true, max: 300 });
     if(!ini.serviciosColumnas) ini.serviciosColumnas = '3';
     F.selector(s, 'Servicios por fila', ini, 'serviciosColumnas', COLUMNAS, { ruta: 'lista:inicio.serviciosColumnas', ayuda: AYUDA_COLUMNAS });
     F.lista(s, { arr: ini.servicios, ruta: 'lista:inicio.servicios', max: 12, min: 1, agregar: 'Agregar servicio',
@@ -71,16 +70,15 @@
     T(s, 'Texto', 'metodo.texto', { multi: true, max: 500 });
     F.lista(s, { arr: ini.metodo, ruta: 'lista:inicio.metodo', max: 8, min: 1, agregar: 'Agregar punto',
       titulo: function(x){ return x.titulo; }, nuevo: function(){ return { titulo: 'Nuevo punto', texto: '' }; },
-      campos: function(c, x){ F.texto(c, 'Título', x, 'titulo', { max: 80 }); F.texto(c, 'Texto', x, 'texto', { max: 300 }); } });
+      campos: function(c, x){ F.texto(c, 'Título', x, 'titulo', { max: 80 }); F.texto(c, 'Texto (opcional)', x, 'texto', { max: 300 }); } });
     T(s, 'Cierre (=)', 'metodo.resultado', { multi: true, max: 120 });
 
     s = F.seccion(p, 'Trayectoria (línea de tiempo)', { clave: 'ini-hitos', abierta: false });
     T(s, 'Etiqueta', 'trayectoria.eyebrow', { max: 60 });
     T(s, 'Título', 'trayectoria.titulo', { max: 80 });
-    T(s, 'Bajada', 'trayectoria.lead', { multi: true, max: 300 });
     F.lista(s, { arr: ini.hitos, ruta: 'lista:inicio.hitos', max: 12, min: 1, agregar: 'Agregar hito',
-      titulo: function(x){ return x.fecha + ' · ' + x.titulo; }, nuevo: function(){ return { fecha: String(new Date().getFullYear()), titulo: 'Nuevo hito', texto: '' }; },
-      campos: function(c, x){ var g = F.grilla(c); F.texto(g, 'Fecha', x, 'fecha', { max: 20, ayuda: '{desde} = año de fundación' }); F.texto(g, 'Título', x, 'titulo', { max: 80 }); F.texto(c, 'Texto', x, 'texto', { multi: true, max: 300 }); } });
+      titulo: function(x){ return x.fecha + ' · ' + (x.titulo || x.texto); }, nuevo: function(){ return { fecha: String(new Date().getFullYear()), titulo: '', texto: 'Nuevo hito' }; },
+      campos: function(c, x){ var g = F.grilla(c); F.texto(g, 'Fecha', x, 'fecha', { max: 20, ayuda: '{desde} = año de fundación' }); F.texto(g, 'Título (opcional)', x, 'titulo', { max: 80 }); F.texto(c, 'Texto', x, 'texto', { multi: true, max: 300 }); } });
 
     s = F.seccion(p, 'Portafolio', { clave: 'ini-port', abierta: false });
     T(s, 'Etiqueta', 'proyectos.eyebrow', { max: 60 });
@@ -100,17 +98,23 @@
       campos: function(c, x){
         var g = F.grilla(c); F.texto(g, 'Nombre', x, 'nombre', { max: 80 }); F.texto(g, 'Cargo', x, 'cargo', { max: 40 });
         F.texto(c, 'Formación / descripción', x, 'texto', { multi: true, max: 300 });
-        F.imagen(c, 'Foto (opcional: sin foto se muestran las iniciales)', x, 'foto', { tipo: 'equipo', opcional: true, nombre: function(){ return x.nombre; }, ayuda: 'Cuadrada, mínimo 400 px.' });
+        F.imagen(c, 'Foto (opcional: sin foto se muestran las iniciales)', x, 'foto', { tipo: 'equipo', opcional: true, nombre: function(){ return x.nombre; }, ayuda: 'Cuadrada (retrato), mínimo 400 px. Se usa en las 4 vistas: Grid, Organigrama, Fotos y Lista.' });
       } });
+    F.nota(s, 'Organigrama: la primera persona de la lista va arriba y el resto debajo. Usa las flechas para cambiar el orden.');
+    var areas = F.seccion(s, 'Áreas (bajo el organigrama)', { clave: 'ini-eq-areas', abierta: false });
+    [1, 2, 3].forEach(function(n){
+      T(areas, 'Área ' + n + ' · título', 'equipo.area' + n + 'Titulo', { max: 80 });
+      T(areas, 'Área ' + n + ' · texto', 'equipo.area' + n + 'Texto', { multi: true, max: 500 });
+    });
 
     s = F.seccion(p, 'Socios y proveedores (logos)', { clave: 'ini-soc', abierta: false });
     T(s, 'Etiqueta', 'socios.eyebrow', { max: 60 });
-    T(s, 'Texto', 'socios.texto', { multi: true, max: 300 });
+    T(s, 'Título', 'socios.titulo', { max: 80 });
     F.lista(s, { arr: ini.socios, ruta: 'lista:inicio.socios', max: 40, agregar: 'Agregar logo',
       titulo: function(x){ return x.nombre; }, nuevo: function(){ return { nombre: 'Nuevo socio', logo: '', grande: false }; },
       campos: function(c, x){
         F.texto(c, 'Nombre', x, 'nombre', { max: 80 });
-        F.imagen(c, 'Logo', x, 'logo', { tipo: 'socio', nombre: function(){ return x.nombre; }, ayuda: 'PNG con fondo transparente, que se vea sobre azul oscuro.' });
+        F.imagen(c, 'Logo', x, 'logo', { tipo: 'socio', nombre: function(){ return x.nombre; }, ayuda: 'PNG con fondo transparente (la cinta va sobre fondo blanco).' });
         F.interruptor(c, 'Mostrar más grande (logos con texto chico)', x, 'grande');
       } });
     F.nota(s, 'La cinta de logos se repite sola para que el movimiento no tenga cortes.');
@@ -261,6 +265,7 @@
     c = bloque('Regiones');
     F.texto(c, 'Número', d.cifras, 'regiones', { max: 20, ruta: 'cifras:regiones', ayuda: 'Regiones con obras cargadas: ' + Object.keys(regs).length });
     g = F.grilla(c);
+    T(g, 'Texto en la portada', 'cifras.regionesHero', { multi: true, max: 60 });
     T(g, 'Texto en la banda de cifras', 'cifras.regionesBanda', { max: 80 });
     F.texto(g, 'Texto en el CV (después de «Regiones,»)', d.cifras, 'regionesTexto', { max: 80, ruta: 'cifras:regionesTexto' });
 

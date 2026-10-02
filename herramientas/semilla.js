@@ -68,7 +68,7 @@ const obras = PROYECTOS.map((p, i) => {
 });
 
 const contenido = {
-  esquema: 1,
+  esquema: 2,
   empresa: {
     nombre: 'Icewell',
     razonSocial: 'Icewell SpA',
@@ -104,48 +104,55 @@ const contenido = {
   // {anios} {desde} {obras} {m2} {regiones} = valores automáticos.
   textos: {
     // etiquetas de las cifras (los números van en "cifras"; los años se calculan solos)
-    'cifras.aniosHero': 'Años de\ntrayectoria',
-    'cifras.obrasHero': 'Obras y proyectos\nregistrados',
-    'cifras.m2Hero': 'm² en obras\ndestacadas',
+    'cifras.aniosHero': 'Años de trayectoria',
+    'cifras.obrasHero': 'Obras y proyectos registrados',
+    'cifras.regionesHero': 'Regiones con proyectos',
+    'cifras.m2Hero': 'm² en obras destacadas',
     'cifras.aniosBanda': 'Años de experiencia · desde {desde}',
     'cifras.obrasBanda': 'Obras y proyectos registrados',
     'cifras.regionesBanda': 'Regiones con proyectos y montajes',
     'cifras.m2Banda': 'm² intervenidos en obras destacadas',
-    'hero.eyebrow': 'Ingeniería HVAC · Chile desde {desde}',
-    'hero.titulo1': 'Ingeniería que',
-    'hero.tituloDestacado': 'hace habitable',
-    'hero.titulo2': 'lo extraordinario.',
-    'hero.lead': 'Diseñamos, instalamos y mantenemos soluciones de climatización para proyectos que exigen desempeño, continuidad y precisión.',
-    'hero.boton1': 'Conocer proyectos',
-    'hero.boton2': 'Hablar con un ingeniero',
+    // Diseño 2 (02-oct): textos del diseño elegido por Icewell (los del sitio Wix) y el lema nuevo
+    'hero.eyebrow': 'Ingeniería en climatización · Chile, desde {desde}',
+    'hero.titulo1': 'Somos',
+    'hero.tituloDestacado': 'confianza y profesionalismo',
+    'hero.titulo2': 'para tus proyectos de climatización.',
+    'hero.lead': 'Damos respuesta ágil y responsable a las crecientes necesidades en el mercado relacionado con aire acondicionado.',
+    'hero.boton1': 'Ver proyectos ejecutados',
+    'hero.boton2': 'Hablar por WhatsApp',
+    'hero.casoBadge': 'Cliente',
     'hero.casoEtiqueta': 'Proyecto destacado',
     'hero.casoTitulo': 'Cerro Dominador',
-    'hero.casoTexto': 'Antofagasta · Climatización industrial',
+    'hero.casoTexto': 'Planta termosolar, Antofagasta',
     'nosotros.eyebrow': 'Quiénes somos',
-    'nosotros.titulo': 'El clima también se *diseña.*',
-    'nosotros.destacado': 'Más que aire acondicionado: entregamos la confianza de una operación térmicamente estable, eficiente y pensada para durar.',
-    'nosotros.texto': 'Fundada por profesionales con más de 25 años de experiencia en climatización y ventilación, Icewell integra conocimiento técnico, planificación y oficio para responder a los desafíos de cada industria.',
-    'servicios.eyebrow': 'Qué hacemos',
-    'servicios.titulo': 'Del cálculo a la puesta en marcha.',
-    'servicios.lead': 'Un equipo involucrado en cada fase, con ingeniería aplicada a resultados reales.',
-    'servicios.nota': 'Además desarrollamos soluciones para **piscinas, control de humedad, centros de salud, hoteles, retail y oficinas.** Revisa nuestras obras por sector:',
+    'nosotros.titulo': 'Redefiniendo la forma de climatizar.',
+    'nosotros.destacado': '**El corazón de nuestra empresa, son sus colaboradores.**',
+    'nosotros.texto': 'Fundada por José Castillo Cuevas, Ingeniero Mecánico con MBA UC y más de 25 años de experiencia en climatización y ventilación.\n\nCon {anios} años de experiencia en el mercado nacional, hemos entregado soluciones integrales y profesionales a empresas, muchas de ellas líderes en el mercado.',
+    'servicios.eyebrow': 'Servicios',
+    'servicios.titulo': 'Hacemos realidad grandes ideas.',
+    'servicios.nota': 'También: **temperar piscinas**, **control de humedad**, calefacción en oficinas, centros de salud, hoteles y resort, entre otros. Revisa nuestras obras por sector:',
     'metodo.eyebrow': 'Por qué Icewell',
-    'metodo.titulo': 'La respuesta correcta antes del primer plano.',
-    'metodo.texto': 'Interpretamos cada necesidad desde la operación. Así construimos soluciones que equilibran eficiencia, calidad y presupuesto sin perder de vista a quienes usarán el espacio.',
-    'metodo.resultado': 'Una respuesta superior\npara cada cliente.',
+    'metodo.titulo': 'Buscamos soluciones estratégicas.',
+    'metodo.texto': 'Para apoyar a nuestros clientes en todas las etapas de ejecución de un proyecto, cumpliendo con los plazos, estándares de calidad y presupuestos.',
+    'metodo.resultado': 'Respuesta superior al cliente',
     'trayectoria.eyebrow': 'Trayectoria',
-    'trayectoria.titulo': 'Obra, no promesas.',
-    'trayectoria.lead': 'Una historia de proyectos que han crecido junto a la confianza de nuestros clientes.',
-    'proyectos.eyebrow': 'Portafolio',
-    'proyectos.titulo': 'Soluciones que ya están en marcha.',
+    'trayectoria.titulo': '{anios} años de obra, no de promesas.',
+    'proyectos.eyebrow': 'Proyectos',
+    'proyectos.titulo': 'Algunos de nuestros proyectos.',
     'equipo.eyebrow': 'Equipo directivo',
-    'equipo.titulo': 'Las personas tras cada proyecto.',
-    'socios.eyebrow': 'Red de especialistas',
-    'socios.texto': 'Trabajamos con tecnologías y proveedores líderes para diseñar soluciones a la medida de cada desafío.',
+    'equipo.titulo': 'Responsables de cada proyecto.',
+    'equipo.area1Titulo': 'Área de Operaciones',
+    'equipo.area1Texto': 'Todos nuestros supervisores son Ingenieros mecánicos o en climatización. Jefaturas, planificadores y gerentes, son Ingenieros civiles y arquitectos con vasta experiencia en construcción y en el desarrollo de proyectos HVAC.',
+    'equipo.area2Titulo': 'Área de Administración y Recursos Humanos',
+    'equipo.area2Texto': 'Está liderada por un gerente de profesión, Ingeniero Comercial, con un Magíster en Finanzas y un MBA UC. Esta gerencia la compone: Control de Gestión, Contabilidad, Adquisiciones y Recursos Humanos. Sus integrantes también son profesionales en sus respectivas áreas.',
+    'equipo.area3Titulo': 'Área Comercial',
+    'equipo.area3Texto': 'Está liderada por un gerente de profesión, Ingeniero Civil Industrial, con un Diplomado en Climatización. Esta gerencia la compone: Jefe de Estudios de propuestas a cargo de analistas de proyectos, cuyas formaciones son de Ingenieros Mecánicos con experiencia en proyectos HVAC.',
+    'socios.eyebrow': 'Industria',
+    'socios.titulo': 'Nuestros socios',
     'contacto.eyebrow': 'Contacto',
-    'contacto.titulo': '¿Tienes un proyecto que necesita respirar mejor?',
-    'contacto.texto': 'Cuéntanos el alcance. Te responderá un ingeniero, no un formulario automático.',
-    'footer.lema': 'Asesorías, ingeniería y montajes térmicos',
+    'contacto.titulo': '¿Tienes un proyecto de climatización?',
+    'contacto.texto': 'Cuéntanos el alcance y te responderá un especialista.',
+    'footer.lema': 'Ingeniería en climatización',
 
     'cv.eyebrow': 'Currículum corporativo · Icewell SpA',
     'cv.titulo': 'Ingeniería y montaje de sistemas *HVAC.*',
@@ -178,26 +185,28 @@ const contenido = {
     heroFotoAlt: 'Infraestructura industrial de climatización en el norte de Chile',
     serviciosColumnas: '3',     // servicios por fila: 'auto' (todos en una fila) o '1'…'6'
     servicios: [
-      { etiqueta: 'Asesorías térmicas', titulo: 'Diagnóstico', texto: 'Informes de proyecto, evaluaciones técnico-económicas, inspecciones de obra, cálculos de carga térmica y consumo de ACS.' },
-      { etiqueta: 'Ingeniería', titulo: 'Diseño', texto: 'Proyectos de climatización, ventilación y calefacción para los sectores comercial, residencial e industrial, con foco en eficiencia energética.' },
-      { etiqueta: 'Instalaciones', titulo: 'Montaje', texto: 'Implementación HVAC con sistemas de agua, expansión directa, VRV, caudal variable e instalaciones solares, entre otros.' }
+      { etiqueta: 'Asesorías térmicas', titulo: 'Diagnóstico', texto: 'Realizamos informes a proyectos y evaluaciones técnico - económica, inspecciones técnicas de obra, cálculos de cargas térmicas, consumo de ACS, entre otros.' },
+      { etiqueta: 'Ingeniería', titulo: 'Diseño', texto: 'Elaboramos proyectos de climatización, ventilación y calefacción, tanto para el área comercial, residencial e industrial. Tenemos experiencia en eficiencia energética y uso de Energías Renovables no Convencionales (ERNC).' },
+      { etiqueta: 'Instalaciones', titulo: 'Montaje', texto: 'Desarrollamos montajes de diversos sistemas Heating Ventilation Air Conditioner (HVAC). Sistemas de agua, sistemas de expansión directa, sistemas de refrigerante variable y sistemas de volumen variable, instalaciones solares, entre otros.' }
     ],
     metodo: [
-      { titulo: 'Eficiencia operacional', texto: 'Energía y confort trabajando en el mismo sentido.' },
-      { titulo: 'Calidad verificable', texto: 'Método, control y estándares desde el diseño hasta la entrega.' },
-      { titulo: 'Innovación aplicada', texto: 'Tecnología útil para retos concretos y operaciones exigentes.' }
+      { titulo: 'Eficiencia operacional', texto: '' },
+      { titulo: 'Máxima calidad', texto: '' },
+      { titulo: 'Innovación y desarrollo', texto: '' }
     ],
     hitos: [
-      { fecha: '{desde}', titulo: 'Nace Icewell', texto: 'Fundación y comienzo de operaciones en Santiago.' },
-      { fecha: '2012', titulo: 'Primera gran minería', texto: 'Inicio de proyectos de alto estándar en el norte de Chile.' },
-      { fecha: '2023', titulo: 'Nueva escala', texto: 'Hotel Debaines y remodelación ACHS Alameda.' },
-      { fecha: 'HOY', titulo: '{anios} años', texto: '{obras} obras registradas en {regiones} regiones, de Tarapacá a Los Lagos.' }
+      // título opcional: el diseño 2 muestra solo fecha + texto
+      { fecha: '{desde}', titulo: '', texto: 'Fundación de Icewell por José Castillo Cuevas.' },
+      { fecha: '2012', titulo: '', texto: 'Primer gran proyecto minero: Minera Maricunga.' },
+      { fecha: '2023', titulo: '', texto: 'Hotel Debaines (10 pisos) y Remodelación ACHS Alameda.' },
+      { fecha: 'Hoy', titulo: '', texto: '{obras} obras registradas en {regiones} regiones y {m2} m² en obras destacadas.' }
     ],
     equipo: [
-      { cargo: 'CEO', nombre: 'Andrés Mora', texto: 'Ingeniero en Climatización (USACH) e Ingeniería Civil Industrial (U. Mayor).', foto: '' },
-      { cargo: 'CFO', nombre: 'Flavio Magnasco', texto: 'MBA UC, Magíster en Finanzas UAI e Ingeniero Comercial (U. de Chile).', foto: '' },
-      { cargo: 'CCO', nombre: 'Gonzalo Díaz W.', texto: 'Ingeniero Industrial (USM), con formación especializada en climatización.', foto: '' },
-      { cargo: 'COO', nombre: 'Cristian Castro', texto: 'Arquitecto (U. Mayor) y diplomado BIM (U. Católica).', foto: '' }
+      // Manuel, 02-oct: sale Cristian Castro, entra José Castillo. Las fotos se suben en el panel.
+      { cargo: 'CEO', nombre: 'Andrés Mora', texto: 'Ingeniero en Climatización (USACH), Ingeniería Civil Industrial (U. Mayor).', foto: '' },
+      { cargo: 'CFO', nombre: 'Flavio Magnasco', texto: 'MBA UC, Magíster en Finanzas UAI, Ingeniero Comercial (U. de Chile).', foto: '' },
+      { cargo: 'CCO', nombre: 'Gonzalo Díaz W.', texto: 'Ingeniero Industrial (USM), Ingeniería Electrónica (U. Mayor), Diplomado en Climatización (U. de Chile).', foto: '' },
+      { cargo: 'Gerente de Operaciones', nombre: 'José Castillo', texto: 'Ing. Civil Industrial, Ing. Mecánico, Diplomado en Climatización y Calefacción. Más de 17 años de experiencia en climatización y calefacción.', foto: '' }
     ],
     socios: [
       { nombre: 'Daikin', logo: 'p-daikin-trans.png' },

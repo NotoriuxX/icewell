@@ -39,10 +39,36 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
   ok(cards.every(c => c.querySelector('img').getAttribute('src').startsWith('assets/')), 'cada tarjeta de portada tiene foto');
   ok(d.querySelectorAll('.marquee-track img').length === S.inicio.socios.length * 2, 'socios: la marquesina se duplica sola (' + d.querySelectorAll('.marquee-track img').length + ')');
   ok(d.querySelectorAll('.marquee-track img[aria-hidden="true"]').length === S.inicio.socios.length, 'la copia de la marquesina va oculta a lectores de pantalla');
-  ok([...d.querySelectorAll('.team-initials')].map(e => e.textContent).join() === 'AM,FM,GD,CC', 'equipo: iniciales calculadas (AM, FM, GD, CC)');
+  ok([...d.querySelectorAll('.team-initials')].map(e => e.textContent).join() === 'AM,FM,GD,JC', 'equipo: iniciales calculadas (AM, FM, GD, JC)');
+  // Diseño 2 (02-oct): lema, 4 cifras en el hero y las 4 vistas del equipo desde los mismos datos
+  ok(/^Somos confianza y profesionalismo para tus proyectos de climatización\.$/.test(texto(d.querySelector('h1'))), 'hero: el lema nuevo en el h1');
+  ok(/ágil y responsable/.test(texto(d.querySelector('.hero-lead'))), 'hero: la bajada');
+  ok(d.querySelectorAll('.hero-metrics .js-count').length === 4 && d.querySelector('.hero-metrics [data-cifra="regiones"]'), 'hero: 4 cifras (años, obras, regiones, m²)');
+  ok(!/150\+|\+150|400\.000|100%/.test(d.querySelector('main').textContent), 'sin las cifras no verificadas del diseño original (150+, 400.000, 100%)');
+  const nombres = sel => [...d.querySelectorAll(sel)].map(e => e.textContent).join();
+  const equipo = 'Andrés Mora,Flavio Magnasco,Gonzalo Díaz W.,José Castillo';
+  ok(nombres('.team-grid h3') === equipo, 'equipo · Grid: ' + nombres('.team-grid h3'));
+  ok(nombres('.org-chart h4') === equipo && d.querySelectorAll('.org-row .org-card').length === 3, 'equipo · Organigrama: CEO arriba y 3 abajo');
+  ok(nombres('.photo-cards h4') === equipo, 'equipo · Fotos');
+  ok(nombres('.exec-list h4') === equipo, 'equipo · Lista ejecutiva');
+  ok(!/Cristian Castro/.test(d.body.textContent), 'Cristian Castro ya no aparece');
+  ok([...d.querySelectorAll('.org-chart [data-edit], .photo-cards [data-edit], .exec-list [data-edit]')].every(e => /^inicio\.equipo\.\d$/.test(e.dataset.edit)), 'cada ficha de las 4 vistas lleva al campo de esa persona en el panel');
+  ok(d.querySelectorAll('.org-areas [data-t^="equipo.area"]').length === 6, 'organigrama: 3 áreas editables');
+  // pestañas: una visible a la vez
+  const vistas = () => [...d.querySelectorAll('.team-view')].filter(v => !v.hidden).map(v => v.id).join();
+  ok(vistas() === 'vista-grid', 'pestañas: arranca en Grid');
+  d.getElementById('tab-fotos').click();
+  ok(vistas() === 'vista-fotos' && d.getElementById('tab-fotos').getAttribute('aria-selected') === 'true', 'pestañas: clic en Fotos muestra solo Fotos');
+  // con foto: la foto aparece en las 4 vistas
+  {
+    const { d: d2 } = cargar('index.html', 'ICEWELL_SITIO.inicio.equipo[1].foto = "obras/flavio.webp";');
+    ok(['.team-grid', '.org-chart', '.photo-cards', '.exec-list'].every(s => d2.querySelector(s + ' img[src="assets/obras/flavio.webp"]')), 'una foto de equipo se ve en las 4 vistas');
+  }
+  // hitos y "por qué" sin texto: no quedan h3/p vacíos
+  ok(![...d.querySelectorAll('.timeline-item h3, .method-item p')].length, 'hitos sin título y puntos sin texto: sin elementos vacíos');
   ok(/51 obras registradas en 12 regiones/.test(texto(d.querySelector('.timeline'))), 'línea de tiempo con cifras automáticas');
   ok(d.querySelectorAll('.service-list .service-card').length === 3 && d.querySelectorAll('.method-list .method-item').length === 3, 'servicios y método desde los datos');
-  ok(d.querySelector('.hero-copy h1 em').textContent === 'hace habitable', 'título del hero con énfasis');
+  ok(d.querySelector('.hero-section h1 em').textContent === 'confianza y profesionalismo', 'título del hero con énfasis (lema)');
   ok(d.querySelector('.contact-redes').hidden, 'sin redes cargadas: el bloque de redes no se muestra');
   ok([...d.querySelectorAll('a[data-wa="cotizar"]')].every(a => a.href === 'https://wa.me/56964074519?text=' + encodeURIComponent(S.empresa.wa.cotizar)), 'links de WhatsApp armados con el número y el mensaje de los datos');
 }

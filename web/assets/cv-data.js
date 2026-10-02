@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ICEWELL — Datos del currículum (GENERADO por el panel /admin el 2026-10-02 16:07)
+   ICEWELL — Datos del currículum (GENERADO por el panel /admin el 2026-10-02 20:08)
    NO editar a mano: se regenera al publicar. Para cambiar una obra, usar el panel.
 
    Campos de cada obra: id, nombre, anio, lugar, regiones[], sectores[], uso, sistemas,

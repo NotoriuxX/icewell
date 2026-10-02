@@ -130,6 +130,19 @@
   }
   // data-edit: ruta del dato para que el editor salte al campo al hacer clic en la vista previa
   function marcar(n, ruta){ n.setAttribute('data-edit', ruta); return n; }
+  // Avatar redondo del equipo: la foto si hay; si no, las iniciales (colores alternados como el Grid)
+  function avatar(doc, x, i){
+    var a = nodo(doc, 'div', 'avatar avatar--' + (i % 4 + 1));
+    if(x.foto){ var img = doc.createElement('img'); img.src = 'assets/' + x.foto; img.alt = ''; img.loading = 'lazy'; a.appendChild(img); }
+    else { a.textContent = iniciales(x.nombre); a.setAttribute('aria-hidden', 'true'); }
+    return a;
+  }
+  function fichaOrg(doc, x, i){
+    var c = marcar(nodo(doc, 'div', 'org-card'), 'inicio.equipo.' + i);
+    c.appendChild(avatar(doc, x, i));
+    c.appendChild(nodo(doc, 'h4', '', x.nombre)); c.appendChild(nodo(doc, 'span', 'rol', x.cargo)); c.appendChild(nodo(doc, 'p', '', x.texto));
+    return c;
+  }
 
   // Servicios por fila (panel): 'auto' = todos en una fila; si no, el número elegido.
   // --cols-md = como máximo 2 en pantallas medianas; en celular el CSS deja 1 por fila.
@@ -162,7 +175,8 @@
       (s.inicio.metodo || []).forEach(function(x, i){
         var a = marcar(nodo(doc, 'article', 'method-item'), 'inicio.metodo.' + i);
         a.appendChild(nodo(doc, 'span', '', num(i)));
-        var d = doc.createElement('div'); d.appendChild(nodo(doc, 'h3', '', x.titulo)); d.appendChild(nodo(doc, 'p', '', x.texto));
+        var d = doc.createElement('div'); d.appendChild(nodo(doc, 'h3', '', x.titulo));
+        if(x.texto) d.appendChild(nodo(doc, 'p', '', x.texto));       // el texto es opcional (diseño 2: solo títulos)
         a.appendChild(d); a.appendChild(svg(doc, CHECK));
         cont.appendChild(a);
       });
@@ -176,7 +190,8 @@
         var a = marcar(nodo(doc, 'article', 'timeline-item'), 'inicio.hitos.' + i);
         a.appendChild(nodo(doc, 'span', 'timeline-dot'));
         a.appendChild(nodo(doc, 'span', 'timeline-date', x.fecha));
-        a.appendChild(nodo(doc, 'h3', '', x.titulo)); a.appendChild(nodo(doc, 'p', '', x.texto));
+        if(x.titulo) a.appendChild(nodo(doc, 'h3', '', x.titulo));     // título opcional (diseño 2: fecha + texto)
+        a.appendChild(nodo(doc, 'p', '', x.texto));
         cont.appendChild(a);
       });
     },
@@ -197,6 +212,12 @@
         a.appendChild(nodo(doc, 'div', 'project-card__index', num(i)));
         cont.appendChild(a);
       });
+      // La última tarjeta completa su fila (con 3 y con 2 columnas) para no dejar un hueco:
+      // una ancha ocupa 2 lugares. El CSS de cada página decide si usa estas clases.
+      var ultima = cont.lastElementChild, lugares = lista.reduce(function(t, p){ return t + (p.portadaAncha ? 2 : 1); }, 0);
+      if(ultima && !lista[lista.length - 1].portadaAncha){
+        [3, 2].forEach(function(cols){ var resto = lugares % cols; if(resto) ultima.classList.add('project-card--fin' + cols + '-' + (cols - resto + 1)); });
+      }
     },
     'equipo': function(doc, s, cont){
       (s.inicio.equipo || []).forEach(function(x, i){
@@ -211,6 +232,39 @@
         var info = nodo(doc, 'div', 'team-info');
         info.appendChild(nodo(doc, 'span', '', x.cargo)); info.appendChild(nodo(doc, 'h3', '', x.nombre)); info.appendChild(nodo(doc, 'p', '', x.texto));
         a.appendChild(info);
+        cont.appendChild(a);
+      });
+    },
+    // Equipo, vistas del diseño 2 (pestañas Organigrama / Fotos / Lista ejecutiva). Mismos datos
+    // que 'equipo' (Grid); cada ficha lleva data-edit para que el clic en el panel abra su campo.
+    'equipo-org': function(doc, s, cont){
+      var eq = s.inicio.equipo || [];
+      if(!eq.length) return;
+      cont.appendChild(fichaOrg(doc, eq[0], 0));
+      if(eq.length < 2) return;
+      cont.appendChild(nodo(doc, 'div', 'org-line'));
+      var fila = nodo(doc, 'div', 'org-row');
+      eq.slice(1).forEach(function(x, i){ fila.appendChild(fichaOrg(doc, x, i + 1)); });
+      cont.appendChild(fila);
+    },
+    'equipo-fotos': function(doc, s, cont){
+      (s.inicio.equipo || []).forEach(function(x, i){
+        var a = marcar(nodo(doc, 'article', 'photo-card' + (i % 4 === 2 ? ' photo-card--2' : '')), 'inicio.equipo.' + i);
+        var f = nodo(doc, 'div', 'photo-img');
+        if(x.foto){ var img = doc.createElement('img'); img.src = 'assets/' + x.foto; img.alt = x.nombre; img.loading = 'lazy'; f.appendChild(img); }
+        else f.appendChild(nodo(doc, 'span', 'photo-initials', iniciales(x.nombre)));
+        a.appendChild(f);
+        var info = nodo(doc, 'div', 'photo-info');
+        info.appendChild(nodo(doc, 'h4', '', x.nombre)); info.appendChild(nodo(doc, 'span', 'rol', x.cargo)); info.appendChild(nodo(doc, 'p', '', x.texto));
+        a.appendChild(info);
+        cont.appendChild(a);
+      });
+    },
+    'equipo-lista': function(doc, s, cont){
+      (s.inicio.equipo || []).forEach(function(x, i){
+        var a = marcar(nodo(doc, 'div', 'exec-row'), 'inicio.equipo.' + i);
+        a.appendChild(avatar(doc, x, i));
+        a.appendChild(nodo(doc, 'h4', '', x.nombre)); a.appendChild(nodo(doc, 'span', 'rol', x.cargo)); a.appendChild(nodo(doc, 'p', '', x.texto));
         cont.appendChild(a);
       });
     },
