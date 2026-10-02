@@ -1,4 +1,4 @@
-/* GENERADO por el panel (/admin) el 2026-10-02 21:16 — NO editar a mano: los cambios se pierden al publicar.
+/* GENERADO por el panel (/admin) el 2026-10-02 18:24 — NO editar a mano: los cambios se pierden al publicar.
    Datos de la empresa, cifras, textos y secciones del sitio. Lo leen index.html, cv.html,
    cv-presentacion.html y los PDF (assets/sitio-render.js lo aplica al HTML). */
 window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio) || {
@@ -37,21 +37,13 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
     },
     "config": {
         "fundacion": "2009-01-01",
-        "botonAniversario": true
+        "botonAniversario": false
     },
     "seo": {
         "titulo": "Icewell — Ingeniería en Climatización",
         "descripcion": "Asesorías térmicas, ingeniería y montaje de sistemas HVAC en todo Chile desde {desde}. {obras} obras registradas y más de 170.000 m² intervenidos en obras destacadas."
     },
     "textos": {
-        "cifras.aniosHero": "Años de trayectoria",
-        "cifras.obrasHero": "Obras y proyectos registrados",
-        "cifras.regionesHero": "Regiones con proyectos",
-        "cifras.m2Hero": "m² en obras destacadas",
-        "cifras.aniosBanda": "Años de experiencia · desde {desde}",
-        "cifras.obrasBanda": "Obras y proyectos registrados",
-        "cifras.regionesBanda": "Regiones con proyectos y montajes",
-        "cifras.m2Banda": "m² intervenidos en obras destacadas",
         "hero.eyebrow": "Ingeniería en climatización · Chile, desde {desde}",
         "hero.titulo1": "Somos",
         "hero.tituloDestacado": "confianza y profesionalismo",
@@ -59,7 +51,6 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "hero.lead": "Damos respuesta ágil y responsable a las crecientes necesidades en el mercado relacionado con aire acondicionado.",
         "hero.boton1": "Ver proyectos ejecutados",
         "hero.boton2": "Hablar por WhatsApp",
-        "hero.casoBadge": "Cliente",
         "hero.casoEtiqueta": "Proyecto destacado",
         "hero.casoTitulo": "Cerro Dominador",
         "hero.casoTexto": "Planta termosolar, Antofagasta",
@@ -69,6 +60,7 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "nosotros.texto": "Fundada por José Castillo Cuevas, Ingeniero Mecánico con MBA UC y más de 25 años de experiencia en climatización y ventilación.\n\nCon {anios} años de experiencia en el mercado nacional, hemos entregado soluciones integrales y profesionales a empresas, muchas de ellas líderes en el mercado.",
         "servicios.eyebrow": "Servicios",
         "servicios.titulo": "Hacemos realidad grandes ideas.",
+        "servicios.lead": "Un equipo involucrado en cada fase, con ingeniería aplicada a resultados reales.",
         "servicios.nota": "También: **temperar piscinas**, **control de humedad**, calefacción en oficinas, centros de salud, hoteles y resort, entre otros. Revisa nuestras obras por sector:",
         "metodo.eyebrow": "Por qué Icewell",
         "metodo.titulo": "Buscamos soluciones estratégicas.",
@@ -76,22 +68,16 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "metodo.resultado": "Respuesta superior al cliente",
         "trayectoria.eyebrow": "Trayectoria",
         "trayectoria.titulo": "{anios} años de obra, no de promesas.",
+        "trayectoria.lead": "Una historia de proyectos que han crecido junto a la confianza de nuestros clientes.",
         "proyectos.eyebrow": "Proyectos",
         "proyectos.titulo": "Algunos de nuestros proyectos.",
         "equipo.eyebrow": "Equipo directivo",
         "equipo.titulo": "Responsables de cada proyecto.",
-        "equipo.area1Titulo": "Área de Operaciones",
-        "equipo.area1Texto": "Todos nuestros supervisores son Ingenieros mecánicos o en climatización. Jefaturas, planificadores y gerentes, son Ingenieros civiles y arquitectos con vasta experiencia en construcción y en el desarrollo de proyectos HVAC.",
-        "equipo.area2Titulo": "Área de Administración y Recursos Humanos",
-        "equipo.area2Texto": "Está liderada por un gerente de profesión, Ingeniero Comercial, con un Magíster en Finanzas y un MBA UC. Esta gerencia la compone: Control de Gestión, Contabilidad, Adquisiciones y Recursos Humanos. Sus integrantes también son profesionales en sus respectivas áreas.",
-        "equipo.area3Titulo": "Área Comercial",
-        "equipo.area3Texto": "Está liderada por un gerente de profesión, Ingeniero Civil Industrial, con un Diplomado en Climatización. Esta gerencia la compone: Jefe de Estudios de propuestas a cargo de analistas de proyectos, cuyas formaciones son de Ingenieros Mecánicos con experiencia en proyectos HVAC.",
         "socios.eyebrow": "Industria",
-        "socios.titulo": "Nuestros socios",
+        "socios.texto": "Trabajamos con tecnologías y proveedores líderes para diseñar soluciones a la medida de cada desafío.",
         "contacto.eyebrow": "Contacto",
         "contacto.titulo": "¿Tienes un proyecto de climatización?",
         "contacto.texto": "Cuéntanos el alcance y te responderá un especialista.",
-        "contacto.formBoton": "Cuéntanos tu proyecto",
         "footer.lema": "Ingeniería en climatización",
         "cv.eyebrow": "Currículum corporativo · Icewell SpA",
         "cv.titulo": "Ingeniería y montaje de sistemas *HVAC.*",
@@ -116,7 +102,24 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "pres.valorTexto": "Proyectamos, estudiamos y proponemos soluciones a los requerimientos de nuestros clientes, considerando las mejores alternativas de precios y equipos disponibles en el mercado, para acompañarlos en todas las etapas de ejecución de un proyecto, cumpliendo plazos, estándares de calidad y presupuestos de costos.",
         "pres.portafolioLead": "Obras de suministro y montaje en ejecución, recientes y destacadas, en usos privados, comerciales y públicos.",
         "pres.trayectoriaNota": "Proyectos y montajes desarrollados por Icewell SpA a lo largo de Chile.",
-        "pres.datosTitulo": "Conversemos su\npróximo proyecto"
+        "pres.datosTitulo": "Conversemos su\npróximo proyecto",
+        "cifras.aniosHero": "Años de trayectoria",
+        "cifras.obrasHero": "Obras y proyectos registrados",
+        "cifras.m2Hero": "m² en obras destacadas",
+        "cifras.aniosBanda": "Años de experiencia · desde {desde}",
+        "cifras.obrasBanda": "Obras y proyectos registrados",
+        "cifras.regionesBanda": "Regiones con proyectos y montajes",
+        "cifras.m2Banda": "m² intervenidos en obras destacadas",
+        "cifras.regionesHero": "Regiones con proyectos",
+        "hero.casoBadge": "Cliente",
+        "equipo.area1Titulo": "Área de Operaciones",
+        "equipo.area1Texto": "Todos nuestros supervisores son Ingenieros mecánicos o en climatización. Jefaturas, planificadores y gerentes, son Ingenieros civiles y arquitectos con vasta experiencia en construcción y en el desarrollo de proyectos HVAC.",
+        "equipo.area2Titulo": "Área de Administración y Recursos Humanos",
+        "equipo.area2Texto": "Está liderada por un gerente de profesión, Ingeniero Comercial, con un Magíster en Finanzas y un MBA UC. Esta gerencia la compone: Control de Gestión, Contabilidad, Adquisiciones y Recursos Humanos. Sus integrantes también son profesionales en sus respectivas áreas.",
+        "equipo.area3Titulo": "Área Comercial",
+        "equipo.area3Texto": "Está liderada por un gerente de profesión, Ingeniero Civil Industrial, con un Diplomado en Climatización. Esta gerencia la compone: Jefe de Estudios de propuestas a cargo de analistas de proyectos, cuyas formaciones son de Ingenieros Mecánicos con experiencia en proyectos HVAC.",
+        "socios.titulo": "Nuestros socios",
+        "contacto.formBoton": "Cuéntanos tu proyecto"
     },
     "inicio": {
         "heroFoto": "hero-cerro-dominador.jpg",
@@ -186,19 +189,19 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
                 "cargo": "CFO",
                 "nombre": "Flavio Magnasco",
                 "texto": "MBA UC, Magíster en Finanzas UAI, Ingeniero Comercial (U. de Chile).",
-                "foto": ""
+                "foto": "cfo-flavio-magnasco.jpg"
             },
             {
                 "cargo": "CCO",
                 "nombre": "Gonzalo Díaz W.",
                 "texto": "Ingeniero Industrial (USM), Ingeniería Electrónica (U. Mayor), Diplomado en Climatización (U. de Chile).",
-                "foto": ""
+                "foto": "cco-gonzalo-diaz.jpg"
             },
             {
                 "cargo": "Gerente de Operaciones",
                 "nombre": "José Castillo",
                 "texto": "Ing. Civil Industrial, Ing. Mecánico, Diplomado en Climatización y Calefacción. Más de 17 años de experiencia en climatización y calefacción.",
-                "foto": ""
+                "foto": "gerente-jose-castillo.jpg"
             }
         ],
         "socios": [
