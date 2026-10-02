@@ -169,6 +169,10 @@ $malo = $c; $malo['empresa']['redes']['linkedin'] = 'javascript:alert(1)';
 ok(req('ana', 'POST', 'contenido/guardar', ['contenido' => $malo, 'base' => $ver2])['codigo'] === 422, 'red social con javascript: → rechazada');
 $malo = $c; $malo['obras'][0]['foto'] = '../../servidor/config.php';
 ok(req('ana', 'POST', 'contenido/guardar', ['contenido' => $malo, 'base' => $ver2])['codigo'] === 422, 'foto con ruta "../" → rechazada');
+$malo = $c; $malo['inicio']['serviciosColumnas'] = '9';
+ok(req('ana', 'POST', 'contenido/guardar', ['contenido' => $malo, 'base' => $ver2])['codigo'] === 422, 'servicios por fila fuera de auto/1–6 → rechazado');
+$malo = $c; $malo['obras'][0]['sectores'][] = 'sector-inventado';
+ok(req('ana', 'POST', 'contenido/guardar', ['contenido' => $malo, 'base' => $ver2])['codigo'] === 422, 'obra con un sector que no está en el catálogo → rechazada');
 ok(req('ana', 'POST', 'contenido/publicar', ['version' => $ver2])['codigo'] === 403, 'un editor no publica (publicar_rol = admin)');
 $r = req('adm', 'POST', 'contenido/publicar', ['version' => $ver2]);
 ok($r['codigo'] === 200, 'admin publica');
@@ -186,17 +190,27 @@ $im = imagecreatetruecolor(300, 200); ob_start(); imagejpeg($im); $chica = ob_ge
 ok(req('ana', 'POST', 'imagen', ['tipo' => 'obra', 'datos' => 'data:image/jpeg;base64,' . base64_encode($chica)])['codigo'] === 422, 'foto de menos de 400 px → rechazada');
 $im = imagecreatetruecolor(1600, 1000); imagefilledrectangle($im, 0, 0, 800, 1000, imagecolorallocate($im, 0, 98, 168)); ob_start(); imagejpeg($im, null, 90); $buena = ob_get_clean() . '<?php echo 1; ?>';
 $r = req('ana', 'POST', 'imagen', ['tipo' => 'obra', 'nombre' => 'Obra de prueba ñ', 'datos' => 'data:image/jpeg;base64,' . base64_encode($buena)]);
-ok($r['codigo'] === 200 && preg_match('#^obras/obra-de-prueba-n-[0-9a-f]{8}\.jpg$#', $r['d']['archivo'] ?? ''), 'foto válida → guardada con nombre del servidor: ' . ($r['d']['archivo'] ?? ''));
+ok($r['codigo'] === 200 && preg_match('#^obras/obra-de-prueba-n-[0-9a-f]{8}\.webp$#', $r['d']['archivo'] ?? ''), 'foto válida → guardada como WebP con nombre del servidor: ' . ($r['d']['archivo'] ?? ''));
 $guardada = file_get_contents("$TMP/web/assets/" . ($r['d']['archivo'] ?? 'x'));
-ok($guardada && !str_contains($guardada, '<?php') && substr($guardada, 0, 3) === "\xFF\xD8\xFF", 'la foto se re-codificó: el código pegado al final desapareció');
+ok($guardada && !str_contains($guardada, '<?php') && substr($guardada, 0, 4) === 'RIFF' && substr($guardada, 8, 4) === 'WEBP', 'la foto se re-codificó a WebP: el código pegado al final desapareció');
+ok(strlen($guardada) < strlen($buena) && ($r['d']['bytes_final'] ?? 0) === strlen($guardada) && ($r['d']['bytes_original'] ?? 0) === strlen($buena), 'la WebP pesa menos que la original y la respuesta informa ambos pesos');
+ok(($r['d']['ancho'] ?? 0) === 1600 && ($r['d']['alto'] ?? 0) === 1000, 'conserva tamaño y proporción (1600×1000, bajo el máximo de 2000 px)');
 // obra nueva con esa foto → publicar regenera las fotos del PDF
 $c = req('adm', 'GET', 'contenido')['d'];
 $cc = $c['contenido'];
 array_unshift($cc['obras'], ['id' => 'obra-prueba', 'nombre' => 'Obra de prueba', 'anio' => 2025, 'lugar' => 'Santiago', 'regiones' => ['metropolitana'], 'sectores' => ['oficinas'],
     'uso' => 'Oficinas', 'sistemas' => 'VRV', 'm2' => 1200, 'foto' => $r['d']['archivo'], 'estado' => 'ejecucion', 'tags' => [], 'cliente' => 'Privado', 'portada' => true, 'ordenPortada' => 7, 'visible' => true]);
+// sector y región creados desde la ficha de la obra (el panel los agrega al catálogo)
+$cc['catalogos']['sectores'][] = ['id' => 'data-center', 'label' => 'Data center'];
+$cc['catalogos']['regiones'][] = ['id' => 'aysen', 'label' => 'Aysén'];
+$cc['obras'][0]['sectores'][] = 'data-center'; $cc['obras'][0]['regiones'][] = 'aysen';
+$cc['cv']['serviciosColumnas'] = 'auto';
 $g = req('adm', 'POST', 'contenido/guardar', ['contenido' => $cc, 'base' => $c['version']]);
+ok($g['codigo'] === 200, 'obra con sector y región nuevos del catálogo + servicios "auto" → aceptada');
 $p = req('adm', 'POST', 'contenido/publicar', ['version' => $g['d']['version'] ?? 0]);
 ok(($p['d']['pdf']['nuevas'] ?? 0) === 1, 'publicar con una foto nueva la agrega al PDF (cv-pdf-assets.js)');
+$cvjs = file_get_contents("$TMP/web/assets/cv-data.js");
+ok(str_contains($cvjs, '"data-center"') && str_contains($cvjs, 'Aysén'), 'el sector y la región nuevos llegan a cv-data.js');
 ok(str_contains(file_get_contents("$TMP/web/assets/vendor/cv-pdf-assets.js"), '"' . str_replace('/', '\/', $r['d']['archivo']) . '"') || str_contains(file_get_contents("$TMP/web/assets/vendor/cv-pdf-assets.js"), '"' . $r['d']['archivo'] . '"'), '…y la foto está embebida en cv-pdf-assets.js');
 
 // ================================================================ recuperar contraseña

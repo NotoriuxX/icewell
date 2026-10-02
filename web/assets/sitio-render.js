@@ -131,8 +131,18 @@
   // data-edit: ruta del dato para que el editor salte al campo al hacer clic en la vista previa
   function marcar(n, ruta){ n.setAttribute('data-edit', ruta); return n; }
 
+  // Servicios por fila (panel): 'auto' = todos en una fila; si no, el número elegido.
+  // --cols-md = como máximo 2 en pantallas medianas; en celular el CSS deja 1 por fila.
+  function columnas(cont, valor, total){
+    var n = valor === 'auto' ? Math.max(1, total) : Math.max(1, Math.min(6, parseInt(valor, 10) || 3));
+    cont.style.setProperty('--cols', n);
+    cont.style.setProperty('--cols-md', Math.min(n, 2));
+    cont.setAttribute('data-columnas', valor || '3');
+  }
+
   var LISTAS = {
     'servicios': function(doc, s, cont){
+      columnas(cont, s.inicio.serviciosColumnas, (s.inicio.servicios || []).length);
       (s.inicio.servicios || []).forEach(function(x, i){
         var a = marcar(nodo(doc, 'article', 'service-card'), 'inicio.servicios.' + i);
         var top = nodo(doc, 'div', 'service-card__top');
@@ -219,6 +229,7 @@
     },
     // CV (cv.html)
     'cv-servicios': function(doc, s, cont){
+      columnas(cont, s.cv.serviciosColumnas, (s.cv.servicios || []).length);
       (s.cv.servicios || []).forEach(function(x, i){
         var a = marcar(nodo(doc, 'article', 'service'), 'cv.servicios.' + i);
         a.appendChild(nodo(doc, 'span', '', x.etiqueta)); a.appendChild(nodo(doc, 'h3', '', x.titulo)); a.appendChild(nodo(doc, 'p', '', x.texto));

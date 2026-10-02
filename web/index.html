@@ -135,7 +135,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 .section-heading > p { max-width: 340px; padding-bottom: 5px; color: rgba(211,239,249,0.86); font-size: 14px; line-height: 1.6; }
 .section-heading--wide { align-items: start; }
 .section-heading--wide h2 { max-width: 630px; }
-.service-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 65px; border-top: 1px solid rgba(204,239,251,0.22); }
+/* servicios por fila: --cols lo pone sitio-render.js según el panel; --cols-md = como máximo 2 en pantallas medianas */
+.service-list { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 0; margin-top: 65px; border-top: 1px solid rgba(204,239,251,0.22); }
 .service-card { position: relative; min-height: 350px; padding: 27px 27px 31px; border-right: 1px solid rgba(204,239,251,0.22); border-bottom: 1px solid rgba(204,239,251,0.22); transition: background 220ms var(--ease-out), transform 220ms var(--ease-out); }
 .service-card:first-child { border-left: 1px solid rgba(204,239,251,0.22); }
 .service-card:hover { background: rgba(162,225,246,0.08); transform: translateY(-5px); }
@@ -258,6 +259,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 .wa-float svg { width: 28px; height: 28px; fill: #fff; }
 
 @media (max-width: 1020px) {
+  .service-list { grid-template-columns: repeat(var(--cols-md, 2), minmax(0, 1fr)); }
   .desktop-nav { gap: 18px; }
   .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr); gap: 40px; }
   .hero-copy h1 { font-size: clamp(54px, 6.5vw, 76px); }
@@ -434,9 +436,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
           </a>
         </div>
         <div class="hero-metrics" aria-label="Cifras de Icewell">
-          <div><strong class="js-count" data-anios>17</strong><span>Años de<br>trayectoria</span></div>
-          <div><strong class="js-count" data-cifra="obras">51</strong><span>Obras y proyectos<br>registrados</span></div>
-          <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span>m² en obras<br>destacadas</span></div>
+          <div><strong class="js-count" data-anios>17</strong><span data-t="cifras.aniosHero">Años de<br>trayectoria</span></div>
+          <div><strong class="js-count" data-cifra="obras">51</strong><span data-t="cifras.obrasHero">Obras y proyectos<br>registrados</span></div>
+          <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span data-t="cifras.m2Hero">m² en obras<br>destacadas</span></div>
         </div>
       </div>
       <div class="hero-visual">
@@ -545,10 +547,10 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 
   <section class="numbers-section" aria-label="Resultados Icewell">
     <div class="site-container number-grid">
-      <div><strong class="js-count" data-anios>17</strong><span>Años de experiencia · desde <span data-desde>2009</span></span></div>
-      <div><strong class="js-count" data-cifra="obras">51</strong><span>Obras y proyectos registrados</span></div>
-      <div><strong class="js-count" data-cifra="regiones">12</strong><span>Regiones con proyectos y montajes</span></div>
-      <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
+      <div><strong class="js-count" data-anios>17</strong><span data-t="cifras.aniosBanda">Años de experiencia · desde <span data-desde>2009</span></span></div>
+      <div><strong class="js-count" data-cifra="obras">51</strong><span data-t="cifras.obrasBanda">Obras y proyectos registrados</span></div>
+      <div><strong class="js-count" data-cifra="regiones">12</strong><span data-t="cifras.regionesBanda">Regiones con proyectos y montajes</span></div>
+      <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span data-t="cifras.m2Banda">m² intervenidos en obras destacadas</span></div>
     </div>
   </section>
 

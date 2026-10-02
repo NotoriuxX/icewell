@@ -82,7 +82,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 .services-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 40px; }
 .services-head h2 { max-width: 640px; font-size: clamp(42px, 4.8vw, 66px); }
 .services-head p { max-width: 440px; color: rgba(215,241,249,0.86); font-size: 15px; line-height: 1.65; }
-.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(204,239,251,0.22); border-left: 1px solid rgba(204,239,251,0.22); }
+.service-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); border-top: 1px solid rgba(204,239,251,0.22); border-left: 1px solid rgba(204,239,251,0.22); }
 .service { padding: 26px 24px 28px; border-right: 1px solid rgba(204,239,251,0.22); border-bottom: 1px solid rgba(204,239,251,0.22); }
 .service > span { color: #9fdff4; font: 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .service h3 { margin: 26px 0 12px; font: 800 36px/0.95 var(--display); text-transform: uppercase; }
@@ -210,6 +210,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 
 
 @media (max-width: 1000px) {
+  .service-grid { grid-template-columns: repeat(var(--cols-md, 2), minmax(0, 1fr)); }
   .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 800px) {
@@ -352,9 +353,9 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
         </div>
       </div>
       <div class="kpis" aria-label="Cifras de Icewell">
-        <div class="kpi"><strong data-anios>17</strong><span>Años de experiencia · desde <span data-desde>2009</span></span></div>
-        <div class="kpi"><strong data-cifra="obras">51</strong><span>Obras y proyectos registrados</span></div>
-        <div class="kpi"><strong data-cifra="m2">+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
+        <div class="kpi"><strong data-anios>17</strong><span data-t="cifras.aniosBanda">Años de experiencia · desde <span data-desde>2009</span></span></div>
+        <div class="kpi"><strong data-cifra="obras">51</strong><span data-t="cifras.obrasBanda">Obras y proyectos registrados</span></div>
+        <div class="kpi"><strong data-cifra="m2">+170.000</strong><span data-t="cifras.m2Banda">m² intervenidos en obras destacadas</span></div>
         <div class="kpi"><strong data-cifra="regiones">12</strong><span>Regiones, <span data-cifra="regionesTexto">de Tarapacá a Los Lagos</span></span></div>
       </div>
     </div>
@@ -561,7 +562,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
       : '<span class="card-big">' + (p.m2 ? fmtN.format(p.m2) + ' <small>m²</small>' : p.anio) + '</span>';
     var meta = [String(p.anio), SEC[sec], p.trabajo || ''].filter(Boolean).map(esc).join(' · ') +
       (p.estado === 'ejecucion' ? ' · <b class="card-vivo">En ejecución</b>' : '');
-    return '<article class="card' + (p.foto ? '' : ' card--solid') + '" data-id="' + p._id + '">' + fondo + '<div class="card-shade"></div>' +
+    return '<article class="card' + (p.foto ? '' : ' card--solid') + '" data-id="' + p._id + '" data-obra="' + esc(p.id || '') + '">' + fondo + '<div class="card-shade"></div>' +
       '<span class="card-cli' + (pub ? ' card-cli--pub' : '') + '">' + (pub ? 'Público' : 'Privado') + '</span>' +
       '<div class="card-content"><span>' + meta + '</span>' +
       '<h3>' + esc(p.nombre) + '</h3><p>' + lugarHtml(p) + ' · ' + esc(p.detalle || p.sistemas) + '</p>' +
@@ -653,7 +654,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
         out += '<p class="result-title">Trayectoria · ' + resto.length + (resto.length === 1 ? ' obra' : ' obras') + '</p>';
         Object.keys(anios).sort(function(a, b){ return b - a; }).forEach(function(a){
           out += '<div class="year-block"><h3>' + a + '</h3><div class="rows">' + anios[a].map(function(p){
-            return '<div class="row" data-id="' + p._id + '"><h4>' + esc(p.nombre) + '</h4><span class="row-meta">' + metaTxt(p) + '</span><p>' + lugarHtml(p) + ' · ' + esc(p.sistemas) + '</p></div>';
+            return '<div class="row" data-id="' + p._id + '" data-obra="' + esc(p.id || '') + '"><h4>' + esc(p.nombre) + '</h4><span class="row-meta">' + metaTxt(p) + '</span><p>' + lugarHtml(p) + ' · ' + esc(p.sistemas) + '</p></div>';
           }).join('') + '</div></div>';
         });
       }

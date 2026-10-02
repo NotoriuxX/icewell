@@ -41,6 +41,13 @@
     "descripcion": "Asesorías térmicas, ingeniería y montaje de sistemas HVAC en todo Chile desde {desde}. {obras} obras registradas y más de 170.000 m² intervenidos en obras destacadas."
   },
   "textos": {
+    "cifras.aniosHero": "Años de\ntrayectoria",
+    "cifras.obrasHero": "Obras y proyectos\nregistrados",
+    "cifras.m2Hero": "m² en obras\ndestacadas",
+    "cifras.aniosBanda": "Años de experiencia · desde {desde}",
+    "cifras.obrasBanda": "Obras y proyectos registrados",
+    "cifras.regionesBanda": "Regiones con proyectos y montajes",
+    "cifras.m2Banda": "m² intervenidos en obras destacadas",
     "hero.eyebrow": "Ingeniería HVAC · Chile desde {desde}",
     "hero.titulo1": "Ingeniería que",
     "hero.tituloDestacado": "hace habitable",
@@ -104,6 +111,7 @@
   "inicio": {
     "heroFoto": "hero-cerro-dominador.jpg",
     "heroFotoAlt": "Infraestructura industrial de climatización en el norte de Chile",
+    "serviciosColumnas": "3",
     "servicios": [
       {
         "etiqueta": "Asesorías térmicas",
@@ -264,7 +272,8 @@
       "Eficiencia energética",
       "ERNC y solar térmica",
       "Obras sobre 4.800 msnm"
-    ]
+    ],
+    "serviciosColumnas": "3"
   },
   "presentacion": {
     "caja": [
@@ -473,9 +482,9 @@
       "estado": "ejecucion",
       "tags": [],
       "cliente": "Público",
+      "textoPortada": "Santiago · Split, chiller y sistemas de ventilación.",
       "portada": true,
       "ordenPortada": 1,
-      "textoPortada": "Santiago · Split, chiller y sistemas de ventilación.",
       "visible": true
     },
     {
@@ -497,10 +506,10 @@
       "estado": "ejecucion",
       "tags": [],
       "cliente": "Público",
+      "textoPortada": "Santiago · Talleres y cocheras con VRV, aire acondicionado y extracción.",
       "revisar": "revisar sector",
       "portada": true,
       "ordenPortada": 2,
-      "textoPortada": "Santiago · Talleres y cocheras con VRV, aire acondicionado y extracción.",
       "visible": true
     },
     {
@@ -521,10 +530,10 @@
       "estado": "ejecucion",
       "tags": [],
       "cliente": "Público",
+      "textoPortada": "Tarapacá · Aire acondicionado, refrigeración, ventilación y bombas de calor.",
       "revisar": "revisar región (Quillagua está en el límite Tarapacá/Antofagasta; el sitio dice Tarapacá)",
       "portada": true,
       "ordenPortada": 3,
-      "textoPortada": "Tarapacá · Aire acondicionado, refrigeración, ventilación y bombas de calor.",
       "visible": true
     },
     {
@@ -546,9 +555,9 @@
       "estado": "ejecucion",
       "tags": [],
       "cliente": "Privado",
+      "textoPortada": "Santiago · VRV, aire acondicionado y refrigeración de precisión.",
       "portada": true,
       "ordenPortada": 4,
-      "textoPortada": "Santiago · VRV, aire acondicionado y refrigeración de precisión.",
       "visible": true
     },
     {
@@ -569,9 +578,9 @@
       "estado": "ejecucion",
       "tags": [],
       "cliente": "Privado",
+      "textoPortada": "Talca, Maule · Aire acondicionado heavy duty.",
       "portada": true,
       "ordenPortada": 6,
-      "textoPortada": "Talca, Maule · Aire acondicionado heavy duty.",
       "visible": true
     },
     {
@@ -592,8 +601,8 @@
       "foto": "p-achs.jpg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -613,11 +622,11 @@
       "foto": "p-debaines.jpg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
+      "textoPortada": "Santiago Centro · Chiller fan-coil, UMAs y ventilación para 10 pisos.",
       "portada": true,
       "ordenPortada": 5,
-      "textoPortada": "Santiago Centro · Chiller fan-coil, UMAs y ventilación para 10 pisos.",
       "portadaAncha": true,
       "visible": true
     },
@@ -639,8 +648,8 @@
       "foto": "p-komatsu.jpg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -660,8 +669,8 @@
       "foto": "p-dkhome.jpeg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "revisar": "revisar sector",
       "visible": true
     },
@@ -682,8 +691,8 @@
       "foto": "p-agrichile.jpeg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -704,8 +713,8 @@
       "foto": "p-loslibertadores.webp",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -725,8 +734,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -746,10 +755,10 @@
       "foto": "p-mercadolibre.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Sistema de climatización con equipos compactos y splits de diferentes capacidades. Integra un sistema de extracción e inyección de aire fresco para los recintos habitables.",
       "destacado": true,
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -769,10 +778,10 @@
       "foto": "p-rosen.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Sistema de climatización con equipos compactos y splits de diferentes capacidades. Integra un sistema de extracción e inyección de aire fresco para los recintos habitables.",
       "destacado": true,
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -794,10 +803,10 @@
       "tags": [
         "Solar / ERNC"
       ],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización y ventilación de los edificios de servicios: calderas eléctricas, manejadoras de aire, sistema VRV y paneles solares para ACS.",
       "destacado": true,
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -817,10 +826,10 @@
       "foto": "p-pdiosorno.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con chiller fan-coil, equipos compactos, unidades manejadoras de aire y ventilación de inyección y extracción de aire.",
       "destacado": true,
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -840,11 +849,11 @@
       "foto": "n-uc.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con chiller fan-coil y manejadoras de aire, más extracción e inyección de aire fresco.",
-      "destacado": true,
-      "cliente": "Privado",
       "revisar": "revisar foto (viene de Noticias del sitio)",
+      "destacado": true,
       "visible": true
     },
     {
@@ -865,11 +874,11 @@
       "foto": "p-fastair.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con sistema VRV con recuperación de calor, más extracción e inyección de aire fresco.",
-      "destacado": true,
-      "cliente": "Privado",
       "revisar": "revisar: el PDF también lista \"Oficinas Fast Air Aeropuerto\" (2021) — se fusionó, confirmar si es la misma obra",
+      "destacado": true,
       "visible": true
     },
     {
@@ -890,11 +899,11 @@
       "foto": "n-sanantonio.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con chiller fan-coil y manejadoras de aire, más extracción e inyección de aire fresco.",
-      "destacado": true,
-      "cliente": "Público",
       "revisar": "revisar foto",
+      "destacado": true,
       "visible": true
     },
     {
@@ -914,10 +923,10 @@
       "foto": "p-estimulacion.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización de boxes de atención con splits y ventilación de extracción. Para la piscina temperada: bomba de calor y deshumidificador.",
       "destacado": true,
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -937,10 +946,10 @@
       "foto": "p-dariosalas.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Calefacción de un edificio de 3 pisos (salas y recintos comunes) con calderas a pellets, radiadores y piso radiante, más ventilación de extracción e inyección.",
       "destacado": true,
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -960,8 +969,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "revisar": "revisar sector",
       "visible": true
     },
@@ -982,8 +991,8 @@
       "foto": "p-juzgadoosorno.jpeg",
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1003,8 +1012,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1024,9 +1033,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización de oficina y bodega con equipos splits de diferentes capacidades, más ventilación de inyección y extracción de aire.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1046,9 +1055,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con sistemas VRV de diferentes capacidades, más extracción e inyección de aire fresco.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1068,8 +1077,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1089,8 +1098,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "revisar": "revisar sector",
       "visible": true
     },
@@ -1112,9 +1121,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización y ventilación de la bodega con equipos compactos.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1134,9 +1143,9 @@
       "foto": "hero-cerro-dominador.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con equipos split y ventilación.",
-      "cliente": "Privado",
       "revisar": "revisar sector (energía)",
       "visible": true
     },
@@ -1159,9 +1168,9 @@
       "tags": [
         "Solar / ERNC"
       ],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización de los edificios de la planta concentradora solar con sistemas VRV de diferentes capacidades, más extracción e inyección de aire fresco.",
-      "cliente": "Privado",
       "revisar": "revisar sector (energía)",
       "visible": true
     },
@@ -1182,8 +1191,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "revisar": "revisar sector (transporte)",
       "visible": true
     },
@@ -1204,8 +1213,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1225,8 +1234,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1247,8 +1256,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1268,8 +1277,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1289,8 +1298,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1310,9 +1319,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con chiller fan-coil y equipos splits, más extracción e inyección de aire fresco.",
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -1332,9 +1341,9 @@
       "foto": "n-torax.jpg",
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Climatización con chiller fan-coil y unidades manejadoras de aire, más extracción e inyección de aire fresco.",
-      "cliente": "Público",
       "revisar": "revisar foto",
       "visible": true
     },
@@ -1355,8 +1364,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1375,8 +1384,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "revisar": "revisar región (el PDF no la indica)",
       "visible": true
     },
@@ -1397,8 +1406,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1418,8 +1427,8 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1441,9 +1450,9 @@
       "tags": [
         "Gran altura"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Ventilación y climatización de los edificios misceláneos del Campamento 5400, a 170 km al sureste de Antofagasta y 3.200 msnm.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1463,9 +1472,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Montaje",
       "detalle": "Sistema de ventilación para la ampliación de la Planta Galletas: los sectores que requieren ventilación forzada cuentan con extractores de aire axiales.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1485,9 +1494,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Montaje",
       "detalle": "Sistema de ventilación forzada con extractores de aire axiales.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1507,9 +1516,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Ventilación de subterráneos, presurización de caja escala, ventilación de baños, cocina y lavanderías; climatización de dormitorios, gimnasio y piscinas; generación de agua caliente sanitaria.",
-      "cliente": "Privado",
       "revisar": "revisar sector",
       "visible": true
     },
@@ -1530,9 +1539,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Suministro y montaje",
       "detalle": "Calefacción con 2 calderas a leña que entregan 180.000 kcal/h; aire acondicionado con equipos split.",
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -1552,9 +1561,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Calefacción con cuatro calderas individuales y radiadores; extracción de baños y cocina e inyección de aire fresco; refrigeración de sala de basura y climatización de oficinas.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1574,9 +1583,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Sistema de climatización para los salones del hotel con equipos VRV.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1596,9 +1605,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Montaje",
       "detalle": "Modificación de la sala de calderas del primer piso y cubierta: se reemplazaron 4 calderas y se modificó la estructura de la sala.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1618,9 +1627,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Suministro y montaje",
       "detalle": "Sistema de extracción en las bodegas de concentrado con ventiladores NOVOVENT, SODECA, S&P o similar.",
-      "cliente": "Privado",
       "revisar": "revisar región (el PDF dice Coquimbo)",
       "visible": true
     },
@@ -1643,9 +1652,9 @@
       "tags": [
         "Gran altura"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Extracción localizada y calefacción con ventiladores de inyección de gran caudal y resistencias eléctricas; proyectos eléctricos de fuerza y control centralizado. 60 equipos de ventilación y 10 tableros eléctricos, a 4.800 msnm.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1667,9 +1676,9 @@
       "tags": [
         "Gran altura"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Extracción localizada y calefacción con ventiladores de mediano caudal y resistencias eléctricas; proyectos eléctricos de fuerza y control centralizado. 15 equipos de ventilación y 12 tableros eléctricos, a 4.800 msnm.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1691,8 +1700,8 @@
       "tags": [
         "Solar / ERNC"
       ],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1715,8 +1724,8 @@
       "tags": [
         "LEED"
       ],
-      "trabajo": "Suministro y montaje",
       "cliente": "Público",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1738,8 +1747,8 @@
       "tags": [
         "LEED"
       ],
-      "trabajo": "Suministro y montaje",
       "cliente": "Privado",
+      "trabajo": "Suministro y montaje",
       "visible": true
     },
     {
@@ -1759,9 +1768,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Público",
       "trabajo": "Proyecto y montaje",
       "detalle": "Enfriadores de agua y fan-coils con resistencia eléctrica de apoyo para oficinas y comedores; extracción de dormitorios, baños, lockers y cocina.",
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -1781,9 +1790,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Tres pabellones de dormitorios y uno de oficinas, en módulos, calefaccionados con aire caliente mediante equipos de ventilación y resistencias eléctricas.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1805,9 +1814,9 @@
       "tags": [
         "LEED"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto",
       "detalle": "Proyecto de climatización con volumen de refrigerante variable a gas licuado y ventilación de aire fresco con recuperación de calor termodinámica activa, según parámetros de certificación LEED.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1827,9 +1836,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Climatización con 25 equipos split Carrier de diferentes capacidades, más extracción e inyección de aire fresco.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1849,9 +1858,9 @@
       "foto": null,
       "estado": "ejecutado",
       "tags": [],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Climatización con equipos de volumen de refrigerante variable LG de 245.000 Btu/h, más extracción de campanas de cocina, baños y sector fumadores.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1873,9 +1882,9 @@
       "tags": [
         "Solar / ERNC"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto y montaje",
       "detalle": "Condominio de 5 torres con calentamiento de agua sanitaria por paneles solares termosifón y ventilación de baños y cocinas.",
-      "cliente": "Privado",
       "visible": true
     },
     {
@@ -1897,9 +1906,9 @@
       "tags": [
         "Ingeniería"
       ],
+      "cliente": "Público",
       "trabajo": "Proyecto",
       "detalle": "Elaboración y desarrollo del proyecto de climatización: enfriadores de agua (chiller) con fan-coil solo frío y calefacción por resistencia eléctrica.",
-      "cliente": "Público",
       "revisar": "revisar sector (transporte)",
       "visible": true
     },
@@ -1922,9 +1931,9 @@
       "tags": [
         "Ingeniería"
       ],
+      "cliente": "Público",
       "trabajo": "Proyecto",
       "detalle": "Elaboración y desarrollo del proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
-      "cliente": "Público",
       "revisar": "revisar sector (transporte)",
       "visible": true
     },
@@ -1947,9 +1956,9 @@
       "tags": [
         "Ingeniería"
       ],
+      "cliente": "Público",
       "trabajo": "Proyecto",
       "detalle": "Elaboración y desarrollo del proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
-      "cliente": "Público",
       "revisar": "revisar sector (transporte)",
       "visible": true
     },
@@ -1972,9 +1981,9 @@
       "tags": [
         "Ingeniería"
       ],
+      "cliente": "Público",
       "trabajo": "Proyecto",
       "detalle": "Ingeniería básica y de detalles de la climatización de 3 terminales de pasajeros: calderas eléctricas, radiadores extraplanos y extracción de baños y cocina.",
-      "cliente": "Público",
       "visible": true
     },
     {
@@ -1996,9 +2005,9 @@
       "tags": [
         "Solar / ERNC"
       ],
+      "cliente": "Privado",
       "trabajo": "Proyecto",
       "detalle": "Condominio de 2 torres con calefacción por radiadores y generadores de calor individuales, más central solar para ACS.",
-      "cliente": "Privado",
       "visible": true
     }
   ]

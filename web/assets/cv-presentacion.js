@@ -70,7 +70,7 @@
     // etiqueta = tipo de cliente (Público verde / Privado azul, como el PDF); sector, uso y trabajo van adentro
     var cliente = p.cliente || clienteDe(p) || 'Privado', uso = usoCorto(p);
     var info = [SEC[sec], uso && uso !== SEC[sec] ? uso : '', p.trabajo || ''].filter(Boolean).join(' · ');
-    return el('<article class="obra" data-id="' + p._id + '"><div class="obra__top"><h3>' + esc(p.nombre) + '</h3>' +
+    return el('<article class="obra" data-id="' + p._id + '" data-obra="' + esc(p.id || '') + '"><div class="obra__top"><h3>' + esc(p.nombre) + '</h3>' +
       '<span class="badge' + (cliente === 'Público' ? ' badge--publico' : '') + '">' + esc(cliente) + '</span></div>' +
       '<p class="obra__lugar">' + esc(lugarPdf(p)) + ' · ' + p.anio +
         (p.estado === 'ejecucion' ? ' · <b class="obra__vivo">En ejecución</b>' : '') + '</p>' +
@@ -183,7 +183,7 @@
   function tomarPre(h){ if(PRE){ h.cuerpo.appendChild(PRE); PRE = null; } }
 
   function filaTray(p){
-    return el('<div class="fila" data-id="' + p._id + '"><span>' + p.anio + '</span><div><b>' + esc(p.nombre) + '</b><small>' + esc(p.lugar) + ' · ' + esc(p.sistemas.replace(/\.$/, '')) + '</small></div></div>');
+    return el('<div class="fila" data-id="' + p._id + '" data-obra="' + esc(p.id || '') + '"><span>' + p.anio + '</span><div><b>' + esc(p.nombre) + '</b><small>' + esc(p.lugar) + ' · ' + esc(p.sistemas.replace(/\.$/, '')) + '</small></div></div>');
   }
 
   // Trayectoria: 2 columnas (primero la izquierda, después la derecha), título con el rango de años de cada hoja

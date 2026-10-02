@@ -32,7 +32,8 @@ final class Panel
         $u = self::ultima();
         $p = self::ultimaPublicada();
         $autor = $u['autor_id'] ? Bd::uno('SELECT nombre FROM usuarios WHERE id = ?', [$u['autor_id']]) : null;
-        return ['ok' => true, 'contenido' => json_decode($u['json'], true), 'version' => (int)$u['id'],
+        // lo guardado + lo nuevo que traiga la semilla (campos agregados después)
+        return ['ok' => true, 'contenido' => Contenido::completar(json_decode($u['json'], true) ?: []), 'version' => (int)$u['id'],
             'guardado' => ['fecha' => (int)$u['creado'], 'autor' => $autor['nombre'] ?? 'Sistema'],
             'publicada' => $p ? (int)$p['id'] : null, 'sinPublicar' => !$p || (int)$p['id'] !== (int)$u['id']];
     }

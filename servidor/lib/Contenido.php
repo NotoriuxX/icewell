@@ -32,8 +32,33 @@ final class Contenido
     public static function validar($c, string $dirAssets): array
     {
         $v = new self($dirAssets);
-        $limpio = $v->todo(is_array($c) ? $c : []);
+        $limpio = $v->todo(self::completar(is_array($c) ? $c : []));
         return [$limpio, $v->errores];
+    }
+
+    /**
+     * Agrega lo que falte (textos y opciones nuevas del sitio) desde servidor/semilla.json.
+     * Así una versión guardada antes de que existiera un campo no lo deja en blanco.
+     */
+    public static function completar(array $c): array
+    {
+        static $semilla = null;
+        if ($semilla === null) $semilla = json_decode((string)@file_get_contents(__DIR__ . '/../semilla.json'), true) ?: [];
+        if (isset($semilla['textos'])) $c['textos'] = (is_array($c['textos'] ?? null) ? $c['textos'] : []) + $semilla['textos'];
+        foreach (['inicio', 'cv'] as $sec) {
+            if (isset($semilla[$sec]['serviciosColumnas']) && is_array($c[$sec] ?? null) && !isset($c[$sec]['serviciosColumnas'])) {
+                $c[$sec]['serviciosColumnas'] = $semilla[$sec]['serviciosColumnas'];
+            }
+        }
+        return $c;
+    }
+
+    // servicios por fila: 'auto' (todos en una fila) o 1–6
+    private function columnas(array $o, string $campo): string
+    {
+        $v = (string)($o['serviciosColumnas'] ?? '3');
+        if (!in_array($v, ['auto', '1', '2', '3', '4', '5', '6'], true)) { $this->err($campo, 'Elige automático o de 1 a 6 por fila.'); return '3'; }
+        return $v;
     }
 
     // ---------------------------------------------------------------- reglas
@@ -101,6 +126,7 @@ final class Contenido
         $out['inicio'] = [
             'heroFoto'    => $this->img($in['heroFoto'] ?? '', 'inicio.heroFoto', true),
             'heroFotoAlt' => $this->txt($in, 'heroFotoAlt', 'inicio.heroFotoAlt', 200),
+            'serviciosColumnas' => $this->columnas($in, 'inicio.serviciosColumnas'),
             'servicios'   => $this->lista($in, 'servicios', 'inicio.servicios', 12, fn($x, $p) => [
                 'etiqueta' => $this->txt($x, 'etiqueta', "$p.etiqueta", 60),
                 'titulo'   => $this->txt($x, 'titulo', "$p.titulo", 80, true),
@@ -138,6 +164,7 @@ final class Contenido
                 'items'    => $this->textos($x['items'] ?? [], "$p.items", 8, 80),
             ]),
             'certificaciones' => $this->textos($cv['certificaciones'] ?? [], 'cv.certificaciones', 8, 80),
+            'serviciosColumnas' => $this->columnas($cv, 'cv.serviciosColumnas'),
         ];
 
         $pr = $this->obj($c, 'presentacion');

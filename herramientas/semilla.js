@@ -103,6 +103,14 @@ const contenido = {
   // Textos sueltos. Formato: *énfasis* (em), **negrita**, salto de línea = \n,
   // {anios} {desde} {obras} {m2} {regiones} = valores automáticos.
   textos: {
+    // etiquetas de las cifras (los números van en "cifras"; los años se calculan solos)
+    'cifras.aniosHero': 'Años de\ntrayectoria',
+    'cifras.obrasHero': 'Obras y proyectos\nregistrados',
+    'cifras.m2Hero': 'm² en obras\ndestacadas',
+    'cifras.aniosBanda': 'Años de experiencia · desde {desde}',
+    'cifras.obrasBanda': 'Obras y proyectos registrados',
+    'cifras.regionesBanda': 'Regiones con proyectos y montajes',
+    'cifras.m2Banda': 'm² intervenidos en obras destacadas',
     'hero.eyebrow': 'Ingeniería HVAC · Chile desde {desde}',
     'hero.titulo1': 'Ingeniería que',
     'hero.tituloDestacado': 'hace habitable',
@@ -168,6 +176,7 @@ const contenido = {
   inicio: {
     heroFoto: 'hero-cerro-dominador.jpg',
     heroFotoAlt: 'Infraestructura industrial de climatización en el norte de Chile',
+    serviciosColumnas: '3',     // servicios por fila: 'auto' (todos en una fila) o '1'…'6'
     servicios: [
       { etiqueta: 'Asesorías térmicas', titulo: 'Diagnóstico', texto: 'Informes de proyecto, evaluaciones técnico-económicas, inspecciones de obra, cálculos de carga térmica y consumo de ACS.' },
       { etiqueta: 'Ingeniería', titulo: 'Diseño', texto: 'Proyectos de climatización, ventilación y calefacción para los sectores comercial, residencial e industrial, con foco en eficiencia energética.' },
@@ -212,7 +221,8 @@ const contenido = {
       { etiqueta: '03 · Montaje', titulo: 'Instalaciones', texto: 'Montaje de sistemas HVAC: sistemas de agua, expansión directa, refrigerante variable, volumen variable e instalaciones solares.',
         resumen: 'Sistemas de agua, expansión directa, VRV/VRF, volumen variable e instalaciones solares.', items: ['Suministro y montaje', 'Chiller, fan-coil y UMA', 'VRV / VRF y solar térmica'] }
     ],
-    certificaciones: ['Proyectos con certificación LEED', 'Eficiencia energética', 'ERNC y solar térmica', 'Obras sobre 4.800 msnm']
+    certificaciones: ['Proyectos con certificación LEED', 'Eficiencia energética', 'ERNC y solar térmica', 'Obras sobre 4.800 msnm'],
+    serviciosColumnas: '3'
   },
   presentacion: {
     caja: [

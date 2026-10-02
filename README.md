@@ -82,6 +82,17 @@ Pedido de Manuel: entrar con cuenta de la empresa y editar todo el sitio sin toc
 - **Guardar ≠ Publicar**: Guardar crea un borrador (cualquier editor); Publicar (admin, configurable) cambia el sitio. Bloqueo optimista (si otra persona guardó, no se pisan), historial de 150 versiones con «Cargar al borrador», deshacer/rehacer, y **copia local del borrador** si se corta la sesión o se cierra la pestaña.
 - **Vista previa real** (iframe con `?borrador=1`, `assets/borrador.js`): Inicio / CV web / CV presentación, escritorio/tablet/móvil; clic en un texto → su campo; foco en un campo → se marca en la vista previa. Textos al vuelo; obras y presentación recargan conservando el scroll.
 
+#### Ajustes tras la primera prueba en Docker (02-oct)
+- **Todo se puede tocar en la vista previa.** Las etiquetas de las cifras (hero, banda de números, KPIs del CV) son textos `cifras.*` y se editan en «Empresa → Cifras», junto a su número. Los años no se escriben: al tocarlos, el panel lleva a «Aniversario → Fecha de fundación» con un aviso.
+- **Obras en la vista previa.** Al abrir una obra, la vista salta a ella y la marca: a la portada si está ahí y, si no, al CV. Las tarjetas y filas llevan `data-obra="<id>"` en `cv.html` y en la presentación. La ficha tiene los botones «Ver en la portada / en el CV / en la presentación».
+- **Sectores y regiones nuevos desde la obra.** «+ Nuevo sector» / «+ Nueva región» crean el elemento en el catálogo y lo dejan marcado. Si el nombre ya existe (sin importar mayúsculas ni acentos), se usa el existente.
+- **Servicios por fila** (`inicio.serviciosColumnas`, `cv.serviciosColumnas`: `auto` o 1–6). `sitio-render.js` pone `--cols` y `--cols-md`. Bajo ~1000 px quedan como máximo 2 columnas y en celular 1.
+- **Fotos en WebP, sin el original** (decisión de Manuel). Se usa calidad 82, con 2000 px de máximo (portada 2400, equipo 800). Los logos de socios conservan la transparencia. Ejemplo: una foto de 3,1 MB queda en ~300 KB, y el panel muestra «3,1 MB → 294 KB». Si el GD del hosting no tiene WebP, se usa JPG/PNG.
+- **Arreglos:**
+  - Al tocar un interruptor, media página quedaba gris. El `<input>` del interruptor tenía `position:absolute` sin padre posicionado y, al recibir el foco, el navegador desplazaba el documento entero. Esto también hacía que un clic en la vista «intentara pero no llevara».
+  - El acceso queda centrado.
+- La **auditoría** (entradas, guardados, publicaciones, subidas) se guarda en la BD (tabla `auditoria`) y se ve en Usuarios → Registro de actividad.
+
 ### Seguridad (todo se valida en el servidor)
 - Correo: solo `@icewell.cl` exacto (sin subdominios ni Unicode). Registro → verificar correo → **aprobación de un admin** (aviso por correo a los admins). `admin_inicial` en config sirve para el primer acceso en un hosting sin consola.
 - Contraseñas: mínimo 12, sin las más comunes ni el nombre/correo; **Argon2id** (bcrypt si el hosting no lo tiene) sobre HMAC con un *pepper* que vive en `config.php`, fuera de la BD.
@@ -91,7 +102,7 @@ Pedido de Manuel: entrar con cuenta de la empresa y editar todo el sitio sin toc
 - **2FA opcional** (app autenticadora, TOTP) con secreto cifrado con libsodium; cada código sirve una vez. Muy recomendado para admins.
 - Imágenes: solo JPG/PNG/WebP ≤ 8 MB, tipo real por bytes, **re-codificadas con GD** (se pierde EXIF/GPS y cualquier contenido escondido), nombre aleatorio, carpeta sin ejecución de PHP. Nada de SVG.
 - CSP estricta en el panel (sin JavaScript en línea), `X-Frame-Options`, `Referrer-Policy: no-referrer` (los enlaces llevan token), HSTS, auditoría de entradas, intentos fallidos, guardados y publicaciones (pestaña Usuarios).
-- Pruebas: `php herramientas/tests/test_api.php` (89 chequeos de flujos y ataques: dominio ajeno, clave débil, CSRF, origen ajeno, fuerza bruta, enlaces reutilizados/vencidos, sesiones que deben morir, Google falso, 2FA repetido, PHP disfrazado de foto, modo desarrollador en producción).
+- Pruebas: `php herramientas/tests/test_api.php` (104 chequeos de flujos y ataques: dominio ajeno, clave débil, CSRF, origen ajeno, fuerza bruta, enlaces reutilizados/vencidos, sesiones que deben morir, Google falso, 2FA repetido, PHP disfrazado de foto, modo desarrollador en producción).
 
 ### Beta en tu PC (sin servidor)
 `php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php` → sin `config.php` arranca en **modo local**: SQLite en `servidor/datos/`, secretos generados solos, correos a `/admin/bandeja.html` y botón **«Entrar como desarrollador»** (solo modo local **y** solo desde 127.0.0.1; en producción no existe). Publicar en local escribe los JS de `web/assets/` del repo: después se hace commit como siempre.

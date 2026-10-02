@@ -149,9 +149,46 @@
       fila.appendChild(b);
     });
     w.appendChild(fila);
+    // "+ Nuevo sector" / "+ Nueva región": se crea en el catálogo y queda marcado en esta obra
+    if(op.crear){
+      var abrir = el('button', 'ed-chip ed-chip--nuevo', op.crear.etiqueta); abrir.type = 'button';
+      var caja = el('div', 'ed-chips__nuevo'); caja.hidden = true;
+      var inp = el('input', 'entrada'); inp.type = 'text'; inp.maxLength = 40; inp.placeholder = op.crear.placeholder || 'Nombre';
+      inp.setAttribute('aria-label', op.crear.etiqueta);
+      var ok = el('button', 'btn btn--primario btn--chico', 'Agregar'); ok.type = 'button';
+      var no = el('button', 'enlace', 'Cancelar'); no.type = 'button';
+      caja.appendChild(inp); caja.appendChild(ok); caja.appendChild(no);
+      var agregar = function(){
+        var nombre = inp.value.trim();
+        if(nombre.length < 2){ inp.focus(); return; }
+        var id = op.crear.fn(nombre);           // devuelve el id (nuevo o el que ya existía con ese nombre)
+        if(!id) return;
+        if((obj[k] || []).indexOf(id) < 0) obj[k] = (obj[k] || []).concat([id]);
+        E.cambio(op.tipo || 'obras'); E.instantanea();
+        E.render();
+      };
+      abrir.addEventListener('click', function(){ caja.hidden = false; abrir.hidden = true; inp.focus(); });
+      no.addEventListener('click', function(){ caja.hidden = true; abrir.hidden = false; inp.value = ''; });
+      ok.addEventListener('click', agregar);
+      inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); agregar(); } if(e.key === 'Escape') no.click(); });
+      fila.appendChild(abrir);
+      w.appendChild(caja);
+    }
     if(op.ayuda) w.appendChild(el('small', 'ed-ayuda-campo', op.ayuda));
     cont.appendChild(w);
     return w;
+  };
+
+  /** Agrega un elemento a un catálogo (sectores/regiones) o devuelve el que ya tiene ese nombre. */
+  F.agregarACatalogo = function(lista, nombre){
+    var norm = function(t){ return String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim(); };
+    var ya = lista.filter(function(x){ return norm(x.label) === norm(nombre); })[0];
+    if(ya){ E.toast('«' + ya.label + '» ya existía: quedó marcado.'); return ya.id; }
+    var base = norm(nombre).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'nuevo', id = base, n = 2;
+    while(lista.some(function(x){ return x.id === id; })) id = base + '-' + n++;
+    lista.push({ id: id, label: nombre.slice(0, 40) });
+    E.toast('«' + nombre + '» se agregó a la lista. Aparecerá en los filtros y botones del sitio al publicar.', 'ok');
+    return id;
   };
 
   /** Lista de elementos con agregar / quitar / subir / bajar. */
@@ -227,6 +264,10 @@
       fr.readAsDataURL(file);
     });
   }
+  function pesoLegible(b){
+    if(b >= 1024 * 1024) return (b / 1024 / 1024).toLocaleString('es-CL', { maximumFractionDigits: 1 }) + ' MB';
+    return Math.max(1, Math.round(b / 1024)).toLocaleString('es-CL') + ' KB';
+  }
   F.subir = function(file, tipo, nombre){
     return leerArchivo(file).then(function(datos){ return P.api('imagen', { tipo: tipo, nombre: nombre || '', datos: datos }); });
   };
@@ -259,7 +300,11 @@
       lbl.classList.add('cargando'); estado.textContent = 'Subiendo…';
       F.subir(f, op.tipo, op.nombre ? op.nombre() : '').then(function(r){
         obj[k] = r.archivo; pintar(); quitar.hidden = !op.opcional; lbl.firstChild.textContent = 'Cambiar imagen';
-        estado.textContent = 'Lista (' + r.ancho + '×' + r.alto + ' px). Se publicará al Guardar y Publicar.';
+        // Peso del archivo que eligió la persona (no el achicado en el navegador) → peso final.
+        var peso = r.bytes_final ? pesoLegible(f.size) + ' → ' + pesoLegible(r.bytes_final) + ' (' + String(r.formato || '').toUpperCase() + ', ' : '(';
+        estado.textContent = 'Lista ' + peso + r.ancho + '×' + r.alto + ' px). Se publicará al Guardar y Publicar.';
+        // También como aviso: en la ficha de obra, alCambiar vuelve a pintar el formulario y este texto se pierde.
+        if(r.bytes_final) E.toast('Foto lista: ' + pesoLegible(f.size) + ' → ' + pesoLegible(r.bytes_final) + '.');
         E.cambio(op.cambio || 'sitio'); E.instantanea();
         if(op.alCambiar) op.alCambiar();
       }).catch(function(err){ estado.textContent = ''; if(err.estado === 401) E.error(err); else E.toast(err.message, 'error'); })

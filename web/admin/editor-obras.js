@@ -34,7 +34,12 @@
   }
 
   E.obras = {
-    abrir: function(id){ vista.modo = 'ficha'; vista.id = id; E.render(); document.getElementById('panel').scrollTop = 0; },
+    abrir: function(id){
+      vista.modo = 'ficha'; vista.id = id; E.render(); document.getElementById('panel').scrollTop = 0;
+      // la vista previa salta a la obra (portada si está ahí; si no, el CV) para que se vea qué se edita
+      var o = porId(id);
+      if(o && !o._nueva && E.vista) E.vista.mostrarObra(id);
+    },
     verPortada: function(){ vista.modo = 'portada'; E.render(); }
   };
 
@@ -147,6 +152,15 @@
     }
     var sd = F.seccion(p, 'Dónde aparece', { clave: 'obra-donde' });
     sd.appendChild(donde); pintarDonde();
+    // botones para ver la obra en la vista previa (solo donde aplica)
+    var ver = el('div', 'ed-ver-obra');
+    [['portada', 'Ver en la portada', o.portada && o.foto], ['cv', 'Ver en el CV', true], ['presentacion', 'Ver en la presentación', true]].forEach(function(x){
+      if(!x[2] || o.visible === false) return;
+      var b = el('button', 'btn btn--secundario btn--chico', x[1]); b.type = 'button';
+      b.addEventListener('click', function(){ if(E.vista) E.vista.mostrarObra(o.id, x[0]); });
+      ver.appendChild(b);
+    });
+    if(ver.childNodes.length && !o._nueva) sd.appendChild(ver);
 
     var s = F.seccion(p, 'Datos de la obra', { clave: 'obra-datos' });
     F.texto(s, 'Nombre', o, 'nombre', { max: 200, tipo: 'obras', requerido: true, ruta: 'obra:' + o.id, alCambiar: function(v){
@@ -161,8 +175,10 @@
     g = F.grilla(s);
     F.texto(g, 'Lugar (comuna o ciudad)', o, 'lugar', { max: 150, tipo: 'obras' });
     F.texto(g, 'Uso', o, 'uso', { max: 150, tipo: 'obras', placeholder: 'Ej: Bodegas y oficinas' });
-    F.chips(s, 'Sectores', o, 'sectores', cat.sectores, { ayuda: 'Al menos uno. El primero es el que se muestra en la tarjeta.' });
-    F.chips(s, 'Regiones', o, 'regiones', cat.regiones);
+    F.chips(s, 'Sectores', o, 'sectores', cat.sectores, { ayuda: 'Al menos uno. El primero es el que se muestra en la tarjeta.',
+      crear: { etiqueta: '+ Nuevo sector', placeholder: 'Ej: Energía', fn: function(n){ return F.agregarACatalogo(cat.sectores, n); } } });
+    F.chips(s, 'Regiones', o, 'regiones', cat.regiones, {
+      crear: { etiqueta: '+ Nueva región', placeholder: 'Ej: Magallanes', fn: function(n){ return F.agregarACatalogo(cat.regiones, n); } } });
     g = F.grilla(s);
     var trabajo = F.texto(g, 'Tipo de trabajo', o, 'trabajo', { max: 80, tipo: 'obras' });
     var dl = el('datalist'); dl.id = 'trabajos'; ['Suministro y montaje', 'Proyecto y montaje', 'Proyecto', 'Montaje', 'Ingeniería'].forEach(function(t){ var x = el('option'); x.value = t; dl.appendChild(x); });

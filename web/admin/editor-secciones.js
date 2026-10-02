@@ -6,6 +6,15 @@
   'use strict';
   var E = window.Editor, F = E.campos, el = F.el;
 
+  // años cumplidos desde la fundación (misma cuenta que assets/aniversario.js)
+  function aniosDesde(f){
+    var p = String(f || '2009-01-01').split('-').map(Number), h = new Date(), a = h.getFullYear() - p[0];
+    if(h.getMonth() + 1 < p[1] || (h.getMonth() + 1 === p[1] && h.getDate() < p[2])) a--;
+    return Math.max(a, 0);
+  }
+  var COLUMNAS = [['auto', 'Automático: todos en una fila'], ['1', '1 por fila'], ['2', '2 por fila'], ['3', '3 por fila'], ['4', '4 por fila'], ['5', '5 por fila'], ['6', '6 por fila']];
+  var AYUDA_COLUMNAS = 'En pantallas medianas se muestran como máximo 2 por fila y en celular 1, para que siempre se lean bien.';
+
   // campo de texto del diccionario "textos" (clave con punto: 'hero.lead')
   function T(cont, etq, clave, op){
     op = Object.assign({ ruta: 't:' + clave }, op || {});
@@ -48,6 +57,8 @@
     T(s, 'Etiqueta', 'servicios.eyebrow', { max: 60 });
     T(s, 'Título', 'servicios.titulo', { max: 80 });
     T(s, 'Bajada', 'servicios.lead', { multi: true, max: 300 });
+    if(!ini.serviciosColumnas) ini.serviciosColumnas = '3';
+    F.selector(s, 'Servicios por fila', ini, 'serviciosColumnas', COLUMNAS, { ruta: 'lista:inicio.serviciosColumnas', ayuda: AYUDA_COLUMNAS });
     F.lista(s, { arr: ini.servicios, ruta: 'lista:inicio.servicios', max: 12, min: 1, agregar: 'Agregar servicio',
       titulo: function(x){ return x.titulo; }, nuevo: function(){ return { etiqueta: '', titulo: 'Nuevo servicio', texto: '' }; },
       campos: function(c, x){ var g = F.grilla(c); F.texto(g, 'Etiqueta', x, 'etiqueta', { max: 60 }); F.texto(g, 'Título', x, 'titulo', { max: 80 }); F.texto(c, 'Texto', x, 'texto', { multi: true, max: 500 }); } });
@@ -138,6 +149,8 @@
     s = F.seccion(p, 'Versión web · servicios', { clave: 'cv-serv', abierta: false });
     T(s, 'Título', 'cv.serviciosTitulo', { max: 100 });
     T(s, 'Bajada', 'cv.serviciosLead', { multi: true, max: 400 });
+    if(!d.cv.serviciosColumnas) d.cv.serviciosColumnas = '3';
+    F.selector(s, 'Servicios por fila', d.cv, 'serviciosColumnas', COLUMNAS, { ruta: 'lista:cv.serviciosColumnas', ayuda: AYUDA_COLUMNAS });
     F.lista(s, { arr: d.cv.servicios, ruta: 'lista:cv.servicios', max: 6, min: 1, agregar: 'Agregar servicio',
       titulo: function(x){ return x.titulo; }, nuevo: function(){ return { etiqueta: '', titulo: 'Nuevo servicio', texto: '', resumen: '', items: [] }; },
       campos: function(c, x){
@@ -228,11 +241,28 @@
     var vis = d.obras.filter(function(o){ return o.visible !== false; });
     var m2 = vis.reduce(function(a, o){ return a + (o.m2 || 0); }, 0);
     var regs = {}; vis.forEach(function(o){ o.regiones.forEach(function(r){ regs[r] = 1; }); });
-    g = F.grilla(s);
-    F.texto(g, 'Obras registradas', d.cifras, 'obras', { max: 20, ruta: 'cifras:obras', ayuda: 'Obras cargadas en el panel: ' + vis.length });
-    F.texto(g, 'm² en obras destacadas', d.cifras, 'm2', { max: 20, ruta: 'cifras:m2', ayuda: 'Suma de m² cargados: ' + new Intl.NumberFormat('es-CL').format(m2) });
-    F.texto(g, 'Regiones', d.cifras, 'regiones', { max: 20, ruta: 'cifras:regiones', ayuda: 'Regiones con obras cargadas: ' + Object.keys(regs).length });
-    F.texto(s, 'Texto junto a las regiones', d.cifras, 'regionesTexto', { max: 80, ruta: 'cifras:regionesTexto' });
+    // cada cifra con sus textos: el número aquí; los años salen solos de la fecha de fundación (más abajo)
+    var bloque = function(titulo){ var b = el('div', 'ed-cifra'); b.appendChild(el('p', 'ed-cifra__titulo', titulo)); s.appendChild(b); return b; };
+    var c = bloque('Años de experiencia');
+    c.appendChild(el('p', 'ed-ayuda', 'El número se calcula solo desde la fecha de fundación (hoy: ' + aniosDesde(d.config.fundacion) + ' años). Aquí solo cambias los textos.'));
+    g = F.grilla(c);
+    T(g, 'Texto en la portada', 'cifras.aniosHero', { multi: true, max: 60 });
+    T(g, 'Texto en la banda de cifras y en el CV', 'cifras.aniosBanda', { max: 80 });
+    c = bloque('Obras registradas');
+    F.texto(c, 'Número', d.cifras, 'obras', { max: 20, ruta: 'cifras:obras', ayuda: 'Obras cargadas en el panel: ' + vis.length });
+    g = F.grilla(c);
+    T(g, 'Texto en la portada', 'cifras.obrasHero', { multi: true, max: 60 });
+    T(g, 'Texto en la banda de cifras y en el CV', 'cifras.obrasBanda', { max: 80 });
+    c = bloque('m² intervenidos');
+    F.texto(c, 'Número', d.cifras, 'm2', { max: 20, ruta: 'cifras:m2', ayuda: 'Suma de m² cargados: ' + new Intl.NumberFormat('es-CL').format(m2) });
+    g = F.grilla(c);
+    T(g, 'Texto en la portada', 'cifras.m2Hero', { multi: true, max: 60 });
+    T(g, 'Texto en la banda de cifras y en el CV', 'cifras.m2Banda', { max: 80 });
+    c = bloque('Regiones');
+    F.texto(c, 'Número', d.cifras, 'regiones', { max: 20, ruta: 'cifras:regiones', ayuda: 'Regiones con obras cargadas: ' + Object.keys(regs).length });
+    g = F.grilla(c);
+    T(g, 'Texto en la banda de cifras', 'cifras.regionesBanda', { max: 80 });
+    F.texto(g, 'Texto en el CV (después de «Regiones,»)', d.cifras, 'regionesTexto', { max: 80, ruta: 'cifras:regionesTexto' });
 
     s = F.seccion(p, 'Aniversario', { clave: 'emp-aniv', abierta: false });
     var f = F.texto(s, 'Fecha de fundación', d.config, 'fundacion', { tipoInput: 'date', ruta: 'config:fundacion',

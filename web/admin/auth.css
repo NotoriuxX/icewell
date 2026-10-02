@@ -5,7 +5,9 @@
    Logo sobre oscuro: isotipo a color + "icewell" en crema, sin placa blanca.
    ========================================================================== */
 body.acceso {
-  min-height: 100vh;
+  /* tarjeta centrada en la pantalla (vertical y horizontal); si no cabe, se hace scroll normal */
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; min-height: 100dvh; padding: 24px 16px;
   background:
     linear-gradient(rgba(159, 223, 244, 0.05) 1px, transparent 1px) 0 0 / 46px 46px,
     linear-gradient(90deg, rgba(159, 223, 244, 0.05) 1px, transparent 1px) 0 0 / 46px 46px,
@@ -14,8 +16,8 @@ body.acceso {
 }
 .acceso-marco {
   display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-  width: min(1060px, calc(100% - 32px)); min-height: min(680px, calc(100vh - 48px));
-  margin: 24px auto; overflow: hidden; border-radius: 16px;
+  width: min(1060px, 100%); min-height: min(680px, calc(100vh - 48px));
+  margin: auto; overflow: hidden; border-radius: 16px;
   box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(159, 223, 244, 0.14);
 }
 
@@ -60,7 +62,8 @@ body.acceso {
 .estado-icono--error { background: #fdeced; color: #a8101d; }
 
 @media (max-width: 860px) {
-  .acceso-marco { grid-template-columns: minmax(0, 1fr); min-height: 0; width: min(560px, calc(100% - 24px)); margin: 12px auto; }
+  .acceso-marco { grid-template-columns: minmax(0, 1fr); min-height: 0; width: min(560px, 100%); }
+  body.acceso { padding: 12px; }
   .marca { gap: 18px; padding: 26px 24px 30px; }
   .marca__logo img { width: 136px; }
   .marca__texto { margin-top: 0; }
@@ -73,7 +76,7 @@ body.acceso {
 }
 
 /* bandeja de correos de prueba (modo local) */
-.acceso-marco--bandeja { grid-template-columns: 1fr; width: min(820px, calc(100% - 24px)); }
+.acceso-marco--bandeja { grid-template-columns: 1fr; width: min(820px, 100%); }
 .bandeja { display: grid; gap: 12px; }
 .correo { padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
 .correo__cab { color: var(--ink-soft); font: 500 11px var(--mono); letter-spacing: 0.06em; }

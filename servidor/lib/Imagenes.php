@@ -6,7 +6,10 @@
    - la imagen se VUELVE A CODIFICAR con GD: el archivo guardado lo escribe el
      servidor, así se pierden EXIF (GPS del teléfono) y cualquier contenido escondido;
    - nombre aleatorio elegido por el servidor, en assets/obras/ (sin PHP: .htaccess);
-   - límite de subidas por usuario y hora. */
+   - límite de subidas por usuario y hora.
+   Formato de salida: WebP (calidad 82), sin guardar el original (decisión de
+   Manuel, 02-oct). Una foto de teléfono de 4–5 MB queda en ~300 KB sin que se
+   note. Si el GD del hosting no trae WebP, se usa JPG/PNG como respaldo. */
 declare(strict_types=1);
 
 final class Imagenes
@@ -14,12 +17,13 @@ final class Imagenes
     const MAX_BYTES = 8 * 1024 * 1024;
     const MAX_PIXELES = 40000000;   // 40 MP: evita "bombas" de descompresión
     const TIPOS = [
-        // tipo => [lado máximo, salida]
-        'obra'   => [2000, 'jpg'],
-        'hero'   => [2400, 'jpg'],
-        'equipo' => [800, 'jpg'],
-        'socio'  => [600, 'png'],    // logos: se conserva la transparencia
+        // tipo => [lado máximo, conserva transparencia]
+        'obra'   => [2000, false],
+        'hero'   => [2400, false],
+        'equipo' => [800, false],
+        'socio'  => [600, true],     // logos: se conserva la transparencia
     ];
+    const CALIDAD_WEBP = 82;
 
     public static function guardar(array $d, int $usuarioId): array
     {
@@ -43,19 +47,27 @@ final class Imagenes
         $im = @imagecreatefromstring($bin);
         if (!$im) throw new ErrorHttp(422, 'No se pudo leer la imagen.');
         if ($mime === 'image/jpeg') $im = self::orientar($im, $bin);
-        [$max, $ext] = self::TIPOS[$tipo];
-        $im = self::escalar($im, $max, $ext === 'png');
+        [$max, $alfa] = self::TIPOS[$tipo];
+        $im = self::escalar($im, $max, $alfa);
+        $ext = function_exists('imagewebp') ? 'webp' : ($alfa ? 'png' : 'jpg');
 
         $dir = rtrim((string)Config::get('dir_web'), '/') . '/assets/obras';
         if (!is_dir($dir)) mkdir($dir, 0755, true);
         $base = self::slug((string)($d['nombre'] ?? $tipo)) ?: $tipo;
         $archivo = $base . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
         $ruta = $dir . '/' . $archivo;
-        $ok = $ext === 'png' ? imagepng($im, $ruta, 8) : imagejpeg($im, $ruta, 84);
+        $ok = match ($ext) {
+            'webp' => imagewebp($im, $ruta, self::CALIDAD_WEBP),
+            'png'  => imagepng($im, $ruta, 8),
+            default => imagejpeg($im, $ruta, 84),
+        };
         if (!$ok) throw new ErrorHttp(500, 'No se pudo guardar la imagen.');
         @chmod($ruta, 0644);
+        clearstatcache(true, $ruta);
+        $final = (int)filesize($ruta);
         Auditoria::registrar($usuarioId, 'imagen.subida', "obras/$archivo");
-        return ['ok' => true, 'archivo' => 'obras/' . $archivo, 'ancho' => imagesx($im), 'alto' => imagesy($im)];
+        return ['ok' => true, 'archivo' => 'obras/' . $archivo, 'ancho' => imagesx($im), 'alto' => imagesy($im),
+            'formato' => $ext, 'bytes_original' => strlen($bin), 'bytes_final' => $final];
     }
 
     private static function escalar($im, int $max, bool $alfa)

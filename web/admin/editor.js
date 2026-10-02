@@ -165,7 +165,7 @@
     if(tipo === 'obra') return 'obras';
     if(tipo === 'empresa' || tipo === 'cifras' || tipo === 'config') return 'empresa';
     if(tipo === 'catalogo') return 'catalogos';
-    if(tipo === 't') return /^(cv|pres)\./.test(resto) ? 'cv' : 'inicio';
+    if(tipo === 't') return /^cifras\./.test(resto) ? 'empresa' : /^(cv|pres)\./.test(resto) ? 'cv' : 'inicio';
     if(tipo === 'lista') return /^(cv|presentacion)\./.test(resto) ? 'cv' : 'inicio';
     if(tipo === 'seo') return 'inicio';
     return null;
@@ -322,6 +322,12 @@
     (E.dirty ? E.confirmar('Tienes cambios sin guardar', 'Si sales ahora, quedan solo en este navegador (te ofreceremos recuperarlos al volver).', { si: 'Salir igual' }) : Promise.resolve(true))
       .then(function(si){ if(!si) return; guardarLocal(); E.dirty = false; return P.api('auth/salir', {}).catch(function(){}).then(function(){ location.href = './'; }); });
   });
+  // Seguro extra contra la "página gris": si algo desplaza el documento (foco en un control oculto,
+  // scrollIntoView), se vuelve arriba. En escritorio el documento no debe moverse nunca.
+  window.addEventListener('scroll', function(){
+    if(window.matchMedia('(min-width: 901px)').matches && (window.scrollY || document.documentElement.scrollTop)) window.scrollTo(0, 0);
+  }, { passive: true });
+  document.addEventListener('scroll', function(){ if(document.body.scrollTop) document.body.scrollTop = 0; }, true);
   // celular: el panel es un cajón sobre la vista previa
   $('btnVerPanel').addEventListener('click', function(){ document.body.classList.toggle('ed--panel-abierto'); });
 })();
