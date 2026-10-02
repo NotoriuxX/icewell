@@ -69,10 +69,73 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
   ok(/51 obras registradas en 12 regiones/.test(texto(d.querySelector('.timeline'))), 'línea de tiempo con cifras automáticas');
   ok(d.querySelectorAll('.service-list .service-card').length === 3 && d.querySelectorAll('.method-list .method-item').length === 3, 'servicios y método desde los datos');
   ok(d.querySelector('.hero-section h1 em').textContent === 'confianza y profesionalismo', 'título del hero con énfasis (lema)');
-  ok(d.querySelector('.contact-redes').hidden, 'sin redes cargadas: el bloque de redes no se muestra');
+  ok(!d.querySelector('.contact-redes').hidden && d.querySelector('.contact-redes [data-red="instagram"]').hidden, 'redes: se ve LinkedIn (cargado) y no las que están vacías');
   ok([...d.querySelectorAll('a[data-wa="cotizar"]')].every(a => a.href === 'https://wa.me/56964074519?text=' + encodeURIComponent(S.empresa.wa.cotizar)), 'links de WhatsApp armados con el número y el mensaje de los datos');
 }
 
+// ---------- formulario «Cuéntanos tu proyecto», LinkedIn, crédito y menú ----------
+(async () => {
+  const { w, d, errores } = cargar('index.html');
+  ok(!errores.length, 'index (formulario) sin errores ' + errores.join(' | '));
+  // LinkedIn de la empresa y crédito
+  const li = [...d.querySelectorAll('a[data-red="linkedin"]')];
+  ok(li.length === 2 && li.every(a => !a.hidden && a.href === 'https://www.linkedin.com/company/icewell-cuvolt/'), 'LinkedIn de la empresa en Contacto y en el pie');
+  const cred = d.querySelector('.site-footer .credito a');
+  ok(cred && cred.textContent === 'Manuel Mery' && cred.href === 'https://www.linkedin.com/in/manuel-mery-413874119/' && cred.rel === 'noopener', 'crédito «Diseño y desarrollo: Manuel Mery» con su LinkedIn');
+  // menú: Currículum destacado y marca de la sección al tocar un enlace
+  ok(d.querySelector('.desktop-nav a.nav-cv[href="curriculum"]'), 'Currículum destacado en el menú');
+  d.querySelector('.desktop-nav a[href="#equipo"]').dispatchEvent(new w.MouseEvent('click', { bubbles: true, cancelable: true }));
+  ok(d.querySelector('.desktop-nav a[href="#equipo"]').classList.contains('activo') && d.querySelector('.desktop-nav a[href="#equipo"]').getAttribute('aria-current') === 'true'
+    && !d.querySelector('.desktop-nav a[href="#nosotros"]').classList.contains('activo'), 'menú: la sección elegida queda marcada (aria-current)');
+  // formulario
+  const botones = d.querySelectorAll('[data-abrir-formulario]');
+  ok(botones.length === 2 && botones[0].textContent.trim() === 'Cuéntanos tu proyecto', 'botón «Cuéntanos tu proyecto» en Contacto y en el pie');
+  botones[0].click();
+  const cf = d.getElementById('formularioContacto');
+  ok(cf && !cf.hidden && cf.getAttribute('role') === 'dialog' && cf.getAttribute('aria-modal') === 'true', 'abre un diálogo modal');
+  const visible = () => cf.querySelector('.cf__paso:not([hidden])').getAttribute('data-paso');
+  const sig = () => cf.querySelector('.cf__form').dispatchEvent(new w.Event('submit', { cancelable: true }));
+  ok(visible() === '1' && /Paso 1 de 5/.test(cf.querySelector('#cfProgreso').textContent), 'paso 1 de 5: nombre');
+  sig();
+  ok(visible() === '1' && /nombre/.test(d.getElementById('cfError').textContent), 'sin nombre no avanza y avisa');
+  cf.querySelector('#cfNombre').value = 'María <b>Pérez</b>'; sig();
+  ok(visible() === '2' && cf.querySelector('.cf__nombre').textContent === 'María' && !cf.querySelector('.cf__nombre b'), 'paso 2 saluda por el nombre (como texto)');
+  cf.querySelector('#cfCorreo').value = 'maria@'; sig();
+  ok(visible() === '2' && cf.querySelector('#cfCorreo').getAttribute('aria-invalid') === 'true', 'correo mal escrito no avanza');
+  cf.querySelector('#cfCorreo').value = 'maria@constructora.cl'; sig();
+  ok(visible() === '3' && cf.querySelectorAll('input[name="tipo"]').length === 4, 'paso 3: 4 opciones');
+  sig();
+  ok(visible() === '3', 'sin elegir opción no avanza');
+  const op = cf.querySelector('input[value="mantencion"]'); op.checked = true; op.dispatchEvent(new w.Event('change', { bubbles: true }));
+  await new Promise(r => setTimeout(r, 400));
+  ok(visible() === '4', 'elegir una opción avanza sola');
+  cf.querySelector('#cfMensaje').value = 'Corto'; sig();
+  ok(visible() === '4', 'mensaje muy corto no avanza');
+  cf.querySelector('#cfMensaje').value = 'Mantención de 3 chillers <img src=x onerror=alert(1)> en Providencia.'; sig();
+  ok(visible() === '5', 'paso 5: resumen');
+  const res = k => cf.querySelector('[data-resumen="' + k + '"]').textContent;
+  ok(res('tipo') === 'Mantención' && /<img src=x/.test(res('mensaje')) && !cf.querySelector('.cf__resumen img') && res('telefono') === '—', 'el resumen muestra lo escrito como texto (sin HTML)');
+  // envío
+  let pedido = null;
+  w.fetch = (url, op) => { pedido = { url, op }; return Promise.resolve({ status: 200, json: () => Promise.resolve({ ok: true }) }); };
+  sig(); await new Promise(r => setTimeout(r, 50));
+  const cuerpo = pedido && JSON.parse(pedido.op.body);
+  ok(pedido && pedido.url === 'api/?r=contacto' && pedido.op.headers['X-Requested-With'] === 'icewell' && cuerpo.tipo === 'mantencion' && cuerpo.web === '' && typeof cuerpo.ms === 'number', 'envía a api/?r=contacto con la cabecera, la trampa y el tiempo');
+  ok(visible() === 'fin' && /maria@constructora\.cl/.test(cf.querySelector('.cf__fin-texto').textContent), 'pantalla de «¡Listo!»');
+  cf.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  ok(cf.hidden, 'Esc cierra');
+  // sin servidor: respaldo por correo / WhatsApp con todo escrito
+  botones[1].click();
+  ok(visible() === '1' && cf.querySelector('#cfNombre').value === '', 'después de enviar, uno nuevo empieza de cero');
+  cf.querySelector('#cfNombre').value = 'Pedro'; sig(); cf.querySelector('#cfCorreo').value = 'pedro@x.cl'; sig();
+  const o2 = cf.querySelector('input[value="otro"]'); o2.checked = true; o2.dispatchEvent(new w.Event('change', { bubbles: true }));
+  await new Promise(r => setTimeout(r, 400));
+  cf.querySelector('#cfMensaje').value = 'Consulta de prueba sin servidor.'; sig();
+  w.fetch = () => Promise.reject(new Error('red'));
+  sig(); await new Promise(r => setTimeout(r, 50));
+  const mail = cf.querySelector('#cfAltCorreo').getAttribute('href');
+  ok(visible() === 'alt' && mail.startsWith('mailto:contacto@icewell.cl?') && decodeURIComponent(mail).includes('Consulta de prueba sin servidor.') && cf.querySelector('#cfAltWa').href.startsWith('https://wa.me/'), 'sin servidor: ofrece correo y WhatsApp con lo escrito');
+})().then(() => {
 // ---------- un dato cambiado en el panel se propaga a TODO ----------
 const PARCHE = `
   ICEWELL_SITIO.empresa.telefono = '+56 2 2999 1234';
@@ -134,3 +197,4 @@ const PARCHE = `
 
 console.log(fallas ? `\n${fallas} FALLAS` : '\nTODO OK');
 process.exit(fallas ? 1 : 0);
+});

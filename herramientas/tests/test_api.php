@@ -213,6 +213,42 @@ $cvjs = file_get_contents("$TMP/web/assets/cv-data.js");
 ok(str_contains($cvjs, '"data-center"') && str_contains($cvjs, 'Aysén'), 'el sector y la región nuevos llegan a cv-data.js');
 ok(str_contains(file_get_contents("$TMP/web/assets/vendor/cv-pdf-assets.js"), '"' . str_replace('/', '\/', $r['d']['archivo']) . '"') || str_contains(file_get_contents("$TMP/web/assets/vendor/cv-pdf-assets.js"), '"' . $r['d']['archivo'] . '"'), '…y la foto está embebida en cv-pdf-assets.js');
 
+// ================================================================ formulario del sitio (solicitudes)
+$sol = ['nombre' => 'María Pérez', 'correo' => 'maria@constructora.cl', 'tipo' => 'proyecto', 'telefono' => '+56 9 1234 5678',
+        'mensaje' => "Edificio de oficinas en Las Condes.\n<script>alert(1)</script> 8 pisos.", 'web' => '', 'ms' => 9000];
+$n0 = count(bandeja());
+$r = req('visita', 'POST', 'contacto', $sol);
+ok($r['codigo'] === 200 && ($r['d']['ok'] ?? false), 'formulario: solicitud válida → ok (sin sesión ni CSRF)');
+$b = bandeja(); $ult = end($b);
+ok(count($b) === $n0 + 1 && $ult['para'] === 'contacto@icewell.cl' && str_contains($ult['asunto'], 'Proyecto nuevo') && str_contains($ult['texto'], 'maria@constructora.cl'), 'el aviso llega SOLO al correo de la empresa (contacto@icewell.cl)');
+ok(!in_array('maria@constructora.cl', array_column($b, 'para'), true), 'al visitante no se le envía nada (el formulario no sirve de relé de spam)');
+ok(req('visita', 'POST', 'contacto', $sol, ['X-Requested-With' => null])['codigo'] === 403, 'formulario: sin la cabecera propia → 403');
+ok(req('visita', 'POST', 'contacto', $sol, ['Origin' => 'https://otro-sitio.example'])['codigo'] === 403, 'formulario: desde otro sitio → 403');
+$bdS = new PDO('sqlite:' . "$TMP/servidor/datos/icewell.sqlite");
+$cuenta = fn() => (int)$bdS->query('SELECT COUNT(*) FROM solicitudes')->fetchColumn();
+$antes = $cuenta();
+ok(req('visita', 'POST', 'contacto', ['web' => 'http://spam.example'] + $sol)['codigo'] === 200 && $cuenta() === $antes, 'trampa llena (bot): responde ok pero no guarda');
+ok(req('visita', 'POST', 'contacto', ['ms' => 800] + $sol)['codigo'] === 200 && $cuenta() === $antes, 'enviado en menos de 3 s (bot): responde ok pero no guarda');
+$r = req('visita', 'POST', 'contacto', ['correo' => 'no-es-correo'] + $sol);
+ok($r['codigo'] === 422 && isset($r['d']['errores']['correo']), 'correo inválido → 422 con el campo');
+ok(isset(req('visita', 'POST', 'contacto', ['tipo' => 'inventado'] + $sol)['d']['errores']['tipo']), 'tipo inventado → rechazado');
+ok(isset(req('visita', 'POST', 'contacto', ['nombre' => "Ana\r\nBcc: x@y.cl"] + $sol)['d']['errores']['nombre']), 'nombre con salto de línea (inyección de cabeceras) → rechazado');
+ok(isset(req('visita', 'POST', 'contacto', ['mensaje' => 'corto'] + $sol)['d']['errores']['mensaje']), 'mensaje de menos de 10 caracteres → rechazado');
+req('visita', 'POST', 'contacto', $sol); req('visita', 'POST', 'contacto', $sol);   // 4.º y 5.º de esta IP en la hora
+ok(req('visita', 'POST', 'contacto', $sol)['codigo'] === 429, '6.º envío desde la misma IP en una hora → 429');
+$bdS->exec("DELETE FROM intentos WHERE tipo = 'contacto_ip'");
+// panel
+ok(req('visita', 'GET', 'solicitudes')['codigo'] === 401, 'sin sesión: la lista de solicitudes → 401');
+$r = req('ana', 'GET', 'solicitudes');
+$s0 = $r['d']['solicitudes'][0] ?? [];
+ok($r['codigo'] === 200 && ($s0['nombre'] ?? '') === 'María Pérez' && str_contains($s0['mensaje'] ?? '', '<script>') && $s0['estado'] === 'nueva', 'un editor ve las solicitudes (el texto vuelve tal cual; el panel lo muestra como texto)');
+ok(req('ana', 'GET', 'solicitudes/nuevas')['d']['n'] === 3, 'contador de nuevas');
+ok(req('ana', 'POST', 'solicitudes/estado', ['id' => $s0['id'], 'estado' => 'atendida'])['codigo'] === 200 && req('ana', 'GET', 'solicitudes/nuevas')['d']['n'] === 2, 'un editor la marca atendida');
+ok(req('ana', 'POST', 'solicitudes/estado', ['id' => $s0['id'], 'estado' => 'x'])['codigo'] === 422, 'estado inválido → 422');
+ok(req('ana', 'POST', 'solicitudes/borrar', ['id' => $s0['id']])['codigo'] === 403, 'un editor no puede borrar');
+ok(req('ana', 'POST', 'solicitudes/estado', ['id' => $s0['id'], 'estado' => 'nueva'], ['X-CSRF-Token' => null])['codigo'] === 403, 'cambiar estado sin CSRF → 403');
+ok(req('adm', 'POST', 'solicitudes/borrar', ['id' => $s0['id']])['codigo'] === 200 && $cuenta() === 2, 'el admin la borra');
+
 // ================================================================ recuperar contraseña
 $n0 = count(bandeja());
 $r = req('x', 'POST', 'auth/recuperar', ['correo' => 'nadie@icewell.cl']);
@@ -339,7 +375,7 @@ ok(Http::esHttps() && Http::ip() === '1.2.3.4', 'desde el proxy de Docker (Caddy
 require_once "$TMP/servidor/lib/Contenido.php";
 $nueva = json_decode(file_get_contents("$TMP/servidor/semilla.json"), true);
 $mig = json_decode(file_get_contents("$TMP/servidor/migraciones/diseno2.json"), true);
-$v1 = $nueva; $v1['esquema'] = 1;
+$v1 = $nueva; $v1['esquema'] = 1; $v1['empresa']['redes']['linkedin'] = '';   // como estaba antes del esquema 3
 foreach ($mig['textos'] as $k => [$viejo, $nuevo]) { if ($viejo === null) unset($v1['textos'][$k]); else $v1['textos'][$k] = $viejo; }
 foreach ($mig['listas'] as $k => [$viejo, $nuevo]) $v1['inicio'][$k] = $viejo;
 $v1['inicio']['equipo'] = $mig['equipo']['viejo'];
@@ -353,7 +389,10 @@ ok($m['inicio']['metodo'] === $nueva['inicio']['metodo'] && $m['inicio']['hitos'
 ok(array_column($m['inicio']['equipo'], 'nombre') === ['Andrés Mora', 'Flavio Magnasco', 'Gonzalo Díaz W.', 'Persona Agregada', 'José Castillo'], 'migración: sale Cristian Castro, entra José Castillo, se respeta a quien agregaron a mano');
 ok($m['inicio']['equipo'][1]['foto'] === 'ceo-andres-mora.jpg' && $m['inicio']['equipo'][1]['texto'] === $nueva['inicio']['equipo'][1]['texto'], 'migración: la foto ya subida se conserva');
 [$limpio, $err] = Contenido::validar($v1, "$TMP/web/assets");
-ok(!$err && $limpio['esquema'] === 2 && $limpio['textos']['hero.casoBadge'] === 'Cliente', 'migración: validar/publicar (y "republicar" de Docker) ya sale en esquema 2');
+ok(!$err && $limpio['esquema'] === 3 && $limpio['textos']['hero.casoBadge'] === 'Cliente', 'migración: validar/publicar (y "republicar" de Docker) ya sale en el esquema actual (3)');
+ok($m['empresa']['redes']['linkedin'] === 'https://www.linkedin.com/company/icewell-cuvolt/', 'migración 3: el LinkedIn de la empresa se completa si estaba vacío');
+$v2 = $v1; $v2['empresa']['redes']['linkedin'] = 'https://www.linkedin.com/company/otra/';
+ok(Contenido::completar($v2)['empresa']['redes']['linkedin'] === 'https://www.linkedin.com/company/otra/', 'migración 3: un LinkedIn ya escrito no se pisa');
 ok(Contenido::completar($m) == $m, 'migración: aplicarla dos veces no cambia nada');
 
 echo $fallas ? "\n$fallas FALLAS\n" : "\nTODO OK\n";

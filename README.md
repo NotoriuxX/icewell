@@ -165,6 +165,52 @@ Manuel subió un diseño anterior que a Icewell le gustó más, y se rehizo el s
   - `test_api.php` cubre la migración.
 - **De pasada se arregló:** en `Contenido::img`, el mensaje «La imagen «…» no existe» no mostraba el nombre, porque PHP tomaba el `»` como parte de la variable.
 
+## Formulario «Cuéntanos tu proyecto», LinkedIn, crédito y menú (02-oct)
+
+Pedidos de Manuel:
+- botón «Cuéntanos tu proyecto», con el paso «¿Qué necesitas?»;
+- las solicitudes llegan a contacto@icewell.cl;
+- el LinkedIn de la empresa;
+- el crédito de diseño;
+- que el menú marque dónde está uno y que Currículum se destaque.
+
+### El formulario
+- **Dónde está:** `assets/contacto-form.js`, con su CSS en `index.html` (prefijo `.cf`). Lo abre cualquier elemento con `[data-abrir-formulario]`: el botón de Contacto y el enlace del pie. El texto del botón es editable: `contacto.formBoton`.
+- **Cómo es:** un diálogo modal a pantalla completa, con una pregunta por pantalla que entra deslizándose:
+  1. nombre;
+  2. correo (saluda por el nombre);
+  3. qué necesita: Proyecto nuevo, Mantención, Asesoría u Otro;
+  4. mensaje y teléfono opcional;
+  5. resumen con «Editar» en cada dato.
+- **Uso con teclado y lector de pantalla:**
+  - Enter avanza y Ctrl + Enter avanza desde el mensaje; Esc cierra;
+  - el foco queda dentro del diálogo y los errores se anuncian (`aria-live`);
+  - con movimiento reducido no hay deslizamiento, solo un fundido;
+  - los botones quedan pegados abajo aunque el paso sea largo;
+  - lo escrito se muestra siempre con `textContent`.
+- **Sin servidor o con error de red:** ofrece enviar lo mismo por correo (`mailto` con todo escrito) o por WhatsApp.
+
+### El servidor (`servidor/lib/Solicitudes.php`)
+- **Ruta:** `api/?r=contacto` es pública, pero exige lo mismo que todo POST: cabecera `X-Requested-With`, mismo origen y JSON.
+- **Validación:** nombre en una sola línea (sin inyección de cabeceras), correo válido, tipo dentro de los 4, teléfono con solo `0-9 +()-` y mensaje de 10 a 2000 caracteres.
+- **Anti-spam sin captcha:**
+  - campo trampa `web` y un mínimo de 3 s desde que se abrió; si el envío cae en eso, responde «ok» y no guarda;
+  - límite de 5 por hora por IP (`contacto_ip`).
+- **Qué hace con la solicitud:**
+  - la guarda en la tabla `solicitudes` (`Bd::VERSION_ESQUEMA` 2; se crea sola);
+  - avisa por correo **solo** a `empresa.correo` de la versión publicada (hoy contacto@icewell.cl); al visitante no se le escribe, para que no sirva como relé de spam.
+- **Panel:** pestaña **Solicitudes** (`editor-solicitudes.js`) con contador de nuevas, filtro Nuevas/Todas, «Responder por correo» y «Marcar atendida». «Borrar» es solo para admin. Todo queda en la auditoría.
+- **Pruebas:** `test_api.php` (envío válido, aviso solo a la empresa, trampa, tiempo, validaciones, 429, permisos y CSRF) y `test_sitio.js` (los 5 pasos, validaciones, texto sin HTML, envío y respaldo `mailto`).
+
+### Lo demás
+- **LinkedIn de la empresa:** https://www.linkedin.com/company/icewell-cuvolt/ en `empresa.redes.linkedin`. Se ve en Contacto y en el pie del sitio, y en Datos de la empresa del CV. Lo agrega `Contenido` con el esquema 3, solo si estaba vacío, así llega también al panel que ya está en uso.
+- **Crédito:** «Diseño y desarrollo: Manuel Mery» va en el pie del sitio y del CV, con enlace a su LinkedIn. Es fijo en el HTML: no se edita desde el panel.
+- **Menú:**
+  - el enlace de la sección en pantalla queda en blanco pleno, con una barra cian que crece desde el centro y `aria-current`; en celular lleva un punto cian;
+  - en el hero no se marca nada;
+  - «Currículum» va como botón con borde cian e ícono, al final del menú, porque abre otra página.
+- **El botón «Vista previa · Aniversario»** ya no tapa el final del pie: agrega espacio abajo solo mientras se muestra.
+
 ## Direcciones limpias (02-oct)
 
 Pedido de Manuel: que en la barra no se vea `cv.html`, `admin/editor.html`, etc.

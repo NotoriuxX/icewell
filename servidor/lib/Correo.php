@@ -67,6 +67,20 @@ final class Correo
             self::html('Acceso aprobado', '<p>Hola ' . self::e($u['nombre']) . ',</p><p>Un administrador aprobó tu acceso al panel del sitio de Icewell.</p>', 'Entrar al panel', $url, ''));
     }
 
+    /** Aviso de una solicitud del formulario del sitio (Solicitudes::recibir). Todo va escapado. */
+    public static function solicitud(string $para, array $s): bool
+    {
+        $url = Http::urlBase() . '/admin/editor#solicitudes';
+        $filas = [['Nombre', $s['nombre']], ['Correo', $s['correo']], ['Necesita', $s['tipo']], ['Teléfono', $s['telefono'] ?: '—']];
+        $texto = "Llegó una solicitud desde el formulario del sitio.\n\n"
+            . implode("\n", array_map(fn($f) => $f[0] . ': ' . $f[1], $filas)) . "\n\nMensaje:\n" . $s['mensaje'] . "\n\nVer en el panel: $url";
+        $html = '<p>Llegó una solicitud desde el formulario del sitio.</p><table role="presentation" cellpadding="0" cellspacing="0" style="font-size:14px;margin:0 0 14px">'
+            . implode('', array_map(fn($f) => '<tr><td style="padding:3px 14px 3px 0;color:#4b6474">' . self::e($f[0]) . '</td><td style="padding:3px 0"><b>' . self::e($f[1]) . '</b></td></tr>', $filas))
+            . '</table><p style="white-space:pre-wrap;border-left:3px solid #0062a8;padding-left:12px;margin:0">' . self::e($s['mensaje']) . '</p>';
+        return self::enviar($para, 'Nueva solicitud: ' . $s['tipo'] . ' — ' . preg_replace('/[\r\n]+/', ' ', $s['nombre']),
+            $texto, self::html('Nueva solicitud #' . (int)$s['id'], $html, 'Ver en el panel', $url, 'Para responder, escribe directamente a ' . $s['correo'] . '.'));
+    }
+
     // ---------------------------------------------------------------- envío
     public static function enviar(string $para, string $asunto, string $texto, string $html): bool
     {

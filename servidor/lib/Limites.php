@@ -18,6 +18,7 @@ final class Limites
         'google_ip'       => [30, 900],
         'subida_usuario'  => [120, 3600],
         'totp_usado'      => [1, 120],      // un código de 6 dígitos sirve una sola vez
+        'contacto_ip'     => [5, 3600],     // formulario del sitio: 5 solicitudes por hora y por IP
     ];
 
     public static function registrar(string $tipo, string $clave): void

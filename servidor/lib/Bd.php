@@ -7,7 +7,7 @@ declare(strict_types=1);
 final class Bd
 {
     private static ?PDO $pdo = null;
-    const VERSION_ESQUEMA = 1;
+    const VERSION_ESQUEMA = 2;   // 2: tabla solicitudes (formulario del sitio)
 
     public static function pdo(): PDO
     {
@@ -136,6 +136,18 @@ final class Bd
                 ip VARCHAR(45) NOT NULL DEFAULT '',
                 creado INTEGER NOT NULL
             )$motor",
+            // formulario «Cuéntanos tu proyecto» (Solicitudes.php)
+            "CREATE TABLE IF NOT EXISTS solicitudes (
+                id $pk,
+                nombre VARCHAR(80) NOT NULL,
+                correo VARCHAR(190) NOT NULL,
+                tipo VARCHAR(20) NOT NULL,
+                telefono VARCHAR(30) NOT NULL DEFAULT '',
+                mensaje TEXT NOT NULL,
+                ip VARCHAR(45) NOT NULL DEFAULT '',
+                creado INTEGER NOT NULL,
+                estado VARCHAR(12) NOT NULL DEFAULT 'nueva'
+            )$motor",
         ];
         foreach ($sql as $s) $pdo->exec($s);
         $indices = [
@@ -143,6 +155,7 @@ final class Bd
             ['idx_tokens_usuario', 'tokens', 'usuario_id, tipo'],
             ['idx_intentos', 'intentos', 'tipo, clave, momento'],
             ['idx_auditoria_creado', 'auditoria', 'creado'],
+            ['idx_solicitudes_estado', 'solicitudes', 'estado'],
         ];
         foreach ($indices as [$n, $t, $cols]) {
             try { $pdo->exec($my ? "CREATE INDEX $n ON $t ($cols)" : "CREATE INDEX IF NOT EXISTS $n ON $t ($cols)"); }

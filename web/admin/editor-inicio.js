@@ -10,6 +10,10 @@
     document.body.classList.remove('ed--panel-abierto');
     E.vista.iniciar();
     E.recuperarLocal();
+    // solicitudes nuevas del formulario del sitio (pestaña Solicitudes)
+    if(E.solicitudesNuevas) E.solicitudesNuevas().then(function(n){
+      if(n) E.toast(n === 1 ? 'Llegó 1 solicitud nueva desde el sitio (pestaña Solicitudes).' : 'Llegaron ' + n + ' solicitudes nuevas desde el sitio (pestaña Solicitudes).');
+    });
     // aviso de cuentas por aprobar (pestaña Usuarios)
     if(E.usuario.rol === 'admin'){
       P.api('usuarios').then(function(r){

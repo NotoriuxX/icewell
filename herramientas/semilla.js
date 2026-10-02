@@ -68,7 +68,7 @@ const obras = PROYECTOS.map((p, i) => {
 });
 
 const contenido = {
-  esquema: 2,
+  esquema: 3,
   empresa: {
     nombre: 'Icewell',
     razonSocial: 'Icewell SpA',
@@ -83,7 +83,7 @@ const contenido = {
     correo: 'contacto@icewell.cl',
     correoComercial: 'gonzalo.diaz@icewell.cl',
     web: 'www.icewell.cl',
-    redes: { linkedin: '', instagram: '', facebook: '', youtube: '' },
+    redes: { linkedin: 'https://www.linkedin.com/company/icewell-cuvolt/', instagram: '', facebook: '', youtube: '' },
     wa: {
       cotizar: 'Hola Icewell, quiero cotizar un proyecto de climatización',
       cv: 'Hola Icewell, vi su currículum y quiero cotizar un proyecto',
@@ -152,6 +152,7 @@ const contenido = {
     'contacto.eyebrow': 'Contacto',
     'contacto.titulo': '¿Tienes un proyecto de climatización?',
     'contacto.texto': 'Cuéntanos el alcance y te responderá un especialista.',
+    'contacto.formBoton': 'Cuéntanos tu proyecto',
     'footer.lema': 'Ingeniería en climatización',
 
     'cv.eyebrow': 'Currículum corporativo · Icewell SpA',

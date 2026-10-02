@@ -53,6 +53,7 @@ try {
             Sesion::cerrar();
             Http::responder(['ok' => true]);
             break;
+        case 'contacto':              $soloPost(); Http::responder(Solicitudes::recibir($post())); break;   // formulario del sitio
         case 'dev/bandeja':
             if (!Http::permiteDesarrollador()) throw new ErrorHttp(404, 'No encontrado.');
             Http::responder(['ok' => true, 'correos' => Correo::bandeja()]);
@@ -68,6 +69,12 @@ try {
         case 'historial':             $conSesion(); Http::responder(Panel::historial()); break;
         case 'historial/version':     $conSesion(); Http::responder(Panel::version((int)($_GET['id'] ?? 0))); break;
         case 'imagen':                $soloPost(); $s = $conSesion(); Http::responder(Imagenes::guardar($post(), (int)$s['id'])); break;
+
+        // ------------------------------------------------ solicitudes del formulario
+        case 'solicitudes':           $conSesion(); Http::responder(Solicitudes::listar()); break;
+        case 'solicitudes/nuevas':    $conSesion(); Http::responder(['ok' => true, 'n' => Solicitudes::nuevas()]); break;
+        case 'solicitudes/estado':    $soloPost(); $s = $conSesion(); Http::responder(Solicitudes::estado($post(), $s)); break;
+        case 'solicitudes/borrar':    $soloPost(); $s = $conSesion('admin'); Http::responder(Solicitudes::borrar($post(), $s)); break;
 
         // ------------------------------------------------ usuarios y auditoría (admin)
         case 'usuarios':              $conSesion('admin'); Http::responder(Panel::usuarios()); break;

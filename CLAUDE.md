@@ -41,7 +41,7 @@ Lo que jsdom **no** puede validar (ni test_api.php) (no tiene layout ni canvas):
 
 ### Páginas (`web/`)
 **Direcciones limpias** (sin `.html`): `/` = `index.html`, `/curriculum` = `cv.html`, `/presentacion` = `cv-presentacion.html`, `/admin/<x>` = `admin/<x>.html`. Los archivos conservan su nombre; la tabla vive en `web/.htaccess` (hosting y Docker) **y** en `herramientas/servidor-local.php` (cambiar las dos; `test_rutas.php` lo revisa). Las direcciones viejas `.html` redirigen con 301 (conservando `?query`; el `#hash` lo conserva el navegador). Cualquier otra → `web/404.html`. En links y JS se escribe siempre la dirección limpia y relativa (`curriculum#sector=…`, `presentacion`, `./`).
-- `index.html`: sitio principal (hero, servicios, portafolio, equipo, socios, contacto). Enlaza al CV.
+- `index.html`: sitio principal (hero, servicios, portafolio, equipo, socios, contacto). Enlaza al CV. Formulario «Cuéntanos tu proyecto» = `assets/contacto-form.js` → `api/?r=contacto` (`servidor/lib/Solicitudes.php`: valida, anti-spam, guarda en `solicitudes` y avisa SOLO al correo de la empresa) → pestaña Solicitudes del panel. Menú con la sección actual marcada (IntersectionObserver).
 - `cv.html`: **versión web** del CV, con el estilo del sitio (Big Shoulders + IBM Plex).
 - `cv-presentacion.html` + `assets/cv-presentacion.js`: **versión presentación**, idéntica en estética a `Icewell-Presentacion-Corporativa.pdf` (Archivo + Inter, medidas en mm tomadas del PDF). La página es una pila de hojas A4.
 

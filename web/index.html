@@ -73,8 +73,17 @@
   .brand{display:inline-flex;align-items:center;flex:none;}
   .brand img{height:30px;width:auto;}
   .desktop-nav{display:flex;align-items:center;gap:30px;}
-  .desktop-nav a{font-size:14.5px;font-weight:500;color:#fff;opacity:.82;transition:opacity .2s;}
+  /* enlace de la sección en pantalla: blanco pleno + barra cian que crece desde el centro */
+  .desktop-nav a{position:relative;padding:6px 0;font-size:14.5px;font-weight:500;color:#fff;opacity:.78;transition:opacity .2s;}
+  .desktop-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--ice);transform:scaleX(0);transform-origin:center;transition:transform .3s var(--ease), opacity .3s var(--ease);}
   .desktop-nav a:hover{opacity:1;}
+  .desktop-nav a:hover::after{transform:scaleX(.45);opacity:.5;}
+  .desktop-nav a.activo{opacity:1;font-weight:600;}
+  .desktop-nav a.activo::after{transform:scaleX(1);opacity:1;}
+  /* Currículum: otra página, va destacado como botón */
+  .desktop-nav a.nav-cv{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1.5px solid var(--ice);border-radius:var(--radius);color:var(--ice);opacity:1;font-weight:600;transition:background .2s, color .2s;}
+  .desktop-nav a.nav-cv::after{display:none;}
+  .desktop-nav a.nav-cv:hover{background:var(--ice);color:var(--ink);}
   .nav-actions{display:flex;align-items:center;gap:18px;}
   .nav-actions .btn{padding:11px 20px;font-size:13.5px;min-height:42px;}
   .menu-button{display:none;background:none;border:0;padding:12px;cursor:pointer;}
@@ -86,7 +95,11 @@
   }
   .mobile-menu{display:none;position:fixed;inset:0;background:var(--ink);z-index:120;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:0 32px;overflow-y:auto;}
   .mobile-menu.mobile-menu--open{display:flex;}
-  .mobile-menu a{font-family:var(--display);font-size:clamp(30px,8vw,38px);font-weight:800;text-transform:uppercase;color:#fff;padding:8px 0;}
+  .mobile-menu a{position:relative;font-family:var(--display);font-size:clamp(30px,8vw,38px);font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.78);padding:8px 0;}
+  .mobile-menu a.activo{color:#fff;}
+  .mobile-menu a.activo::before{content:"";position:absolute;left:-18px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--ice);}
+  .mobile-menu a.nav-cv{display:inline-flex;align-items:center;gap:10px;color:var(--ice);}
+  .mobile-menu a.nav-cv svg{width:24px;height:24px;}
   .mobile-menu .btn{margin-top:24px;font-family:var(--body);font-size:15px;text-transform:none;padding:15px 26px;}
   .mobile-menu .cerrar{position:absolute;top:18px;right:18px;width:48px;height:48px;background:none;border:0;color:#fff;font-size:34px;line-height:1;cursor:pointer;}
 
@@ -288,7 +301,8 @@
   .contact-data .fila a, .contact-data .fila div{font-size:16px;color:#fff;overflow-wrap:anywhere;}
   .contact-data .fila a:hover{color:var(--ice);}
   .contact-redes{display:flex;gap:16px;flex-wrap:wrap;padding-top:18px;}
-  .contact-redes a{font-family:var(--mono);font-size:12px;color:var(--ice);text-transform:uppercase;letter-spacing:.06em;}
+  .contact-redes a{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ice);text-transform:uppercase;letter-spacing:.06em;}
+  .contact-redes a:hover{color:#fff;}
   @media (max-width:860px){
     .contact-layout{grid-template-columns:1fr;}
     .contact-data{border-left:0;border-top:1px solid var(--line-dark);padding-left:0;padding-top:34px;}
@@ -301,6 +315,87 @@
   .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-size:13.5px;}
   .footer-links a:hover{color:#fff;}
   .fine{font-size:12.5px;}
+  .footer-acciones{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 22px;}
+  .footer-form{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--ice);background:none;border:0;cursor:pointer;padding:6px 0;border-bottom:1.5px solid currentColor;}
+  .footer-form:hover{color:#fff;}
+  .footer-redes{display:flex;gap:10px;}
+  .footer-redes a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line-dark);border-radius:var(--radius);color:rgba(241,244,247,.85);transition:color .2s, border-color .2s;}
+  .footer-redes a:hover{color:var(--ice);border-color:var(--ice);}
+  .credito{font-size:12px;color:rgba(241,244,247,.6);}
+  .credito a{color:rgba(241,244,247,.9);font-weight:600;border-bottom:1px solid rgba(241,244,247,.3);}
+  .credito a:hover{color:var(--ice);border-color:var(--ice);}
+
+  /* ---------- FORMULARIO «Cuéntanos tu proyecto» (assets/contacto-form.js) ---------- */
+  .btn-form{background:transparent;border-color:var(--ice);color:var(--ice);}
+  .btn-form:hover{background:var(--ice);color:var(--ink);}
+  html.cf-abierto, html.cf-abierto body{overflow:hidden;}
+  .cf{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;background:var(--ink);color:#fff;overflow-y:auto;}
+  .cf[hidden]{display:none;}
+  .cf__top{display:flex;align-items:center;gap:24px;padding:20px 28px;border-bottom:1px solid var(--line-dark);}
+  .cf__logo{height:26px;width:auto;flex:none;}
+  .cf__prog{flex:1;max-width:420px;margin:0 auto;}
+  .cf__progtxt{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(241,244,247,.7);margin-bottom:8px;text-align:center;}
+  .cf__barra{height:3px;background:var(--line-dark);border-radius:2px;overflow:hidden;}
+  .cf__barra span{display:block;height:100%;width:20%;background:var(--ice);transition:width .4s var(--ease);}
+  .cf__cerrar{width:44px;height:44px;flex:none;border:1px solid var(--line-dark);border-radius:var(--radius);background:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;}
+  .cf__cerrar:hover{border-color:var(--ice);color:var(--ice);}
+  .cf__form{flex:1;display:flex;flex-direction:column;width:min(720px,100%);margin:0 auto;padding:clamp(28px,7vh,72px) 28px 0;}
+  .cf__paso[hidden]{display:none;}
+  .cf__num{font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;color:var(--ice);margin-bottom:14px;}
+  .cf__titulo{font-size:clamp(30px,4.4vw,50px);margin-bottom:26px;outline:none;}
+  .cf__nombre{color:var(--ice);}
+  .cf__campo{margin-bottom:18px;}
+  .cf__etq{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(241,244,247,.7);margin-bottom:8px;}
+  .cf__input{width:100%;font:500 clamp(20px,3vw,26px)/1.3 var(--body);color:#fff;background:transparent;border:0;border-bottom:2px solid rgba(241,244,247,.35);border-radius:0;padding:8px 2px 10px;outline:none;transition:border-color .2s;}
+  textarea.cf__input{font-size:18px;line-height:1.5;resize:vertical;min-height:130px;border:2px solid rgba(241,244,247,.25);border-radius:var(--radius);padding:12px 14px;}
+  .cf__input:focus{border-color:var(--ice);}
+  .cf__input[aria-invalid="true"]{border-color:#ff8f8f;}
+  .cf__input::placeholder{color:rgba(241,244,247,.45);}
+  .cf__contador, .cf__ayuda{font-family:var(--mono);font-size:11.5px;color:rgba(241,244,247,.6);margin:-10px 0 16px;text-align:right;}
+  .cf__ayuda{text-align:left;margin:4px 0 0;}
+  .cf__opciones{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .cf__opcion{position:relative;cursor:pointer;}
+  .cf__opcion input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;}
+  .cf__opcion span{display:block;padding:20px 22px;border:1.5px solid rgba(241,244,247,.3);border-radius:var(--radius);font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;transition:border-color .2s, background .2s, color .2s;}
+  .cf__opcion:hover span{border-color:var(--ice);}
+  .cf__opcion input:checked + span{background:var(--ice);border-color:var(--ice);color:var(--ink);}
+  .cf__opcion input:focus-visible + span{outline:3px solid var(--brand-2);outline-offset:3px;}
+  .cf__sr, .cf__trampa{position:absolute !important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .cf__trampa{left:-9999px;}
+  .cf__resumen{margin:0;border-top:1px solid var(--line-dark);}
+  .cf__fila{display:grid;grid-template-columns:120px 1fr auto;gap:14px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line-dark);}
+  .cf__fila dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ice);}
+  .cf__fila dd{margin:0;font-size:16px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:9em;overflow:auto;}
+  .cf__editar{background:none;border:0;color:rgba(241,244,247,.75);font:600 13px var(--body);text-decoration:underline;cursor:pointer;padding:6px;}
+  .cf__editar:hover{color:var(--ice);}
+  .cf__error{min-height:1.5em;margin:14px 0 0;color:#ffb0b0;font-size:14.5px;}
+  /* botones siempre a la vista: pegados abajo aunque el paso sea largo */
+  .cf__nav{position:sticky;bottom:0;display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding:18px 0 22px;background:linear-gradient(180deg, rgba(12,20,28,0), var(--ink) 30%);}
+  html.cf-abierto .aniv-switch, html.cf-abierto .wa-float{display:none !important;}
+  .cf__nav[hidden]{display:none;}
+  .cf__atras[hidden]{visibility:hidden;display:inline-flex;}
+  .cf__btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:14px 26px;font:600 15px var(--body);border-radius:var(--radius);border:1.5px solid transparent;cursor:pointer;transition:background .2s, border-color .2s, transform .2s var(--ease);}
+  .cf__btn:hover{transform:translateY(-2px);}
+  .cf__btn:disabled{opacity:.6;cursor:default;transform:none;}
+  .cf__btn--primario{background:var(--brand);color:#fff;}
+  .cf__btn--primario:hover{background:var(--brand-2);}
+  .cf__btn--fantasma{background:transparent;color:#fff;border-color:rgba(241,244,247,.4);}
+  .cf__btn--fantasma:hover{border-color:#fff;}
+  .cf__texto{font-size:18px;color:rgba(241,244,247,.8);max-width:52ch;margin-bottom:28px;}
+  .cf__acciones{display:flex;flex-wrap:wrap;gap:12px;}
+  .cf__entra--der{animation:cfDer .45s var(--ease) both;}
+  .cf__entra--izq{animation:cfIzq .45s var(--ease) both;}
+  @keyframes cfDer{from{opacity:0;transform:translateX(48px);}to{opacity:1;transform:none;}}
+  @keyframes cfIzq{from{opacity:0;transform:translateX(-48px);}to{opacity:1;transform:none;}}
+  @media (prefers-reduced-motion: reduce){ .cf__entra--der, .cf__entra--izq{animation:cfFundido .15s linear both;} @keyframes cfFundido{from{opacity:0;}to{opacity:1;}} }
+  @media (max-width:600px){
+    .cf__top{padding:14px 16px;gap:12px;}
+    .cf__logo{display:none;}
+    .cf__form{padding:24px 18px 0;}
+    .cf__opciones{grid-template-columns:1fr;}
+    .cf__fila{grid-template-columns:1fr auto;}
+    .cf__fila dt{grid-column:1 / -1;}
+  }
 
   /* ---------- WHATSAPP FLOTANTE ---------- */
   .wa-float{position:fixed;right:24px;bottom:24px;z-index:90;width:58px;height:58px;border-radius:50%;background:var(--wa-green);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.28);transition:transform .2s var(--ease);}
@@ -345,8 +440,8 @@
       <a href="#proyectos">Proyectos</a>
       <a href="#equipo">Equipo</a>
       <a href="#socios">Socios</a>
-      <a href="curriculum">Currículum</a>
       <a href="#contacto">Contacto</a>
+      <a class="nav-cv" href="curriculum" title="Abre el currículum de obras (otra página)"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>Currículum</a>
     </nav>
     <div class="nav-actions">
       <a class="btn btn-ghost-light" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noopener">Hablar con un ingeniero</a>
@@ -362,8 +457,8 @@
   <a href="#proyectos">Proyectos</a>
   <a href="#equipo">Equipo</a>
   <a href="#socios">Socios</a>
-  <a href="curriculum">Currículum</a>
   <a href="#contacto">Contacto</a>
+  <a class="nav-cv" href="curriculum"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>Currículum</a>
   <a class="btn btn-brand" href="https://wa.me/56964074519" data-wa="cotizar" target="_blank" rel="noopener">Hablar por WhatsApp</a>
 </div>
 
@@ -536,6 +631,7 @@
       <p class="contact-lead" data-t="contacto.texto">Cuéntanos el alcance y te responderá un especialista.</p>
       <div class="contact-actions">
         <a class="btn btn-brand" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <button class="btn btn-form" type="button" data-abrir-formulario><span data-t="contacto.formBoton">Cuéntanos tu proyecto</span></button>
         <a class="btn btn-ghost-light" href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a>
       </div>
     </div>
@@ -545,7 +641,7 @@
       <div class="fila"><span>WhatsApp</span><a href="https://wa.me/56964074519" data-empresa="whatsapp" target="_blank" rel="noopener">+56 9 6407 4519</a></div>
       <div class="fila"><span>Email</span><a href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a></div>
       <div class="contact-redes" data-redes hidden>
-        <a data-red="linkedin" target="_blank" rel="noopener" hidden>LinkedIn</a><a data-red="instagram" target="_blank" rel="noopener" hidden>Instagram</a><a data-red="facebook" target="_blank" rel="noopener" hidden>Facebook</a><a data-red="youtube" target="_blank" rel="noopener" hidden>YouTube</a>
+        <a data-red="linkedin" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a><a data-red="instagram" target="_blank" rel="noopener" hidden>Instagram</a><a data-red="facebook" target="_blank" rel="noopener" hidden>Facebook</a><a data-red="youtube" target="_blank" rel="noopener" hidden>YouTube</a>
       </div>
     </div>
   </div>
@@ -557,7 +653,15 @@
     <nav class="footer-links" aria-label="Pie de página">
       <a href="#nosotros">Nosotros</a><a href="#servicios">Servicios</a><a href="#proyectos">Proyectos</a><a href="#equipo">Equipo</a><a href="curriculum">Currículum</a><a href="#contacto">Contacto</a>
     </nav>
+    <div class="footer-acciones">
+      <button class="footer-form" type="button" data-abrir-formulario><span data-t="contacto.formBoton">Cuéntanos tu proyecto</span> →</button>
+      <div class="footer-redes" data-redes hidden>
+        <a data-red="linkedin" target="_blank" rel="noopener" aria-label="Icewell en LinkedIn" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+      </div>
+    </div>
     <p class="fine">© <span data-anio-actual>2026</span> <span data-empresa="razonSocial">Icewell SpA</span> · <span data-t="footer.lema">Ingeniería en climatización</span> · <span data-empresa="ubicacionLarga">Providencia · Santiago · Chile</span></p>
+    <!-- Crédito fijo (no se edita desde el panel) -->
+    <p class="credito">Diseño y desarrollo: <a href="https://www.linkedin.com/in/manuel-mery-413874119/" target="_blank" rel="noopener">Manuel Mery</a></p>
   </div>
 </footer>
 
@@ -572,6 +676,7 @@
 <script src="assets/aniversario.js"></script>
 <script src="assets/cv-data.js"></script>
 <script src="assets/sitio-render.js"></script>
+<script src="assets/contacto-form.js"></script>
 <script>
   // Años automáticos (assets/aniversario.js): rellenar ANTES de que el contador lea su valor objetivo
   if(window.icewellAniversario) icewellAniversario.rellenar();
@@ -638,6 +743,28 @@
       }
     });
   });
+
+  // Menú: marca la sección que está en pantalla (la que cruza la franja a ~35 % de la altura).
+  var enlacesNav = Array.prototype.slice.call(document.querySelectorAll('.desktop-nav a[href^="#"], .mobile-menu a[href^="#"]'));
+  function marcarNav(id){
+    enlacesNav.forEach(function(a){
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('activo', on);
+      if(on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  var seccionesNav = ['nosotros', 'servicios', 'proyectos', 'equipo', 'socios', 'contacto'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  if('IntersectionObserver' in window){
+    var visibles = {};
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ visibles[e.target.id] = e.isIntersecting; });
+      // la primera en orden de página que cruza la franja; arriba del todo (hero) no se marca nada
+      var actual = seccionesNav.filter(function(s){ return visibles[s.id]; })[0];
+      marcarNav(actual ? actual.id : '');
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    seccionesNav.forEach(function(s){ spy.observe(s); });
+  }
+  enlacesNav.forEach(function(a){ a.addEventListener('click', function(){ marcarNav(a.getAttribute('href').slice(1)); }); });
 
   var header = document.getElementById('siteHeader');
   function onScroll(){ header.classList.toggle('site-header--scrolled', window.scrollY > 40); }

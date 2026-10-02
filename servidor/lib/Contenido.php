@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 final class Contenido
 {
-    const ESQUEMA = 2;   // 2 = diseño 2 (02-oct): ver servidor/migraciones/diseno2.json
+    const ESQUEMA = 3;   // 2 = diseño 2 (02-oct): ver servidor/migraciones/diseno2.json · 3 = LinkedIn de la empresa
     const EXT_IMG = '/^(obras\/)?[A-Za-z0-9][A-Za-z0-9._-]{0,120}\.(jpe?g|png|webp|svg)$/';
     const ID = '/^[a-z0-9][a-z0-9-]{0,63}$/';
 
@@ -45,6 +45,14 @@ final class Contenido
         static $semilla = null;
         if ($semilla === null) $semilla = json_decode((string)@file_get_contents(__DIR__ . '/../semilla.json'), true) ?: [];
         if ((int)($c['esquema'] ?? 1) < 2) $c = self::migrarDiseno2($c);
+        if ((int)($c['esquema'] ?? 1) < 3) {
+            // 3: LinkedIn de la empresa (Manuel, 02-oct). Solo si nadie había escrito uno.
+            if (is_array($c['empresa'] ?? null) && trim((string)($c['empresa']['redes']['linkedin'] ?? '')) === '') {
+                $c['empresa']['redes'] = (is_array($c['empresa']['redes'] ?? null) ? $c['empresa']['redes'] : []) + ['linkedin' => ''];
+                $c['empresa']['redes']['linkedin'] = (string)($semilla['empresa']['redes']['linkedin'] ?? '');
+            }
+            $c['esquema'] = 3;
+        }
         if (isset($semilla['textos'])) $c['textos'] = (is_array($c['textos'] ?? null) ? $c['textos'] : []) + $semilla['textos'];
         foreach (['inicio', 'cv'] as $sec) {
             if (isset($semilla[$sec]['serviciosColumnas']) && is_array($c[$sec] ?? null) && !isset($c[$sec]['serviciosColumnas'])) {

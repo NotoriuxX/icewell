@@ -1,8 +1,8 @@
-/* GENERADO por el panel (/admin) el 2026-10-02 20:08 — NO editar a mano: los cambios se pierden al publicar.
+/* GENERADO por el panel (/admin) el 2026-10-02 21:16 — NO editar a mano: los cambios se pierden al publicar.
    Datos de la empresa, cifras, textos y secciones del sitio. Lo leen index.html, cv.html,
    cv-presentacion.html y los PDF (assets/sitio-render.js lo aplica al HTML). */
 window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio) || {
-    "esquema": 2,
+    "esquema": 3,
     "empresa": {
         "nombre": "Icewell",
         "razonSocial": "Icewell SpA",
@@ -18,7 +18,7 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "correoComercial": "gonzalo.diaz@icewell.cl",
         "web": "www.icewell.cl",
         "redes": {
-            "linkedin": "",
+            "linkedin": "https://www.linkedin.com/company/icewell-cuvolt/",
             "instagram": "",
             "facebook": "",
             "youtube": ""
@@ -91,6 +91,7 @@ window.ICEWELL_SITIO = (window.ICEWELL_BORRADOR && window.ICEWELL_BORRADOR.sitio
         "contacto.eyebrow": "Contacto",
         "contacto.titulo": "¿Tienes un proyecto de climatización?",
         "contacto.texto": "Cuéntanos el alcance y te responderá un especialista.",
+        "contacto.formBoton": "Cuéntanos tu proyecto",
         "footer.lema": "Ingeniería en climatización",
         "cv.eyebrow": "Currículum corporativo · Icewell SpA",
         "cv.titulo": "Ingeniería y montaje de sistemas *HVAC.*",

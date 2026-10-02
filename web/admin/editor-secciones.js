@@ -123,6 +123,7 @@
     T(s, 'Etiqueta', 'contacto.eyebrow', { max: 60 });
     T(s, 'Título', 'contacto.titulo', { max: 100 });
     T(s, 'Texto', 'contacto.texto', { multi: true, max: 300 });
+    T(s, 'Botón del formulario', 'contacto.formBoton', { max: 40, ayuda: 'Abre el formulario paso a paso. Las solicitudes llegan al correo de la empresa (Empresa y contacto) y quedan en la pestaña Solicitudes.' });
     T(s, 'Lema del pie de página', 'footer.lema', { max: 100 });
     F.nota(s, 'Dirección, teléfono, correo, WhatsApp y redes se editan en «Empresa y contacto» y cambian en todas las páginas y los PDF.');
 

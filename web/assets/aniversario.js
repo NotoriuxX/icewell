@@ -313,6 +313,8 @@ const ICEWELL_FUNDACION = /^\d{4}-\d{2}-\d{2}$/.test(_CFG_SITIO.fundacion || '')
       .aniv-switch button{ padding:7px 13px; border-radius:999px; border:1px solid rgba(201,166,70,.5); background:transparent; color:#F1DFA0; font:inherit; cursor:pointer; transition:background .2s, color .2s; }
       .aniv-switch button:hover{ background:rgba(201,166,70,.15); }
       .aniv-switch button[aria-pressed="true"]{ color:#2b1d05; border-color:transparent; background:${GOLD}; }
+      /* el botón de vista previa va fijo abajo al centro: que no tape el final del pie (crédito, ©) */
+      .site-footer, .cv-footer{ padding-bottom:84px !important; }
       @media print{ .aniv-switch{ display:none !important; } }
       @media (max-width:520px){ .aniv-switch span{ display:none; } .aniv-switch{ padding:4px; } }
     `;

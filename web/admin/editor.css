@@ -187,6 +187,18 @@ body.ed { height: 100vh; display: grid; grid-template-rows: auto auto 1fr; overf
 .ed-historial__fila { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
 .ed-historial__txt { display: grid; flex: 1; gap: 2px; min-width: 200px; font-size: 13.5px; }
 .ed-historial__txt span { color: var(--ink-soft); font-size: 12.5px; }
+/* Solicitudes del formulario del sitio */
+.ed-solicitudes__filtro { display: flex; gap: 8px; margin-bottom: 12px; }
+.ed-solicitudes { display: grid; gap: 10px; margin-bottom: 16px; }
+.ed-solicitud { padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.ed-solicitud--nueva { border-left: 4px solid #c99a1d; }
+.ed-solicitud__cab { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.ed-solicitud__cab strong { font-size: 15px; }
+.ed-solicitud__tipo { color: var(--ink-soft); font-size: 13px; }
+.ed-solicitud__fecha { margin-left: auto; color: var(--ink-soft); font-size: 12.5px; }
+.ed-solicitud__datos { margin: 6px 0; font-size: 13.5px; overflow-wrap: anywhere; }
+.ed-solicitud__msg { margin: 8px 0 12px; padding: 10px 12px; border-radius: 6px; background: #f3f7f9; font-size: 14px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ed-solicitud__acc { display: flex; flex-wrap: wrap; gap: 8px; }
 .ed-auditoria { display: grid; max-height: 420px; overflow: auto; font-size: 12px; }
 .ed-auditoria__fila { display: grid; grid-template-columns: 130px 110px 130px 1fr 100px; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
 .ed-auditoria__fila span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
