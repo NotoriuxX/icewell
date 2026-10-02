@@ -9,11 +9,11 @@ Proyecto Icewell: sitio modernizado de icewell.net (hoy en Wix) + currículum in
 Todas las rutas son relativas a la raíz del proyecto (`Desktop/icewell/proyecto/`).
 
 ```bash
-# Servir el sitio + el panel (modo local: SQLite, correos a /admin/bandeja.html, "Entrar como desarrollador")
-php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php   # → /index.html | /cv.html | /cv-presentacion.html | /admin/
+# Servir el sitio + el panel (modo local: SQLite, correos a /admin/bandeja, "Entrar como desarrollador")
+php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php   # → / | /curriculum | /presentacion | /admin/
 # Docker (sitio + panel + MariaDB): PC → http://localhost:8080 ; servidor → ver DESPLIEGUE-DOCKER.md
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
-# Solo el sitio estático (sin panel; con doble clic también funciona)
+# Solo el sitio estático, sin panel. Ojo: no traduce /curriculum (sí el doble clic: transicion.js lleva al .html en file://)
 python -m http.server 8765 --directory web
 
 # Pruebas (jsdom, corren el JS real de las páginas). Instalar una vez:
@@ -24,6 +24,7 @@ node herramientas/tests/test_web_ux.js           # tarjetas Público/Privado, fi
 node herramientas/tests/test_pdf.js              # genera PDFs reales de cv.html (modo 'dibujo') → herramientas/tests/salida/
 node herramientas/tests/test_sitio.js            # sitio-data.js → index/cv/presentación/PDF, XSS, portada desde datos
 php herramientas/tests/test_api.php              # servidor del panel: auth, CSRF, límites, tokens, Google, 2FA, subidas (copia temporal)
+php herramientas/tests/test_rutas.php            # direcciones limpias: alias, 301 desde los .html viejos, 404 propio (levanta php -S)
 
 # Panel por consola
 php herramientas/admin-cli.php crear-admin correo@icewell.cl "Nombre"   # (listar | aprobar | bloquear | resetear-clave | migrar)
@@ -39,6 +40,7 @@ Lo que jsdom **no** puede validar (ni test_api.php) (no tiene layout ni canvas):
 ## Arquitectura
 
 ### Páginas (`web/`)
+**Direcciones limpias** (sin `.html`): `/` = `index.html`, `/curriculum` = `cv.html`, `/presentacion` = `cv-presentacion.html`, `/admin/<x>` = `admin/<x>.html`. Los archivos conservan su nombre; la tabla vive en `web/.htaccess` (hosting y Docker) **y** en `herramientas/servidor-local.php` (cambiar las dos; `test_rutas.php` lo revisa). Las direcciones viejas `.html` redirigen con 301 (conservando `?query`; el `#hash` lo conserva el navegador). Cualquier otra → `web/404.html`. En links y JS se escribe siempre la dirección limpia y relativa (`curriculum#sector=…`, `presentacion`, `./`).
 - `index.html`: sitio principal (hero, servicios, portafolio, equipo, socios, contacto). Enlaza al CV.
 - `cv.html`: **versión web** del CV, con el estilo del sitio (Big Shoulders + IBM Plex).
 - `cv-presentacion.html` + `assets/cv-presentacion.js`: **versión presentación**, idéntica en estética a `Icewell-Presentacion-Corporativa.pdf` (Archivo + Inter, medidas en mm tomadas del PDF). La página es una pila de hojas A4.

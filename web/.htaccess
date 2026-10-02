@@ -14,7 +14,40 @@ DirectoryIndex index.html index.php
   RewriteCond %{REQUEST_URI} !^/\.well-known/
   RewriteRule (^|/)\. - [F]
   RewriteRule \.tmp- - [F]
+
+  # --- Direcciones limpias (sin .html) ---  Misma tabla en herramientas/servidor-local.php.
+  #   /             → index.html         /admin/          → admin/index.html
+  #   /curriculum   → cv.html            /admin/editor    → admin/editor.html (y restablecer, verificar, bandeja)
+  #   /presentacion → cv-presentacion.html
+  # 1) Las direcciones viejas con .html redirigen (301) a la limpia: así no se rompen links ya
+  #    compartidos ni correos ya enviados. Se mira THE_REQUEST (lo que pidió el navegador) y no
+  #    la ruta ya reescrita, para que los alias de abajo no provoquen un bucle. El ?query se conserva.
+  # Esquema para las redirecciones: detrás de Caddy (Docker) Apache ve http aunque la visita sea
+  # https; sin esto, cada 301 daría un salto extra por http. (Si alguien falsea la cabecera, solo
+  # cambia el esquema de SU propia redirección.)
+  RewriteRule ^ - [E=ICW_ESQ:http]
+  RewriteCond %{HTTPS} =on [OR]
+  RewriteCond %{HTTP:X-Forwarded-Proto} =https
+  RewriteRule ^ - [E=ICW_ESQ:https]
+  RewriteCond %{THE_REQUEST} \s/(?:[^?\s]*/)?index\.html[?\s]
+  RewriteRule ^(.*/)?index\.html$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/$1 [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/cv\.html[?\s]
+  RewriteRule ^cv\.html$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/curriculum [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/cv-presentacion\.html[?\s]
+  RewriteRule ^cv-presentacion\.html$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/presentacion [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/admin/[a-z-]+\.html[?\s]
+  RewriteRule ^admin/([a-z-]+)\.html$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/admin/$1 [R=301,L]
+  RewriteRule ^admin/index$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/admin/ [R=301,L]
+  RewriteRule ^(curriculum|presentacion)/$ %{ENV:ICW_ESQ}://%{HTTP_HOST}/$1 [R=301,L]
+  # 2) Alias internos: la barra de direcciones no cambia
+  RewriteRule ^curriculum$ cv.html [L]
+  RewriteRule ^presentacion$ cv-presentacion.html [L]
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^admin/([a-z-]+)$ admin/$1.html [L]
 </IfModule>
+
+# Página propia para cualquier dirección que no exista
+ErrorDocument 404 /404.html
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"

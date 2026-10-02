@@ -1,4 +1,4 @@
-/* ICEWELL — transición de carga entre páginas (index ↔ cv ↔ cv-presentacion)
+/* ICEWELL — transición de carga entre páginas (inicio ↔ /curriculum ↔ /presentacion)
    Se carga en el <head> de las 3 páginas (síncrono y liviano) para que, al llegar desde
    otra página nuestra, la cortina ya esté puesta antes del primer pintado (sin parpadeo).
    - Salida: al hacer clic en un enlace a otra de las 3 páginas, la cortina entra y recién
@@ -14,7 +14,12 @@
   var MIN_MS = 450;                                       // tiempo mínimo visible al llegar (evita un destello)
   var MAX_MS = 6000;                                      // respaldo: nunca dejar la cortina pegada
   var SALIDA_MS = 500;                                    // lo que tarda en cubrir antes de navegar
-  var PAGINAS = { 'index.html': 1, 'cv.html': 1, 'cv-presentacion.html': 1 };
+  /* Último tramo de la dirección → página. Direcciones limpias (/curriculum, /presentacion;
+     ver web/.htaccess) y, por si acaso, los nombres de archivo de antes. */
+  var PAGINAS = { '': 'inicio', 'index.html': 'inicio', 'curriculum': 'curriculum', 'cv.html': 'curriculum',
+                  'presentacion': 'presentacion', 'cv-presentacion.html': 'presentacion' };
+  /* Abierto con doble clic (file://) no hay servidor que traduzca /curriculum: se va al archivo. */
+  var ARCHIVOS = { inicio: 'index.html', curriculum: 'cv.html', presentacion: 'cv-presentacion.html' };
   var reducido = false;
   try{ reducido = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
 
@@ -65,7 +70,7 @@
     setTimeout(function(){ pagina = listo = true; revisar(); }, MAX_MS);
     window.addEventListener('load', function(){ pagina = true; revisar(); });
     // si la página no avisa, el load basta (index); cv/presentación avisan tras su primer armado
-    if(nombreDe(location) === 'index.html') listo = true;
+    if(nombreDe(location) === 'inicio') listo = true;
   }
   /* bfcache: al volver con "Atrás" la página queda con la cortina de salida puesta */
   window.addEventListener('pageshow', function(e){
@@ -75,7 +80,7 @@
   /* ── salida ── */
   function nombreDe(url){
     var p = url.pathname.split('/').pop();
-    return p === '' ? 'index.html' : p;
+    return Object.prototype.hasOwnProperty.call(PAGINAS, p) ? PAGINAS[p] : null;
   }
   /* WhatsApp es otro sitio (y se abre en pestaña nueva): se cubre la página un instante con
      "Abriendo WhatsApp" y se abre la pestaña. La pestaña se abre en el clic (si no, el bloqueador
@@ -104,9 +109,10 @@
     if(a.target && a.target !== '_self') return;
     if(url.origin !== location.origin || !/^https?:$/.test(url.protocol) && url.protocol !== 'file:') return;
     var destino = nombreDe(url);
-    if(!(destino in PAGINAS)) return;
+    if(!destino) return;
     if(destino === nombreDe(location) && url.search === location.search) return;   // ancla/filtro en la misma página
     e.preventDefault();
+    if(url.protocol === 'file:') url.pathname = url.pathname.replace(/[^\/]*$/, ARCHIVOS[destino]);
     cortina.classList.add('on');
     guardar('1');
     setTimeout(function(){ location.href = url.href; }, reducido ? 60 : SALIDA_MS);

@@ -12,13 +12,15 @@
   'use strict';
   var E = window.Editor;
   var frame = document.getElementById('frame'), marco = document.getElementById('marco');
-  var pagina = 'index.html', tVivo = null, tRecarga = null, pendienteRecarga = false, scrollGuardado = 0, rutaSel = null, irAlCargar = false;
+  var pagina = 'inicio', tVivo = null, tRecarga = null, pendienteRecarga = false, scrollGuardado = 0, rutaSel = null, irAlCargar = false;
   var DERIVADOS = { direccionCompleta: 'direccion', ubicacion: 'comuna', ubicacionLarga: 'comuna', ciudadPais: 'ciudad', webCorta: 'web' };
 
   function win(){ try { return frame.contentWindow; } catch(e){ return null; } }
   function doc(){ try { return frame.contentDocument; } catch(e){ return null; } }
 
-  function url(){ return '../' + pagina + '?borrador=1&preview=0&_=' + Date.now(); }
+  // Direcciones limpias del sitio (web/.htaccess): inicio = '../', currículum = '../curriculum'…
+  var RUTAS = { inicio: '', curriculum: 'curriculum', presentacion: 'presentacion' };
+  function url(){ return '../' + RUTAS[pagina] + '?borrador=1&preview=0&_=' + Date.now(); }
   function recargar(){
     clearTimeout(tRecarga); clearTimeout(tVivo); pendienteRecarga = false;
     var w = win(); try { scrollGuardado = w && w.location.href !== 'about:blank' ? w.scrollY : 0; } catch(e){ scrollGuardado = 0; }
@@ -72,7 +74,7 @@
     if(interactivo && !n) return;   // chips, filtros, botones del CV: funcionan normal
     var ruta = n ? rutaDe(n) : null;
     // presentación: sus textos se arman en JS (sin marcas); llevan a su sección del panel
-    if(!ruta && pagina === 'cv-presentacion.html' && t.closest('.hoja')){
+    if(!ruta && pagina === 'presentacion' && t.closest('.hoja')){
       ruta = 't:pres.portadaTitulo';
       E.toast('Los textos de la presentación están en Currículum → «Versión presentación».');
     }
@@ -123,7 +125,7 @@
   function cambiarPagina(nueva){
     document.querySelectorAll('[data-pagina]').forEach(function(x){ x.classList.toggle('activo', x.dataset.pagina === nueva); });
     pagina = nueva; scrollGuardado = 0;
-    document.getElementById('ayudaVista').textContent = pagina === 'cv-presentacion.html'
+    document.getElementById('ayudaVista').textContent = pagina === 'presentacion'
       ? 'La presentación se arma por hojas: sus textos se editan en la pestaña Currículum. Se recarga sola con cada cambio.'
       : 'Vista previa con tus cambios sin publicar. Haz clic en un texto para ir a su campo.';
     frame.src = url();
@@ -136,7 +138,7 @@
       if(!o) return;
       if(o.visible === false){ E.toast('Esta obra está oculta: no aparece en el sitio.'); return; }
       donde = donde || (o.portada && o.foto ? 'portada' : 'cv');
-      var destino = { portada: 'index.html', cv: 'cv.html', presentacion: 'cv-presentacion.html' }[donde];
+      var destino = { portada: 'inicio', cv: 'curriculum', presentacion: 'presentacion' }[donde];
       rutaSel = 'obra:' + id;
       if(destino === pagina){ marcar(rutaSel, true); return; }
       irAlCargar = true;
@@ -147,7 +149,7 @@
     resaltar: function(ruta){ marcar(ruta, true); },
     // tipo 'sitio': al vuelo; 'obras' (o la presentación, que arma todo en JS): recarga
     programar: function(tipo){
-      if(tipo === 'obras' || pagina === 'cv-presentacion.html') pendienteRecarga = true;
+      if(tipo === 'obras' || pagina === 'presentacion') pendienteRecarga = true;
       if(pendienteRecarga){ clearTimeout(tVivo); clearTimeout(tRecarga); tRecarga = setTimeout(recargar, 700); }
       else { clearTimeout(tVivo); tVivo = setTimeout(enVivo, 150); }
     }

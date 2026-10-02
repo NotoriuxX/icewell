@@ -10,7 +10,7 @@
    ========================================================================== */
 return [
     // 'produccion' | 'local'. En 'local' los correos van a la bandeja de prueba
-    // (/admin/bandeja.html) y existe "Entrar como desarrollador" (solo desde 127.0.0.1).
+    // (/admin/bandeja) y existe "Entrar como desarrollador" (solo desde 127.0.0.1).
     'entorno' => 'produccion',
 
     // Dirección pública del sitio, SIN barra final. Se usa para armar los enlaces de los

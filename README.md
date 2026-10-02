@@ -39,13 +39,13 @@ proyecto/
 
 ## Cómo abrir
 
-Con doble clic funciona (el sitio público sigue siendo estático). Con el panel incluido, en tu PC:
+Con doble clic funciona (el sitio público sigue siendo estático; en `file://` los links limpios van al `.html`). Con el panel incluido, en tu PC:
 
 ```bash
 php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php
-# http://localhost:8765/              sitio
+# http://localhost:8765/              sitio  (/curriculum, /presentacion)
 # http://localhost:8765/admin/        panel → "Entrar como desarrollador"
-# http://localhost:8765/admin/bandeja.html   correos de prueba (recuperar, verificar)
+# http://localhost:8765/admin/bandeja   correos de prueba (recuperar, verificar)
 ```
 
 Sin PHP instalado (solo mirar el sitio): `python -m http.server 8765 --directory web`.
@@ -96,7 +96,7 @@ Pedido de Manuel: entrar con cuenta de la empresa y editar todo el sitio sin toc
 ### Seguridad (todo se valida en el servidor)
 - Correo: solo `@icewell.cl` exacto (sin subdominios ni Unicode). Registro → verificar correo → **aprobación de un admin** (aviso por correo a los admins). `admin_inicial` en config sirve para el primer acceso en un hosting sin consola.
 - Contraseñas: mínimo 12, sin las más comunes ni el nombre/correo; **Argon2id** (bcrypt si el hosting no lo tiene) sobre HMAC con un *pepper* que vive en `config.php`, fuera de la BD.
-- Recuperar: enlace `restablecer.html?id=<selector>&t=<verificador>`, en la BD solo el SHA-256, **30 min, un solo uso**; la página valida el enlace antes de mostrar el formulario y lo saca de la barra de direcciones; al cambiar la clave se cierran **todas** las sesiones y llega un correo de aviso. Respuestas que no revelan si un correo existe (login, registro, recuperar), con tiempo parecido.
+- Recuperar: enlace `/admin/restablecer?id=<selector>&t=<verificador>`, en la BD solo el SHA-256, **30 min, un solo uso**; la página valida el enlace antes de mostrar el formulario y lo saca de la barra de direcciones; al cambiar la clave se cierran **todas** las sesiones y llega un correo de aviso. Respuestas que no revelan si un correo existe (login, registro, recuperar), con tiempo parecido.
 - Google: el ID token se verifica en el servidor (firma RS256 con las llaves de Google, `aud`, `iss`, vencimiento, `email_verified`, claim `hd` **y** dominio del correo). Cuenta nueva → espera aprobación.
 - Sesiones propias en la BD (no archivos de PHP, que en un hosting compartido pueden ser legibles por otros sitios): cookie `__Host-`, HttpOnly, SameSite=Strict, 30 min de inactividad / 8 h máximo, revalidación por petición (bloquear o cambiar la clave corta al instante). CSRF por sesión + cabecera propia + chequeo de Origin. Límites de intentos por IP y por correo.
 - **2FA opcional** (app autenticadora, TOTP) con secreto cifrado con libsodium; cada código sirve una vez. Muy recomendado para admins.
@@ -105,7 +105,7 @@ Pedido de Manuel: entrar con cuenta de la empresa y editar todo el sitio sin toc
 - Pruebas: `php herramientas/tests/test_api.php` (104 chequeos de flujos y ataques: dominio ajeno, clave débil, CSRF, origen ajeno, fuerza bruta, enlaces reutilizados/vencidos, sesiones que deben morir, Google falso, 2FA repetido, PHP disfrazado de foto, modo desarrollador en producción).
 
 ### Beta en tu PC (sin servidor)
-`php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php` → sin `config.php` arranca en **modo local**: SQLite en `servidor/datos/`, secretos generados solos, correos a `/admin/bandeja.html` y botón **«Entrar como desarrollador»** (solo modo local **y** solo desde 127.0.0.1; en producción no existe). Publicar en local escribe los JS de `web/assets/` del repo: después se hace commit como siempre.
+`php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php` → sin `config.php` arranca en **modo local**: SQLite en `servidor/datos/`, secretos generados solos, correos a `/admin/bandeja` y botón **«Entrar como desarrollador»** (solo modo local **y** solo desde 127.0.0.1; en producción no existe). Publicar en local escribe los JS de `web/assets/` del repo: después se hace commit como siempre.
 Para crear una cuenta real de admin por consola: `php herramientas/admin-cli.php crear-admin correo@icewell.cl "Nombre"`.
 
 ### Publicar el panel (hosting compartido con PHP 8.1+)
@@ -126,6 +126,25 @@ Para crear una cuenta real de admin por consola: `php herramientas/admin-cli.php
 - Los logos de socios estaban duplicados a mano para la marquesina → se duplican solos.
 - Faltaban: texto alternativo de las fotos, SEO editable, redes sociales, fotos del equipo (sin foto se ven las iniciales), respaldos al publicar, historial, papelera (ocultar), concurrencia entre dos editores, auditoría y 2FA.
 - Pendiente de decidir: dominio definitivo (icewell.net vs icewell.cl) y migración desde Wix; respaldo periódico de la BD (cPanel → copias de seguridad).
+
+## Direcciones limpias (02-oct)
+
+Pedido de Manuel: que en la barra no se vea `cv.html`, `admin/editor.html`, etc.
+
+| Dirección | Archivo |
+|---|---|
+| `/` | `index.html` |
+| `/curriculum` | `cv.html` |
+| `/presentacion` | `cv-presentacion.html` |
+| `/admin/`, `/admin/editor`, `/admin/restablecer`, `/admin/verificar`, `/admin/bandeja` | `admin/*.html` |
+
+- **Los archivos no cambiaron de nombre.** La traducción la hace el servidor: `web/.htaccess`, que usan el hosting y Docker, y `herramientas/servidor-local.php`, para `php -S`. Son dos copias de la misma tabla: si cambia una, hay que cambiar la otra. `test_rutas.php` las prueba.
+- **Las direcciones viejas con `.html` siguen funcionando:** redirigen con 301 a la limpia, conservando el `?query`; el navegador conserva el `#filtro`. Así no se rompen los links ya compartidos ni los correos de recuperación ya enviados.
+- **Detrás de Caddy (https)**, la redirección sale directo en https (`X-Forwarded-Proto`).
+- **Cualquier dirección que no exista** muestra `404.html`: página propia, con links al inicio y al currículum.
+- **Links:** siempre en forma limpia y relativa (`curriculum#sector=…`, `presentacion`, `./`). `test_icewell.js` revisa que ninguna de las 3 páginas tenga un link con `.html`.
+- **Doble clic (`file://`):** `transicion.js` lleva el clic al archivo `.html`. Con `python -m http.server` los links limpios no resuelven: para eso está `php -S` o Docker.
+- **De pasada se arregló un bug:** el selector «Versión presentación» de `cv.html` llevaba el filtro anterior, porque se actualizaba antes de escribir el hash.
 
 ## Docker (02-oct)
 

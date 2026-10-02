@@ -1,4 +1,4 @@
-/* ICEWELL — Vista previa del panel (/admin/editor.html)
+/* ICEWELL — Vista previa del panel (/admin/editor)
    El editor muestra el sitio real en un iframe con ?borrador=1. Este script, que va
    ANTES de sitio-data.js y cv-data.js, toma el borrador sin guardar desde el editor
    (window.parent.icewellBorrador) para que la vista previa muestre los cambios

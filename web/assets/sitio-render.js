@@ -154,7 +154,7 @@
     },
     'sectores': function(doc, s, cont){
       sectores().forEach(function(x){
-        var a = doc.createElement('a'); a.href = 'cv.html#sector=' + encodeURIComponent(x.id); a.textContent = x.label;
+        var a = doc.createElement('a'); a.href = 'curriculum#sector=' + encodeURIComponent(x.id); a.textContent = x.label;
         cont.appendChild(a);
       });
     },

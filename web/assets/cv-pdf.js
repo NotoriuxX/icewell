@@ -37,7 +37,7 @@
       doc.addFileToVFS(n + '.ttf', A.fuentes[n]);
       doc.addFont(n + '.ttf', n, 'normal');
     });
-    doc.setProperties({ title: 'Currículum Icewell' + (o.hayFiltro ? ' — ' + o.desc : ''), author: 'Icewell SpA', subject: 'Obras y proyectos HVAC', creator: 'icewell cv.html' });
+    doc.setProperties({ title: 'Currículum Icewell' + (o.hayFiltro ? ' — ' + o.desc : ''), author: 'Icewell SpA', subject: 'Obras y proyectos HVAC', creator: 'icewell /curriculum' });
 
     // Textos y datos de la empresa: los mismos de la página (assets/sitio-data.js, editables en /admin)
     var IS = window.icewellSitio, E = IS ? IS.empresa() : {};

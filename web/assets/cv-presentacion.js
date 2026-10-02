@@ -495,7 +495,7 @@
     if(state.q) h.set('q', state.q);
     var nuevo = h.toString().replace(/%2C/g, ',');
     if(location.hash.slice(1) !== nuevo){ try{ history.replaceState(null, '', nuevo ? '#' + nuevo : location.pathname + location.search); }catch(e){} }
-    document.querySelectorAll('.js-version').forEach(function(a){ a.href = 'cv.html' + (nuevo ? '#' + nuevo : ''); });
+    document.querySelectorAll('.js-version').forEach(function(a){ a.href = 'curriculum' + (nuevo ? '#' + nuevo : ''); });
   }
   function leerHash(){
     var h = new URLSearchParams(location.hash.replace(/^#/, ''));

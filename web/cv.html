@@ -318,13 +318,13 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 
 <header class="cv-header">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Icewell, volver al sitio"><img src="assets/icewell-logo.svg" alt="Icewell"></a>
+    <a class="brand" href="./" aria-label="Icewell, volver al sitio"><img src="assets/icewell-logo.svg" alt="Icewell"></a>
     <div class="header-actions">
-      <a class="back-link" href="index.html">
+      <a class="back-link" href="./">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         <span>Volver al sitio</span>
       </a>
-      <nav class="version-switch" aria-label="Versión del currículum"><a href="cv.html" aria-current="page">Versión web</a><a href="cv-presentacion.html" class="js-version">Versión presentación</a></nav>
+      <nav class="version-switch" aria-label="Versión del currículum"><a href="curriculum" aria-current="page">Versión web</a><a href="presentacion" class="js-version">Versión presentación</a></nav>
       <button class="btn btn--primary js-pdf-cv" type="button" title="CV completo (no depende de los filtros)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
         Descargar CV
@@ -465,7 +465,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 <footer class="cv-footer">
   <div class="wrap">
     <p>© <span data-anio-actual>2026</span> <span data-empresa="razonSocial">Icewell SpA</span></p>
-    <a href="index.html">icewell · sitio principal</a>
+    <a href="./">icewell · sitio principal</a>
   </div>
 </footer>
 
@@ -633,8 +633,6 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
       (hayFiltro ? ' · ' + esc(desc) : ' en el currículum') + (m2 ? ' · ' + fmtN.format(m2) + ' m² con superficie registrada' : '');
     var pl = document.getElementById('printLabel');
     if(pl) pl.textContent = hayFiltro ? 'Descargar proyectos (' + lista.length + ')' : 'Descargar proyectos';
-    // el link a la otra versión conserva los filtros
-    document.querySelectorAll('.js-version').forEach(function(a){ a.href = 'cv-presentacion.html' + location.hash; });
     document.getElementById('printFilter').textContent = (hayFiltro ? 'Filtro: ' + desc : 'Todas las obras') + ' · ' + lista.length + ' obras · ' +
       new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -700,6 +698,9 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
     if(location.hash.slice(1) !== nuevo){
       try{ history.replaceState(null, '', nuevo ? '#' + nuevo : location.pathname + location.search); }catch(e){}
     }
+    // el link a la otra versión conserva los filtros (acá, ya con el hash nuevo: antes se
+    // actualizaba un paso antes de escribirlo y llevaba el filtro anterior)
+    document.querySelectorAll('.js-version').forEach(function(a){ a.href = 'presentacion' + (nuevo ? '#' + nuevo : ''); });
   }
   function leerHash(){
     var h = new URLSearchParams(location.hash.replace(/^#/, ''));

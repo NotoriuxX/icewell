@@ -58,7 +58,7 @@
   var formLogin = document.getElementById('formLogin'), formTotp = document.getElementById('formTotp');
   var avisoLogin = document.getElementById('avisoLogin');
   var desafio = '';
-  function entrar(){ location.replace('editor.html'); }
+  function entrar(){ location.replace('editor'); }
 
   formLogin.addEventListener('submit', function(e){
     e.preventDefault();

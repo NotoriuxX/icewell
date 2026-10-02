@@ -30,7 +30,8 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 - Sitio: http://localhost:8080
 - Panel: http://localhost:8080/admin/ → «Entrar como desarrollador»
-- Correos de prueba: http://localhost:8080/admin/bandeja.html
+- Correos de prueba: http://localhost:8080/admin/bandeja
+- Currículum: http://localhost:8080/curriculum · Presentación: http://localhost:8080/presentacion (direcciones limpias, ver `web/.htaccess`)
 
 No necesita `.env`. El código está montado: los cambios en `web/` y `servidor/` se ven al recargar.
 Publicar desde el panel en desarrollo **escribe los JS del repo** (`web/assets/sitio-data.js`, `cv-data.js`, `vendor/cv-pdf-assets.js`), igual que con `php -S`. Después se hace commit si corresponde.

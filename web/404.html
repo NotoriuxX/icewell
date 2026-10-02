@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Página no encontrada · Icewell</title>
+<!-- Rutas absolutas (/assets/…): esta página se muestra en cualquier dirección que no exista, a cualquier profundidad -->
+<link rel="icon" type="image/svg+xml" href="/assets/isotipo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #112536; --ink-soft: #4b6474; --blue: #0062a8; --blue-deep: #004a80; --snow: #f6fbfd;
+  --tri: linear-gradient(90deg, #0062a8 0 33.34%, #1a9614 33.34% 66.67%, #d01726 66.67% 100%);
+  --display: "Big Shoulders Display", Impact, sans-serif; --body: "IBM Plex Sans", Arial, sans-serif; --mono: "IBM Plex Mono", monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+  background: linear-gradient(160deg, #ffffff, #e7f3fa); color: var(--ink); font-family: var(--body); }
+main { width: min(560px, 100%); text-align: center; }
+main > img { width: 150px; height: auto; }
+.tri { width: 72px; height: 4px; margin: 28px auto; background: var(--tri); border-radius: 2px; }
+.codigo { margin: 0 0 10px; color: var(--blue); font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+h1 { margin: 0 0 14px; font: 800 clamp(38px, 9vw, 60px)/.92 var(--display); letter-spacing: -.025em; text-transform: uppercase; }
+p { margin: 0 0 28px; color: var(--ink-soft); font-size: 16px; line-height: 1.55; }
+nav { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+nav a { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px; text-decoration: none; }
+.primario { background: var(--blue); color: #fff; }
+.primario:hover { background: var(--blue-deep); }
+.secundario { border: 1.5px solid rgba(17, 37, 54, .25); color: var(--ink); }
+.secundario:hover { border-color: var(--blue); color: var(--blue); }
+a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="/assets/icewell-logo.svg" alt="Icewell">
+  <div class="tri" aria-hidden="true"></div>
+  <p class="codigo">Error 404</p>
+  <h1>Esta página no existe</h1>
+  <p>Puede que la dirección esté mal escrita o que la página se haya movido.</p>
+  <nav>
+    <a class="primario" href="/">Ir al inicio</a>
+    <a class="secundario" href="/curriculum">Ver currículum</a>
+  </nav>
+</main>
+</body>
+</html>

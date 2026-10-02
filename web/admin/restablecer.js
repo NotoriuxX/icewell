@@ -1,4 +1,4 @@
-/* ICEWELL — Página del enlace de recuperación (admin/restablecer.html?id=…&t=…)
+/* ICEWELL — Página del enlace de recuperación (/admin/restablecer?id=…&t=… → restablecer.html)
    1) Lee el id y el token del enlace y los saca de la barra de direcciones
       (no quedan en el historial ni se comparten por error).
    2) Pregunta al servidor si el enlace sirve ANTES de mostrar el formulario.

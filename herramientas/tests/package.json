@@ -4,7 +4,7 @@
   "description": "Pruebas: jsdom (index, cv, presentación, PDF, datos del sitio) y servidor del panel (php test_api.php). Ver CLAUDE.md.",
   "scripts": {
     "test": "node test_icewell.js && node test_web_ux.js && node test_sitio.js && node test_transicion.js && node test_pdf.js",
-    "test:servidor": "php test_api.php"
+    "test:servidor": "php test_api.php && php test_rutas.php"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"

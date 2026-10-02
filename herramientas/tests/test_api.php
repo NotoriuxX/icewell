@@ -83,7 +83,7 @@ function bandeja(): array
 function enlace(string $para, string $pagina): array
 {
     foreach (array_reverse(bandeja()) as $m) {
-        if ($m['para'] === $para && preg_match('#/admin/' . $pagina . '\.html\?id=([0-9a-f]{32})&t=([0-9a-f]{64})#', $m['texto'], $x)) return ['id' => $x[1], 't' => $x[2]];
+        if ($m['para'] === $para && preg_match('#/admin/' . $pagina . '\?id=([0-9a-f]{32})&t=([0-9a-f]{64})#', $m['texto'], $x)) return ['id' => $x[1], 't' => $x[2]];
     }
     return ['id' => '', 't' => ''];
 }

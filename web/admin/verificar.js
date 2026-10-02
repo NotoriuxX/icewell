@@ -1,4 +1,4 @@
-/* ICEWELL — Confirmación de correo (admin/verificar.html?id=…&t=…) */
+/* ICEWELL — Confirmación de correo (/admin/verificar?id=…&t=… → verificar.html) */
 (function(){
   'use strict';
   var P = window.Panel;

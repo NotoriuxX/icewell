@@ -130,7 +130,7 @@
   // ==================================================================== Currículum
   E.registrarTab('cv', { render: function(p){
     var d = E.draft;
-    F.encabezado(p, 'Currículum', 'Textos de la versión web (cv.html) y de la versión presentación. Las obras se editan en la pestaña Obras.');
+    F.encabezado(p, 'Currículum', 'Textos de la versión web (/curriculum) y de la versión presentación. Las obras se editan en la pestaña Obras.');
     F.formato(p);
 
     var s = F.seccion(p, 'Datos de la empresa (solo lectura)', { clave: 'cv-emp' });

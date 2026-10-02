@@ -3,7 +3,7 @@
    - Producción: SMTP de la empresa (STARTTLS en 587 o SSL en 465, AUTH LOGIN).
      Cliente SMTP mínimo propio para no depender de Composer en un hosting compartido.
    - Local: no se envía nada; el correo queda en servidor/datos/bandeja/ y se ve en
-     /admin/bandeja.html (ahí está el enlace de recuperación para probar el flujo).
+     /admin/bandeja (ahí está el enlace de recuperación para probar el flujo).
    Los datos del usuario (nombre) se escapan en el HTML; destinatario y asunto se
    validan contra saltos de línea (inyección de cabeceras). */
 declare(strict_types=1);
@@ -13,7 +13,7 @@ final class Correo
     // ---------------------------------------------------------------- mensajes
     public static function verificacion(array $u, string $sel, string $ver): bool
     {
-        $url = Http::urlBase() . '/admin/verificar.html?id=' . $sel . '&t=' . $ver;
+        $url = Http::urlBase() . '/admin/verificar?id=' . $sel . '&t=' . $ver;
         return self::enviar($u['email'], 'Confirma tu correo · Panel Icewell',
             'Hola ' . $u['nombre'] . ",\n\nPara activar tu cuenta del panel de Icewell confirma tu correo en este enlace (vale 24 horas):\n\n$url\n\nDespués de confirmarlo, un administrador aprobará tu acceso.\nSi no fuiste tú, ignora este mensaje.",
             self::html('Confirma tu correo', '<p>Hola ' . self::e($u['nombre']) . ',</p><p>Para activar tu cuenta del panel de Icewell confirma tu correo. El enlace vale 24 horas.</p>',
@@ -22,7 +22,7 @@ final class Correo
 
     public static function recuperar(array $u, string $sel, string $ver): bool
     {
-        $url = Http::urlBase() . '/admin/restablecer.html?id=' . $sel . '&t=' . $ver;
+        $url = Http::urlBase() . '/admin/restablecer?id=' . $sel . '&t=' . $ver;
         return self::enviar($u['email'], 'Recupera tu contraseña · Panel Icewell',
             'Hola ' . $u['nombre'] . ",\n\nAlguien (ojalá tú) pidió crear una contraseña nueva para tu cuenta del panel de Icewell.\nEnlace (vale 30 minutos y se usa una sola vez):\n\n$url\n\nSi no fuiste tú, ignora este correo: tu contraseña actual sigue funcionando.",
             self::html('Crea una contraseña nueva', '<p>Hola ' . self::e($u['nombre']) . ',</p><p>Alguien (ojalá tú) pidió crear una contraseña nueva para tu cuenta del panel de Icewell. El enlace vale <b>30 minutos</b> y se usa una sola vez.</p>',
@@ -50,7 +50,7 @@ final class Correo
     public static function avisarAdmins(array $nuevo): void
     {
         $admins = Bd::todos("SELECT email, nombre FROM usuarios WHERE rol = 'admin' AND estado = 'activo'");
-        $url = Http::urlBase() . '/admin/editor.html#usuarios';
+        $url = Http::urlBase() . '/admin/editor#usuarios';
         foreach ($admins as $a) {
             self::enviar($a['email'], 'Nueva cuenta por aprobar · Panel Icewell',
                 $nuevo['nombre'] . ' (' . $nuevo['email'] . ") confirmó su correo y espera aprobación para editar el sitio.\n\nAprobar o rechazar: $url",

@@ -41,8 +41,8 @@ function cargar(archivo, query, hash){
   ok(m2.includes(51) && m2.includes(170000), 'cifras PDF 51 y 170.000 en hero: ' + m2.join(','));
   ok(!/\+150|400k|400\.000/.test(d.body.innerHTML), 'sin cifras viejas (+150 / 400k)');
   ok(d.querySelector('.wa-float svg path') && !d.querySelector('.whatsapp-float'), 'WhatsApp flotante nuevo presente');
-  ok(d.querySelectorAll('a[href="cv.html"]').length >= 4, 'links a cv.html (nav, menú móvil, footer, CTA)');
-  ok(d.querySelectorAll('.sector-links a[href^="cv.html#sector="]').length === 10, '10 links de sector al CV');
+  ok(d.querySelectorAll('a[href="curriculum"]').length >= 4, 'links a /curriculum, sin .html (nav, menú móvil, footer, CTA)');
+  ok(d.querySelectorAll('.sector-links a[href^="curriculum#sector="]').length === 10, '10 links de sector al CV');
   ok(!d.documentElement.classList.contains('aniversario'), 'sin tema aniversario el 27-sep');
 }
 {
@@ -77,6 +77,12 @@ function cargar(archivo, query, hash){
 for(const pag of ['cv.html', 'cv-presentacion.html']){
   const { d } = cargar(pag, '');
   ok(!!d.querySelector('.aniv-switch button'), pag + ': también tiene el botón de aniversario');
+}
+// Direcciones limpias (web/.htaccess): ningún link visible lleva .html, ni los que arma el JS
+for(const pag of ['index.html', 'cv.html', 'cv-presentacion.html']){
+  const { d } = cargar(pag, '', '#sector=mineria');
+  const conHtml = [...d.querySelectorAll('a[href]')].map(a => a.getAttribute('href')).filter(h => /\.html/.test(h));
+  ok(conHtml.length === 0, pag + ': links sin .html' + (conHtml.length ? ' → ' + conHtml.join(', ') : ''));
 }
 
 // ---------------- cv.html ----------------
