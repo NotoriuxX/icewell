@@ -1,0 +1,9 @@
+.git
+.claude
+**/node_modules
+herramientas/tests
+muestras-pdf
+servidor/config.php
+servidor/datos
+.env
+*.tmp-*

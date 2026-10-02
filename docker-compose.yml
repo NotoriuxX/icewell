@@ -1,0 +1,93 @@
+# ==========================================================================
+# ICEWELL — sitio + panel + base de datos
+#
+#   Producción (VPS):   cp .env.ejemplo .env   → completar
+#                       docker compose --profile https up -d --build
+#   PC (desarrollo):    docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+#                       → http://localhost:8080  y  http://localhost:8080/admin/
+#
+# Datos persistentes (sobreviven a reconstruir/actualizar la imagen):
+#   icewell_bd     MariaDB (usuarios, versiones del contenido, auditoría)
+#   icewell_obras  fotos subidas desde el panel
+#   icewell_datos  servidor/datos (respaldos al publicar, caché de llaves de Google)
+# Los JS públicos (sitio-data.js, cv-data.js, fotos del PDF) se regeneran al arrancar
+# desde la última versión publicada en la BD.
+# ==========================================================================
+name: icewell
+
+services:
+  web:
+    build: .
+    image: icewell-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ICEWELL_ENTORNO: ${ICEWELL_ENTORNO:-produccion}
+      ICEWELL_URL_BASE: ${ICEWELL_URL_BASE:-}
+      ICEWELL_PEPPER: ${ICEWELL_PEPPER:-}
+      ICEWELL_CLAVE_CIFRADO: ${ICEWELL_CLAVE_CIFRADO:-}
+      ICEWELL_DOMINIOS: ${ICEWELL_DOMINIOS:-icewell.cl}
+      ICEWELL_ADMIN_INICIAL: ${ICEWELL_ADMIN_INICIAL:-}
+      ICEWELL_PUBLICAR_ROL: ${ICEWELL_PUBLICAR_ROL:-admin}
+      ICEWELL_GOOGLE_CLIENT_ID: ${ICEWELL_GOOGLE_CLIENT_ID:-}
+      ICEWELL_BD_DRIVER: mysql
+      ICEWELL_BD_HOST: db
+      ICEWELL_BD_NOMBRE: ${ICEWELL_BD_NOMBRE:-icewell}
+      ICEWELL_BD_USUARIO: ${ICEWELL_BD_USUARIO:-icewell}
+      ICEWELL_BD_CLAVE: ${ICEWELL_BD_CLAVE:-}
+      ICEWELL_SMTP_HOST: ${ICEWELL_SMTP_HOST:-}
+      ICEWELL_SMTP_PUERTO: ${ICEWELL_SMTP_PUERTO:-587}
+      ICEWELL_SMTP_SEGURIDAD: ${ICEWELL_SMTP_SEGURIDAD:-tls}
+      ICEWELL_SMTP_USUARIO: ${ICEWELL_SMTP_USUARIO:-}
+      ICEWELL_SMTP_CLAVE: ${ICEWELL_SMTP_CLAVE:-}
+      ICEWELL_SMTP_DE: ${ICEWELL_SMTP_DE:-}
+      # el proxy HTTPS (caddy) vive en la red interna de Docker: se le cree X-Forwarded-Proto/For
+      ICEWELL_PROXIES_CONFIABLES: ${ICEWELL_PROXIES_CONFIABLES:-172.16.0.0/12}
+    volumes:
+      - icewell_obras:/var/www/icewell/web/assets/obras
+      - icewell_datos:/var/www/icewell/servidor/datos
+    # Sin proxy delante, publicar el puerto (p.ej. "80:80"). Con el perfil https, Caddy lo publica.
+    expose:
+      - "80"
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${ICEWELL_BD_NOMBRE:-icewell}
+      MARIADB_USER: ${ICEWELL_BD_USUARIO:-icewell}
+      MARIADB_PASSWORD: ${ICEWELL_BD_CLAVE:-}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - icewell_bd:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # HTTPS automático (Let's Encrypt) para un VPS: docker compose --profile https up -d
+  caddy:
+    image: caddy:2
+    profiles: ["https"]
+    restart: unless-stopped
+    depends_on: [web]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      ICEWELL_DOMINIO: ${ICEWELL_DOMINIO:-localhost}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_datos:/data
+      - caddy_config:/config
+
+volumes:
+  icewell_bd:
+  icewell_obras:
+  icewell_datos:
+  caddy_datos:
+  caddy_config:

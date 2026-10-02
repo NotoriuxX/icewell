@@ -11,6 +11,8 @@ Todas las rutas son relativas a la raíz del proyecto (`Desktop/icewell/proyecto
 ```bash
 # Servir el sitio + el panel (modo local: SQLite, correos a /admin/bandeja.html, "Entrar como desarrollador")
 php -S 127.0.0.1:8765 -t web herramientas/servidor-local.php   # → /index.html | /cv.html | /cv-presentacion.html | /admin/
+# Docker (sitio + panel + MariaDB): PC → http://localhost:8080 ; servidor → ver DESPLIEGUE-DOCKER.md
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 # Solo el sitio estático (sin panel; con doble clic también funciona)
 python -m http.server 8765 --directory web
 
@@ -45,7 +47,7 @@ Las dos versiones del CV comparten los datos, el formato del hash de filtros (`#
 
 ### Panel (`web/admin/` + `servidor/`)
 - **Fuente de verdad = BD del panel** (versiones del contenido JSON). `servidor/semilla.json` es el contenido inicial. **Publicar** escribe `assets/sitio-data.js` y `assets/cv-data.js` (`servidor/lib/Contenido.php`: validación de TODO lo que llega + generación) y regenera `vendor/cv-pdf-assets.js` (`PdfAssets.php`). **No editar esos 2 JS a mano**: se pisan al publicar (para cambios a mano: editar, `node herramientas/semilla.js`, `php herramientas/admin-cli.php publicar-semilla`).
-- API: `web/api/index.php?r=<ruta>` → `servidor/api.php`. Todo POST exige `X-Requested-With: icewell` + Origin propio + JSON; con sesión, `X-CSRF-Token`. Clases en `servidor/lib/` (Auth, Sesion, Tokens, Limites, Google, Totp, Correo, Cripto, Imagenes, Panel, Auditoria). Config: `servidor/config.php` (no va a git; sin él → modo local solo en `php -S`/CLI).
+- API: `web/api/index.php?r=<ruta>` → `servidor/api.php`. Todo POST exige `X-Requested-With: icewell` + Origin propio + JSON; con sesión, `X-CSRF-Token`. Clases en `servidor/lib/` (Auth, Sesion, Tokens, Limites, Google, Totp, Correo, Cripto, Imagenes, Panel, Auditoria). Config: `servidor/config.php` (hosting compartido; no va a git), o variables `ICEWELL_*` (Docker, `.env.ejemplo`); sin ninguna → modo local solo en `php -S`/CLI. Detrás de proxy: `proxies_confiables` (IPs/CIDR) decide si se cree `X-Forwarded-Proto/For`.
 - Editor: `editor.js` (núcleo, guardar/publicar, deshacer, copia local), `editor-campos.js` (campos enlazados al borrador, siempre `textContent`), `editor-secciones.js`, `editor-obras.js`, `editor-cuenta.js`, `editor-vista.js` (iframe `?borrador=1` + `assets/borrador.js` lee `parent.icewellBorrador()`). Sin JS en línea: CSP `script-src 'self'` (`servidor/lib/Cabeceras.php` en local = `web/admin/.htaccess` en el hosting; cambiar los dos).
 - `assets/sitio-render.js` aplica `ICEWELL_SITIO` al HTML: `data-t` (textos con formato `*énfasis*`, `**negrita**`, `{anios}`…), `data-empresa`, `data-wa`, `data-cifra`, `data-img`, `data-lista` (servicios, sectores, metodo, hitos, portada, equipo, socios, cv-servicios, cv-cert), `data-edit` (para el clic → campo). Los PDF y la presentación usan `icewellSitio.plano/html/empresa/campoEmpresa`. Cargar en orden: `borrador.js`, `sitio-data.js`, `aniversario.js`, `cv-data.js`, `sitio-render.js`.
 

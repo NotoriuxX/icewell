@@ -11,6 +11,7 @@
      php herramientas/admin-cli.php bloquear <correo>
      php herramientas/admin-cli.php resetear-clave <correo>   (pide la clave nueva sin mostrarla)
      php herramientas/admin-cli.php migrar               crea/actualiza las tablas
+     php herramientas/admin-cli.php republicar           reescribe los JS públicos desde la última versión publicada (Docker)
    ========================================================================== */
 declare(strict_types=1);
 
@@ -58,6 +59,20 @@ switch ($cmd) {
         Auditoria::registrar($id, 'cli.crear_admin', $correo);
         salir("Admin creado: $correo", 0);
 
+    case 'republicar':
+        // Docker: al arrancar un contenedor nuevo, vuelve a escribir los JS públicos desde la última versión
+        // publicada en la BD (así no se necesita volumen para sitio-data.js / cv-data.js / cv-pdf-assets.js).
+        $v = Bd::uno("SELECT id, json FROM contenido_versiones WHERE estado = 'publicado' ORDER BY id DESC LIMIT 1");
+        if (!$v) salir('Todavía no hay nada publicado en la BD: se dejan los JS de la imagen.', 0);
+        [$limpio, $errores] = Contenido::validar(json_decode($v['json'], true), Config::get('dir_web') . '/assets');
+        if ($errores) {
+            // p.ej. falta una foto (volumen de fotos vacío): no publicar algo roto, dejar lo que hay
+            salir("La versión {$v['id']} tiene errores; se dejan los JS actuales:\n" . implode("\n", array_map(fn($e) => " - {$e['campo']}: {$e['error']}", $errores)));
+        }
+        Contenido::publicar($limpio, (string)Config::get('dir_web'));
+        $pdf = PdfAssets::regenerar($limpio, (string)Config::get('dir_web'));
+        salir("Republicada la versión {$v['id']} (fotos PDF: {$pdf['fotos']}, nuevas: {$pdf['nuevas']}).", 0);
+
     case 'listar':
         foreach (Bd::todos('SELECT email, nombre, rol, estado, ultimo_login FROM usuarios ORDER BY id') as $u) {
             printf("%-34s %-22s %-7s %-22s %s\n", $u['email'], $u['nombre'], $u['rol'], $u['estado'], $u['ultimo_login'] ?? '-');
@@ -87,5 +102,5 @@ switch ($cmd) {
         salir('Clave cambiada y sesiones cerradas.', 0);
 
     default:
-        salir("Comandos: publicar-semilla | migrar | crear-admin <correo> <nombre> | listar | aprobar <correo> [admin|editor] | bloquear <correo> | resetear-clave <correo>");
+        salir("Comandos: publicar-semilla | migrar | republicar | crear-admin <correo> <nombre> | listar | aprobar <correo> [admin|editor] | bloquear <correo> | resetear-clave <correo>");
 }

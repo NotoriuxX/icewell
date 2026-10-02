@@ -1,0 +1,26 @@
+# ICEWELL — desarrollo en la PC (se suma a docker-compose.yml):
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+#   → http://localhost:8080        sitio
+#   → http://localhost:8080/admin/ panel ("Entrar como desarrollador")
+#   → http://localhost:8080/admin/bandeja.html  correos de prueba
+# El código está montado: los cambios en web/ y servidor/ se ven al recargar, sin reconstruir.
+services:
+  web:
+    ports:
+      - "127.0.0.1:8080:80"     # solo esta PC: el botón de desarrollador no debe quedar expuesto en la red
+    environment:
+      ICEWELL_ENTORNO: local
+      ICEWELL_DESARROLLADOR: "1"
+      ICEWELL_SIN_HTTPS: "1"
+      ICEWELL_URL_BASE: ""
+      ICEWELL_PEPPER: ""
+      ICEWELL_CLAVE_CIFRADO: ""
+      ICEWELL_BD_CLAVE: icewell-desarrollo
+    volumes:
+      - ./web:/var/www/icewell/web
+      - ./servidor:/var/www/icewell/servidor
+      - icewell_obras:/var/www/icewell/web/assets/obras
+      - icewell_datos:/var/www/icewell/servidor/datos
+  db:
+    environment:
+      MARIADB_PASSWORD: icewell-desarrollo

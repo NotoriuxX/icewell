@@ -291,5 +291,34 @@ req('p', 'POST', 'auth/recuperar', ['correo' => 'ana@icewell.cl'], $o, $P2);
 ok(!is_dir("$TMP/prod/servidor/datos/bandeja") || count(glob("$TMP/prod/servidor/datos/bandeja/*")) === count(glob("$TMP/servidor/datos/bandeja/*")), 'producción: los correos no van a la bandeja local');
 proc_terminate($srv2);
 
+// ================================================================ Docker: configuración por variables y proxy
+@mkdir("$TMP/env/servidor/lib", 0777, true);
+foreach (glob("$TMP/servidor/lib/*.php") as $f) copy($f, "$TMP/env/servidor/lib/" . basename($f));
+$sec = "$TMP/env/pepper.txt"; file_put_contents($sec, str_repeat('ef', 32) . "\n");
+$leer = function (array $env) use ($TMP) {
+    $cmd = 'env -i PATH=/usr/bin:/bin ' . implode(' ', array_map(fn($k, $v) => $k . '=' . escapeshellarg($v), array_keys($env), $env))
+        . ' ' . escapeshellarg(PHP_BINARY) . ' -r ' . escapeshellarg('require "' . $TMP . '/env/servidor/lib/Config.php"; try { echo json_encode(Config::cargar()); } catch (Throwable $e) { echo json_encode(["error" => $e->getMessage()]); }');
+    return json_decode((string)shell_exec($cmd), true);
+};
+$c = $leer(['ICEWELL_ENTORNO' => 'produccion', 'ICEWELL_URL_BASE' => 'https://www.icewell.cl/', 'ICEWELL_PEPPER_FILE' => $sec, 'ICEWELL_CLAVE_CIFRADO' => str_repeat('12', 32),
+    'ICEWELL_BD_DRIVER' => 'mysql', 'ICEWELL_BD_HOST' => 'db', 'ICEWELL_BD_CLAVE' => 'x', 'ICEWELL_DOMINIOS' => 'icewell.cl, icewell.net', 'ICEWELL_DESARROLLADOR' => '1',
+    'ICEWELL_PROXIES_CONFIABLES' => '172.16.0.0/12,10.0.0.5', 'ICEWELL_SMTP_HOST' => 'smtp.gmail.com', 'ICEWELL_SMTP_USUARIO' => 'a@icewell.cl']);
+ok(($c['entorno'] ?? '') === 'produccion' && $c['url_base'] === 'https://www.icewell.cl' && $c['bd']['driver'] === 'mysql' && $c['bd']['host'] === 'db', 'Docker: configuración desde variables ICEWELL_*');
+ok(($c['pepper'] ?? '') === str_repeat('ef', 32), 'Docker: secreto leído de un archivo (*_FILE, Docker secrets)');
+ok($c['dominios_permitidos'] === ['icewell.cl', 'icewell.net'] && $c['proxies_confiables'] === ['172.16.0.0/12', '10.0.0.5'] && $c['smtp']['de'] === 'a@icewell.cl', 'Docker: listas y SMTP desde variables');
+ok(($c['desarrollador'] ?? null) === false, 'Docker: ICEWELL_DESARROLLADOR=1 se ignora en producción');
+$c = $leer(['ICEWELL_ENTORNO' => 'produccion', 'ICEWELL_URL_BASE' => 'https://www.icewell.cl']);
+ok(isset($c['error']) && str_contains($c['error'], 'pepper'), 'Docker: producción sin secretos no arranca');
+$c = $leer(['ICEWELL_ENTORNO' => 'local', 'ICEWELL_DESARROLLADOR' => '1']);
+ok(($c['entorno'] ?? '') === 'local' && $c['desarrollador'] === true && preg_match('/^[0-9a-f]{64}$/', $c['pepper'] ?? ''), 'Docker local: secretos generados y botón de desarrollador habilitado');
+
+require_once "$TMP/servidor/lib/Config.php"; require_once "$TMP/servidor/lib/Http.php";
+Config::forzar(['proxies_confiables' => ['172.16.0.0/12', '2001:db8::/32']]);
+ok(Http::ipEnRango('172.18.0.3', '172.16.0.0/12') && !Http::ipEnRango('172.32.0.1', '172.16.0.0/12') && Http::ipEnRango('2001:db8::1', '2001:db8::/32') && !Http::ipEnRango('10.0.0.1', '172.16.0.0/12'), 'rangos CIDR (IPv4 e IPv6)');
+$_SERVER = ['REMOTE_ADDR' => '203.0.113.9', 'HTTP_X_FORWARDED_PROTO' => 'https', 'HTTP_X_FORWARDED_FOR' => '1.2.3.4'];
+ok(!Http::esHttps() && Http::ip() === '203.0.113.9', 'X-Forwarded-Proto/For de un cliente cualquiera se ignoran (no se puede fingir https ni la IP)');
+$_SERVER = ['REMOTE_ADDR' => '172.18.0.4', 'HTTP_X_FORWARDED_PROTO' => 'https', 'HTTP_X_FORWARDED_FOR' => '9.9.9.9, 1.2.3.4'];
+ok(Http::esHttps() && Http::ip() === '1.2.3.4', 'desde el proxy de Docker (Caddy) sí se cree https y la IP real');
+
 echo $fallas ? "\n$fallas FALLAS\n" : "\nTODO OK\n";
 exit($fallas ? 1 : 0);

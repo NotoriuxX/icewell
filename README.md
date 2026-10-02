@@ -116,6 +116,17 @@ Para crear una cuenta real de admin por consola: `php herramientas/admin-cli.php
 - Faltaban: texto alternativo de las fotos, SEO editable, redes sociales, fotos del equipo (sin foto se ven las iniciales), respaldos al publicar, historial, papelera (ocultar), concurrencia entre dos editores, auditoría y 2FA.
 - Pendiente de decidir: dominio definitivo (icewell.net vs icewell.cl) y migración desde Wix; respaldo periódico de la BD (cPanel → copias de seguridad).
 
+## Docker (02-oct)
+
+Todo el proyecto (sitio + panel + MariaDB) corre en Docker; detalle completo y **prompt listo para el Claude que publique en el servidor nuevo**: [`DESPLIEGUE-DOCKER.md`](DESPLIEGUE-DOCKER.md).
+- PC: `docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build` → http://localhost:8080 (panel con «Entrar como desarrollador», correos a la bandeja de prueba, código montado).
+- Servidor: `.env` desde `.env.ejemplo` → `docker compose --profile https up -d --build` (Caddy saca el certificado HTTPS solo).
+- Configuración por variables `ICEWELL_*` (o `*_FILE` para Docker secrets); `servidor/config.php` sigue sirviendo para un hosting compartido.
+- Al arrancar, el contenedor migra la BD y **re-publica la última versión publicada** (`admin-cli.php republicar`): los JS del sitio salen de la BD, no hace falta volumen para ellos. Volúmenes: BD, fotos subidas y `servidor/datos`.
+- Detrás de un proxy: `ICEWELL_PROXIES_CONFIABLES` acepta rangos CIDR; `X-Forwarded-Proto/For` solo se creen si vienen de ahí (si no, cualquiera podría fingir https o su IP).
+- «Entrar como desarrollador» en Docker: solo con `ICEWELL_ENTORNO=local` **y** `ICEWELL_DESARROLLADOR=1`, y el puerto publicado solo en 127.0.0.1. En producción se ignora (probado).
+- Verificado en este entorno: stack completo con MariaDB, flujo del editor en Chromium (editar, subir foto, publicar), producción (redirección a https, cookie `__Host-` Secure, sin botón de desarrollador, contenido que sobrevive a recrear el contenedor). ⚠ La red de la sesión de prueba bloquea los repositorios de Debian, así que el paso `apt-get` del `Dockerfile` (receta oficial de la imagen `php`) se reemplazó por una imagen de prueba con las mismas extensiones; en una PC o servidor normal el `Dockerfile` se construye tal cual.
+
 ## Dos versiones del CV (para mostrarle a Icewell)
 
 Las dos comparten los datos (`cv-data.js`) y los filtros por hash (`#sector=hoteleria`). El selector **Versión web / Versión presentación** que va arriba en ambas conserva el filtro al cambiar de versión.

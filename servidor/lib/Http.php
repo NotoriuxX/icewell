@@ -34,7 +34,32 @@ final class Http
 
     public static function esHttps(): bool
     {
-        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (int)($_SERVER['SERVER_PORT'] ?? 0) === 443;
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (int)($_SERVER['SERVER_PORT'] ?? 0) === 443) return true;
+        // detrás de un proxy HTTPS (Caddy en Docker, Cloudflare): solo se cree a X-Forwarded-Proto si viene de un proxy confiable
+        return self::desdeProxyConfiable() && strtolower(trim(explode(',', (string)($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''))[0])) === 'https';
+    }
+
+    /** ¿La petición llegó desde un proxy de la lista proxies_confiables (IPs o rangos CIDR, p.ej. 172.16.0.0/12)? */
+    public static function desdeProxyConfiable(): bool
+    {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        foreach ((array)Config::get('proxies_confiables') as $p) if (self::ipEnRango($ip, (string)$p)) return true;
+        return false;
+    }
+
+    public static function ipEnRango(string $ip, string $rango): bool
+    {
+        if (!str_contains($rango, '/')) return $ip !== '' && $ip === $rango;
+        [$red, $bits] = explode('/', $rango, 2);
+        $a = @inet_pton($ip); $b = @inet_pton($red);
+        if ($a === false || $b === false || strlen($a) !== strlen($b)) return false;
+        $bits = (int)$bits;
+        if ($bits < 0 || $bits > strlen($a) * 8) return false;
+        $bytes = intdiv($bits, 8); $resto = $bits % 8;
+        if (substr($a, 0, $bytes) !== substr($b, 0, $bytes)) return false;
+        if ($resto === 0) return true;
+        $m = chr((0xFF << (8 - $resto)) & 0xFF);
+        return (ord($a[$bytes]) & ord($m)) === (ord($b[$bytes]) & ord($m));
     }
 
     public static function responder(array $datos, int $estado = 200): void
@@ -63,13 +88,18 @@ final class Http
     public static function ip(): string
     {
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-        $proxies = (array)Config::get('proxies_confiables');
-        if ($proxies && in_array($ip, $proxies, true) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (self::desdeProxyConfiable() && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $partes = array_map('trim', explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
             $real = end($partes);
             if (filter_var($real, FILTER_VALIDATE_IP)) $ip = $real;
         }
         return substr($ip, 0, 45);
+    }
+
+    /** "Entrar como desarrollador": solo modo local, y desde la misma PC (o Docker local con ICEWELL_DESARROLLADOR=1). */
+    public static function permiteDesarrollador(): bool
+    {
+        return Config::esLocal() && (self::esIpLocal() || Config::get('desarrollador') === true);
     }
 
     public static function esIpLocal(): bool
@@ -117,7 +147,7 @@ final class Http
     {
         $b = (string)Config::get('url_base');
         if ($b !== '') return rtrim($b, '/');
-        if (Config::esLocal() && Http::esIpLocal() && !empty($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/', $_SERVER['HTTP_HOST'])) {
+        if (self::permiteDesarrollador() && !empty($_SERVER['HTTP_HOST']) && preg_match('/^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/', $_SERVER['HTTP_HOST'])) {
             return 'http://' . $_SERVER['HTTP_HOST'];
         }
         return 'http://localhost:8765';

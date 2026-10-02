@@ -7,6 +7,8 @@ DirectoryIndex index.html index.php
   # Todo por HTTPS (el panel y las cookies de sesión lo exigen)
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  # Docker en desarrollo (http://localhost): sin certificado, no se redirige
+  RewriteCond %{ENV:ICEWELL_SIN_HTTPS} !=1
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   # Archivos ocultos y temporales de publicación: nunca (salvo .well-known, que usa el certificado HTTPS)
   RewriteCond %{REQUEST_URI} !^/\.well-known/

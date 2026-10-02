@@ -1,0 +1,6 @@
+# ICEWELL — HTTPS automático (Let's Encrypt) delante del contenedor web.
+# ICEWELL_DOMINIO = www.icewell.cl (o el dominio definitivo); el DNS debe apuntar a este servidor.
+{$ICEWELL_DOMINIO} {
+	encode zstd gzip
+	reverse_proxy web:80
+}

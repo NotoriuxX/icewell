@@ -11,3 +11,6 @@ Thumbs.db
 servidor/config.php
 servidor/datos/
 web/assets/*.tmp-*
+
+# Docker: configuración con secretos
+.env

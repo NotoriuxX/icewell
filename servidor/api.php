@@ -29,7 +29,7 @@ try {
         // ------------------------------------------------ públicas
         case 'config':
             Http::responder(['ok' => true, 'local' => Config::esLocal(), 'googleClientId' => (string)Config::get('google_client_id'),
-                'dominios' => Config::get('dominios_permitidos'), 'desarrollador' => Config::esLocal() && Http::esIpLocal()]);
+                'dominios' => Config::get('dominios_permitidos'), 'desarrollador' => Http::permiteDesarrollador()]);
             break;
         case 'sesion':
             $s = Sesion::actual();
@@ -54,7 +54,7 @@ try {
             Http::responder(['ok' => true]);
             break;
         case 'dev/bandeja':
-            if (!Config::esLocal() || !Http::esIpLocal()) throw new ErrorHttp(404, 'No encontrado.');
+            if (!Http::permiteDesarrollador()) throw new ErrorHttp(404, 'No encontrado.');
             Http::responder(['ok' => true, 'correos' => Correo::bandeja()]);
             break;
 

@@ -314,7 +314,7 @@ final class Auth
     /** Solo modo local y solo desde la misma PC: entra como el primer admin (lo crea si no hay). */
     public static function desarrollador(): array
     {
-        if (!Config::esLocal() || !Http::esIpLocal()) throw new ErrorHttp(404, 'No encontrado.');
+        if (!Http::permiteDesarrollador()) throw new ErrorHttp(404, 'No encontrado.');
         $u = Bd::uno("SELECT * FROM usuarios WHERE rol = 'admin' AND estado = 'activo' ORDER BY id LIMIT 1");
         if (!$u) {
             $id = self::crearUsuario('Desarrollador local', 'desarrollador@local.test', null, 'admin', 'activo');
