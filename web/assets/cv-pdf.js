@@ -39,6 +39,12 @@
     });
     doc.setProperties({ title: 'Currículum Icewell' + (o.hayFiltro ? ' — ' + o.desc : ''), author: 'Icewell SpA', subject: 'Obras y proyectos HVAC', creator: 'icewell cv.html' });
 
+    // Textos y datos de la empresa: los mismos de la página (assets/sitio-data.js, editables en /admin)
+    var IS = window.icewellSitio, E = IS ? IS.empresa() : {};
+    var CF = (IS && IS.datos() && IS.datos().cifras) || {};
+    function txt(k){ var v = IS && IS.t(k); return v != null ? IS.plano(v) : ''; }
+    var CVD = (IS && IS.datos() && IS.datos().cv) || { servicios: [], certificaciones: [] };
+
     var y = Y_INICIO;
     var fecha = new Date().toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -80,7 +86,7 @@
     cabecera();
 
     // ---------- portada / encabezado de la selección ----------
-    eyebrow(o.hayFiltro ? 'Selección de obras · ' + fecha : 'Currículum corporativo · Icewell SpA', M, y);
+    eyebrow(o.hayFiltro ? 'Selección de obras · ' + fecha : txt('cv.eyebrow'), M, y);
     y += 7;
     if(o.hayFiltro){
       fuente('BigShoulders-Black', 30, C.ink);
@@ -92,15 +98,21 @@
       texto(lead, M, y, { lineHeightFactor: 1.45 });
       y += alto(9.5, lead.length, 1.45) + 7;
     } else {
+      // título del CV: la parte entre *asteriscos* (énfasis) va en azul si cierra una línea, como en la web
+      var titCv = (IS && IS.t('cv.titulo')) || '';
+      var enfasis = ((titCv.match(/\*([^*]+)\*/) || [])[1] || '').toUpperCase();
       fuente('BigShoulders-Black', 38, C.ink);
-      texto('INGENIERÍA Y MONTAJE', M, y);
-      y += alto(38, 1, 0.95);
-      texto('DE SISTEMAS ', M, y);
-      var anchoDe = doc.getTextWidth('DE SISTEMAS ');
-      doc.setTextColor.apply(doc, C.blue); texto('HVAC.', M + anchoDe, y);
-      y += alto(38, 1, 0.95) + 7;
+      lineas(txt('cv.titulo').toUpperCase(), W * 0.82).forEach(function(l){
+        if(enfasis && l.length > enfasis.length && l.slice(-enfasis.length) === enfasis){
+          var antes = l.slice(0, -enfasis.length);
+          doc.setTextColor.apply(doc, C.ink); texto(antes, M, y);
+          doc.setTextColor.apply(doc, C.blue); texto(enfasis, M + doc.getTextWidth(antes), y);
+        } else { doc.setTextColor.apply(doc, enfasis && l === enfasis ? C.blue : C.ink); texto(l, M, y); }
+        y += alto(38, 1, 0.95);
+      });
+      y += 7;
       fuente('PlexSans', 9.5, C.soft);
-      var lead2 = lineas('Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde ' + o.desde + '.', W * 0.78);
+      var lead2 = lineas(txt('cv.lead'), W * 0.78);
       texto(lead2, M, y, { lineHeightFactor: 1.45 });
       y += alto(9.5, lead2.length, 1.45) + 7;
       // CV completo pero con obras seleccionadas ("Descargar proyectos"): se deja explícita la selección
@@ -125,8 +137,8 @@
         [ini === fin ? String(ini) : ini + '–' + fin, 'Período de las obras']
       ];
     } else {
-      kpis = [[String(o.anios), 'Años de experiencia · desde ' + o.desde], ['51', 'Obras y proyectos registrados'],
-              ['+170.000', 'm² intervenidos en obras destacadas'], ['12', 'Regiones, de Tarapacá a Los Lagos']];
+      kpis = [[String(o.anios), 'Años de experiencia · desde ' + o.desde], [CF.obras || '', 'Obras y proyectos registrados'],
+              [CF.m2 || '', 'm² intervenidos en obras destacadas'], [CF.regiones || '', 'Regiones' + (CF.regionesTexto ? ', ' + CF.regionesTexto : '')]];
     }
     trazo(C.line, 0.3); doc.line(M, y, M + W, y);
     y += 4;
@@ -140,14 +152,11 @@
 
     // Servicios (solo CV completo): banda oscura de 3 columnas
     if(!o.hayFiltro){
-      var srv = [
-        ['01 · Asesoría', 'Asesorías térmicas', 'Informes y evaluaciones técnico-económicas, inspección técnica de obra, cargas térmicas y consumo de ACS.'],
-        ['02 · Ingeniería', 'Ingeniería', 'Proyectos de climatización, ventilación y calefacción comercial, residencial e industrial, con eficiencia energética y ERNC.'],
-        ['03 · Montaje', 'Instalaciones', 'Sistemas de agua, expansión directa, VRV/VRF, volumen variable e instalaciones solares. Suministro y montaje.']
-      ];
+      // versión corta (resumen) de cada servicio: la banda tiene alto fijo
+      var srv = CVD.servicios.slice(0, 3).map(function(x){ return [x.etiqueta, x.titulo, IS.plano(x.resumen || x.texto)]; });
       var hs = 44;
       relleno(C.dark); doc.rect(M, y, W, hs, 'F');
-      var sw = W / 3;
+      var sw = W / Math.max(srv.length, 1);
       srv.forEach(function(s, i){
         var x = M + i * sw + 6;
         if(i){ trazo([40, 70, 90], 0.2); doc.line(M + i * sw, y + 5, M + i * sw, y + hs - 5); }
@@ -160,10 +169,11 @@
 
     // ---------- obras destacadas: tarjetas 2 columnas con foto ----------
     var todasFicha = !!(o.seleccion || o.hayFiltro);
-    var esFicha = function(p){ return todasFicha || p.foto || p.m2 || p.anio >= 2023; };
+    // Regla (igual que la web): tarjeta = obra con foto; Trayectoria = TODAS las obras, con y sin foto
+    var esFicha = function(p){ return todasFicha || !!p.foto; };
     var dest = o.lista.filter(esFicha)
       .sort(function(a, b){ return (b.estado === 'ejecucion') - (a.estado === 'ejecucion') || b.anio - a.anio || (b.m2 || 0) - (a.m2 || 0); });
-    var resto = o.lista.filter(function(p){ return !esFicha(p); });
+    var resto = todasFicha ? [] : o.lista;
     var cols = dest.length > 6 ? 3 : 2;               // CV completo: 3 columnas → menos páginas
     var gap = cols === 3 ? 5 : 6, cw = (W - gap * (cols - 1)) / cols, fh = cw * 2 / 3;
     var T = cols === 3 ? { nom: 11.5, desc: 7.2, m2: 11.5, pad: 4 } : { nom: 13.5, desc: 7.8, m2: 13, pad: 5 };
@@ -228,7 +238,7 @@
     // ---------- trayectoria: filas con línea fina, agrupadas por año ----------
     if(resto.length){
       asegurar(24);
-      eyebrow('Trayectoria · ' + resto.length + (resto.length === 1 ? ' obra' : ' obras') + (dest.length ? ' más' : ''), M, y); y += 8;
+      eyebrow('Trayectoria · ' + resto.length + (resto.length === 1 ? ' obra' : ' obras'), M, y); y += 8;
       var colAnio = 20, colMeta = 44, anchoTxt = W - colAnio - colMeta - 4;
       var filas = resto.slice().sort(function(a, b){ return b.anio - a.anio; }).map(function(p){
         fuente('PlexSans-SemiBold', 9.2, C.ink); var n = lineas(p.nombre, anchoTxt);
@@ -254,7 +264,7 @@
         fuente('PlexSans', 7.8, C.soft); texto(fi.d, M + colAnio, y + 3 + alto(9.2, fi.n.length, 1.2) + 1, { lineHeightFactor: 1.35 });
         fuente('PlexMono', 6.2, C.blue, 0.3); textoDer(lineas(metaTxt(p).toUpperCase(), colMeta - 6), M + W, y + 3.6, alto(6.2, 1, 1.35)); doc.setCharSpace(0);
         y += fi.h;
-        hechas++;
+        if(!esFicha(p)) hechas++;   // el avance cuenta cada obra una vez (las con foto ya se contaron como tarjeta)
         if(k % 6 === 5) await avance('armando');
       }
       y += 6;
@@ -264,8 +274,8 @@
     if(!o.hayFiltro){
       asegurar(24);
       eyebrow('Certificaciones y estándares', M, y); y += 7;
-      var certs = ['Proyectos con certificación LEED', 'Eficiencia energética', 'ERNC y solar térmica', 'Obras sobre 4.800 msnm'];
-      var cwc = W / 4;
+      var certs = CVD.certificaciones;
+      var cwc = W / Math.max(certs.length, 1);
       trazo(C.line, 0.25); doc.line(M, y, M + W, y);
       certs.forEach(function(c, i){ fuente('BigShoulders-Bold', 11, C.ink); texto(lineas(c.toUpperCase(), cwc - 6), M + i * cwc, y + 3, { lineHeightFactor: 1 }); });
       y += 14; doc.line(M, y, M + W, y);
@@ -277,11 +287,12 @@
     asegurar(he);
     relleno(C.dark); doc.rect(M, y, W, he, 'F');
     fuente('PlexMono', 6.5, C.ice, 0.5); texto('DATOS DE LA EMPRESA', M + 8, y + 8); doc.setCharSpace(0);
-    fuente('BigShoulders-Black', 22, C.white); texto(['CONVERSEMOS SU', 'PRÓXIMO PROYECTO.'], M + 8, y + 14, { lineHeightFactor: 0.95 });
-    fuente('PlexSans', 8, [196, 228, 239]); texto('WhatsApp +56 9 6407 4519', M + 8, y + 33);
-    var filas = [['Razón social', 'Icewell SpA'], ['Giro', 'Asesorías, ingeniería y montajes térmicos'], ['RUT', '76.059.117-3'],
-                 ['Dirección', 'Román Díaz #1363, Providencia, Santiago'], ['Teléfono', '+56 2 2847 0610'],
-                 ['Contacto', 'contacto@icewell.cl · gonzalo.diaz@icewell.cl'], ['Sitio web', 'www.icewell.cl']];
+    fuente('BigShoulders-Black', 22, C.white); texto(lineas(txt('cv.empresaTitulo').toUpperCase(), W * 0.4).slice(0, 2), M + 8, y + 14, { lineHeightFactor: 0.95 });
+    fuente('PlexSans', 8, [196, 228, 239]); texto('WhatsApp ' + (E.whatsapp || ''), M + 8, y + 33);
+    var filas = [['Razón social', E.razonSocial], ['Giro', E.giro], ['RUT', E.rut],
+                 ['Dirección', IS.campoEmpresa('direccionCompleta') + (E.ciudad ? ', ' + E.ciudad : '')], ['Teléfono', E.telefono],
+                 ['Contacto', [E.correo, E.correoComercial].filter(Boolean).join(' · ')], ['Sitio web', E.web]]
+      .filter(function(f){ return f[1]; });
     var dx = M + W * 0.44, dy = y + 7;
     filas.forEach(function(f){
       fuente('PlexMono', 6.2, C.ice, 0.4); texto(f[0].toUpperCase(), dx, dy + 0.6); doc.setCharSpace(0);
@@ -296,7 +307,7 @@
       doc.setPage(pg);
       trazo(C.line, 0.2); doc.line(M, 284, M + W, 284);
       fuente('PlexMono', 6.2, C.soft, 0.2);
-      texto('ICEWELL SPA · ROMÁN DÍAZ 1363, PROVIDENCIA · +56 2 2847 0610 · CONTACTO@ICEWELL.CL', M, 286.5);
+      texto([E.razonSocial, IS.campoEmpresa('direccionCompleta'), E.telefono, E.correo].filter(Boolean).join(' · ').toUpperCase(), M, 286.5);
       textoDer(String(pg).padStart(2, '0') + ' / ' + String(total).padStart(2, '0'), M + W, 286.5);
       doc.setCharSpace(0);
     }

@@ -1,7 +1,7 @@
 const { JSDOM } = require('jsdom');
 const fs = require('fs');
 const path = require('path');
-const WEB = 'C:/Users/MANUEL MERY/Desktop/icewell/proyecto/web';
+const WEB = path.join(__dirname, '../../web');
 let fallas = 0;
 function ok(cond, msg){ console.log((cond ? 'OK   ' : 'FAIL ') + msg); if(!cond) fallas++; }
 
@@ -84,8 +84,11 @@ for(const pag of ['cv.html', 'cv-presentacion.html']){
   const { w, d, errores } = cargar('cv.html');
   ok(!errores.length, 'cv sin errores JS ' + errores.join(' | '));
   const total = w.eval('PROYECTOS.length');
-  const n0 = d.querySelectorAll('.card').length + d.querySelectorAll('.row').length;
-  ok(n0 === total, 'sin filtro se muestran todas: ' + n0 + '/' + total);
+  // regla: tarjetas = obras con foto; Trayectoria = TODAS (con y sin foto)
+  const nFoto = w.eval('PROYECTOS.filter(p=>p.foto).length');
+  const nCards = d.querySelectorAll('.card').length, nRows = d.querySelectorAll('.row').length;
+  ok(nRows === total && nCards === nFoto, 'sin filtro: ' + nCards + ' tarjetas (con foto) + Trayectoria con todas ' + nRows + '/' + total);
+  ok(!d.querySelector('.card--solid'), 'sin filtro ninguna tarjeta sin foto');
   ok(d.querySelector('.kpi [data-anios]').textContent === String(w.icewellAniversario.anios), 'KPI años automático');
   // sin nombres duplicados
   const nombres = w.eval('PROYECTOS.map(p=>p.nombre)');
@@ -125,7 +128,7 @@ for(const pag of ['cv.html', 'cv-presentacion.html']){
 
   // limpiar
   d.getElementById('clearBtn').click();
-  ok(d.querySelectorAll('.card, .row').length === total && !d.body.classList.contains('has-filter'), 'limpiar vuelve a todas');
+  ok(d.querySelectorAll('.row').length === total && !d.body.classList.contains('has-filter'), 'limpiar vuelve a todas');
 
   // búsqueda
   const inp = d.getElementById('searchInput');

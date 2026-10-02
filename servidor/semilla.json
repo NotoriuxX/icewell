@@ -1,0 +1,2005 @@
+{
+  "esquema": 1,
+  "empresa": {
+    "nombre": "Icewell",
+    "razonSocial": "Icewell SpA",
+    "giro": "Asesorías, ingeniería y montajes térmicos",
+    "rut": "76.059.117-3",
+    "direccion": "Román Díaz #1363",
+    "comuna": "Providencia",
+    "ciudad": "Santiago",
+    "pais": "Chile",
+    "telefono": "+56 2 2847 0610",
+    "whatsapp": "+56 9 6407 4519",
+    "correo": "contacto@icewell.cl",
+    "correoComercial": "gonzalo.diaz@icewell.cl",
+    "web": "www.icewell.cl",
+    "redes": {
+      "linkedin": "",
+      "instagram": "",
+      "facebook": "",
+      "youtube": ""
+    },
+    "wa": {
+      "cotizar": "Hola Icewell, quiero cotizar un proyecto de climatización",
+      "cv": "Hola Icewell, vi su currículum y quiero cotizar un proyecto",
+      "presentacion": "Hola Icewell, vi su presentación y quiero cotizar un proyecto"
+    }
+  },
+  "cifras": {
+    "obras": "51",
+    "m2": "+170.000",
+    "regiones": "12",
+    "regionesTexto": "de Tarapacá a Los Lagos"
+  },
+  "config": {
+    "fundacion": "2009-01-01",
+    "botonAniversario": true
+  },
+  "seo": {
+    "titulo": "Icewell — Ingeniería en Climatización",
+    "descripcion": "Asesorías térmicas, ingeniería y montaje de sistemas HVAC en todo Chile desde {desde}. {obras} obras registradas y más de 170.000 m² intervenidos en obras destacadas."
+  },
+  "textos": {
+    "hero.eyebrow": "Ingeniería HVAC · Chile desde {desde}",
+    "hero.titulo1": "Ingeniería que",
+    "hero.tituloDestacado": "hace habitable",
+    "hero.titulo2": "lo extraordinario.",
+    "hero.lead": "Diseñamos, instalamos y mantenemos soluciones de climatización para proyectos que exigen desempeño, continuidad y precisión.",
+    "hero.boton1": "Conocer proyectos",
+    "hero.boton2": "Hablar con un ingeniero",
+    "hero.casoEtiqueta": "Proyecto destacado",
+    "hero.casoTitulo": "Cerro Dominador",
+    "hero.casoTexto": "Antofagasta · Climatización industrial",
+    "nosotros.eyebrow": "Quiénes somos",
+    "nosotros.titulo": "El clima también se *diseña.*",
+    "nosotros.destacado": "Más que aire acondicionado: entregamos la confianza de una operación térmicamente estable, eficiente y pensada para durar.",
+    "nosotros.texto": "Fundada por profesionales con más de 25 años de experiencia en climatización y ventilación, Icewell integra conocimiento técnico, planificación y oficio para responder a los desafíos de cada industria.",
+    "servicios.eyebrow": "Qué hacemos",
+    "servicios.titulo": "Del cálculo a la puesta en marcha.",
+    "servicios.lead": "Un equipo involucrado en cada fase, con ingeniería aplicada a resultados reales.",
+    "servicios.nota": "Además desarrollamos soluciones para **piscinas, control de humedad, centros de salud, hoteles, retail y oficinas.** Revisa nuestras obras por sector:",
+    "metodo.eyebrow": "Por qué Icewell",
+    "metodo.titulo": "La respuesta correcta antes del primer plano.",
+    "metodo.texto": "Interpretamos cada necesidad desde la operación. Así construimos soluciones que equilibran eficiencia, calidad y presupuesto sin perder de vista a quienes usarán el espacio.",
+    "metodo.resultado": "Una respuesta superior\npara cada cliente.",
+    "trayectoria.eyebrow": "Trayectoria",
+    "trayectoria.titulo": "Obra, no promesas.",
+    "trayectoria.lead": "Una historia de proyectos que han crecido junto a la confianza de nuestros clientes.",
+    "proyectos.eyebrow": "Portafolio",
+    "proyectos.titulo": "Soluciones que ya están en marcha.",
+    "equipo.eyebrow": "Equipo directivo",
+    "equipo.titulo": "Las personas tras cada proyecto.",
+    "socios.eyebrow": "Red de especialistas",
+    "socios.texto": "Trabajamos con tecnologías y proveedores líderes para diseñar soluciones a la medida de cada desafío.",
+    "contacto.eyebrow": "Contacto",
+    "contacto.titulo": "¿Tienes un proyecto que necesita respirar mejor?",
+    "contacto.texto": "Cuéntanos el alcance. Te responderá un ingeniero, no un formulario automático.",
+    "footer.lema": "Asesorías, ingeniería y montajes térmicos",
+    "cv.eyebrow": "Currículum corporativo · Icewell SpA",
+    "cv.titulo": "Ingeniería y montaje de sistemas *HVAC.*",
+    "cv.lead": "Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde {desde}.",
+    "cv.serviciosTitulo": "Tres líneas de servicio, un solo responsable.",
+    "cv.serviciosLead": "Proyectamos, estudiamos y proponemos soluciones considerando las mejores alternativas de precios y equipos del mercado, cumpliendo plazos, estándares de calidad y presupuestos.",
+    "cv.obrasTitulo": "Obras por sector.",
+    "cv.obrasLead": "Elige uno o más sectores, un período o una región. El PDF se descarga con lo que tengas seleccionado.",
+    "cv.certTitulo": "Obras que exigen más.",
+    "cv.coberturaTitulo": "De Tarapacá a Los Lagos.",
+    "cv.coberturaNota": "Regiones con proyectos y montajes de Icewell. Toca una para ver sus obras.",
+    "cv.empresaTitulo": "Conversemos su próximo proyecto.",
+    "cv.empresaLead": "Cuéntenos el alcance. Le responderá un ingeniero.",
+    "pres.portadaTitulo": "Ingeniería y montaje\nde sistemas HVAC",
+    "pres.portadaLead": "Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile.",
+    "pres.cobertura": "Todo el país",
+    "pres.especialidad": "Asesorías,\ningeniería y\nmontajes térmicos",
+    "pres.quienesTitulo": "Respuesta ágil y responsable\nen climatización",
+    "pres.quienes1": "Icewell SpA fue creada a principios de 2009 para responder de manera ágil y responsable a las crecientes necesidades del mercado de aire acondicionado, ventilación y calefacción (HVAC), de acuerdo con los nuevos estándares de calidad, tecnología y cumplimiento de objetivos.",
+    "pres.quienes2": "La compañía está conformada por ingenieros civiles industriales e ingenieros mecánicos jóvenes, dinámicos y comprometidos con las necesidades de sus clientes. Cuentan con la experiencia acumulada durante más de 15 años trabajando para las principales empresas de climatización del país, ejecutando obras de relevancia y realizando proyectos de ingeniería e inspecciones técnicas en construcciones de diversos usos a lo largo de todo Chile.",
+    "pres.serviciosTitulo": "Tres líneas de servicio,\nun solo responsable",
+    "pres.valorTexto": "Proyectamos, estudiamos y proponemos soluciones a los requerimientos de nuestros clientes, considerando las mejores alternativas de precios y equipos disponibles en el mercado, para acompañarlos en todas las etapas de ejecución de un proyecto, cumpliendo plazos, estándares de calidad y presupuestos de costos.",
+    "pres.portafolioLead": "Obras de suministro y montaje en ejecución, recientes y destacadas, en usos privados, comerciales y públicos.",
+    "pres.trayectoriaNota": "Proyectos y montajes desarrollados por Icewell SpA a lo largo de Chile.",
+    "pres.datosTitulo": "Conversemos su\npróximo proyecto"
+  },
+  "inicio": {
+    "heroFoto": "hero-cerro-dominador.jpg",
+    "heroFotoAlt": "Infraestructura industrial de climatización en el norte de Chile",
+    "servicios": [
+      {
+        "etiqueta": "Asesorías térmicas",
+        "titulo": "Diagnóstico",
+        "texto": "Informes de proyecto, evaluaciones técnico-económicas, inspecciones de obra, cálculos de carga térmica y consumo de ACS."
+      },
+      {
+        "etiqueta": "Ingeniería",
+        "titulo": "Diseño",
+        "texto": "Proyectos de climatización, ventilación y calefacción para los sectores comercial, residencial e industrial, con foco en eficiencia energética."
+      },
+      {
+        "etiqueta": "Instalaciones",
+        "titulo": "Montaje",
+        "texto": "Implementación HVAC con sistemas de agua, expansión directa, VRV, caudal variable e instalaciones solares, entre otros."
+      }
+    ],
+    "metodo": [
+      {
+        "titulo": "Eficiencia operacional",
+        "texto": "Energía y confort trabajando en el mismo sentido."
+      },
+      {
+        "titulo": "Calidad verificable",
+        "texto": "Método, control y estándares desde el diseño hasta la entrega."
+      },
+      {
+        "titulo": "Innovación aplicada",
+        "texto": "Tecnología útil para retos concretos y operaciones exigentes."
+      }
+    ],
+    "hitos": [
+      {
+        "fecha": "{desde}",
+        "titulo": "Nace Icewell",
+        "texto": "Fundación y comienzo de operaciones en Santiago."
+      },
+      {
+        "fecha": "2012",
+        "titulo": "Primera gran minería",
+        "texto": "Inicio de proyectos de alto estándar en el norte de Chile."
+      },
+      {
+        "fecha": "2023",
+        "titulo": "Nueva escala",
+        "texto": "Hotel Debaines y remodelación ACHS Alameda."
+      },
+      {
+        "fecha": "HOY",
+        "titulo": "{anios} años",
+        "texto": "{obras} obras registradas en {regiones} regiones, de Tarapacá a Los Lagos."
+      }
+    ],
+    "equipo": [
+      {
+        "cargo": "CEO",
+        "nombre": "Andrés Mora",
+        "texto": "Ingeniero en Climatización (USACH) e Ingeniería Civil Industrial (U. Mayor).",
+        "foto": ""
+      },
+      {
+        "cargo": "CFO",
+        "nombre": "Flavio Magnasco",
+        "texto": "MBA UC, Magíster en Finanzas UAI e Ingeniero Comercial (U. de Chile).",
+        "foto": ""
+      },
+      {
+        "cargo": "CCO",
+        "nombre": "Gonzalo Díaz W.",
+        "texto": "Ingeniero Industrial (USM), con formación especializada en climatización.",
+        "foto": ""
+      },
+      {
+        "cargo": "COO",
+        "nombre": "Cristian Castro",
+        "texto": "Arquitecto (U. Mayor) y diplomado BIM (U. Católica).",
+        "foto": ""
+      }
+    ],
+    "socios": [
+      {
+        "nombre": "Daikin",
+        "logo": "p-daikin-trans.png"
+      },
+      {
+        "nombre": "LG",
+        "logo": "p-lg.png"
+      },
+      {
+        "nombre": "Aermec",
+        "logo": "p-aermec.png"
+      },
+      {
+        "nombre": "Dimaco",
+        "logo": "p-dimaco.png"
+      },
+      {
+        "nombre": "Novaclima",
+        "logo": "p-novaclima-trans.png"
+      },
+      {
+        "nombre": "Flowtech",
+        "logo": "p-flowtech.png",
+        "grande": true
+      },
+      {
+        "nombre": "Empresas Mar del Sur",
+        "logo": "p-mardelsur-trans.png"
+      },
+      {
+        "nombre": "Amwo",
+        "logo": "p-amwo-trans.png"
+      },
+      {
+        "nombre": "NVL Clima & Energía",
+        "logo": "p-nvl-trans.png"
+      }
+    ]
+  },
+  "cv": {
+    "servicios": [
+      {
+        "etiqueta": "01 · Asesoría",
+        "titulo": "Asesorías térmicas",
+        "texto": "Informes a proyectos y evaluaciones técnico-económicas, inspecciones técnicas de obra, cálculos de cargas térmicas y consumo de ACS.",
+        "resumen": "Informes y evaluaciones técnico-económicas, inspección técnica de obra, cargas térmicas y consumo de ACS.",
+        "items": [
+          "Evaluación técnico-económica",
+          "ITO",
+          "Cargas térmicas y ACS"
+        ]
+      },
+      {
+        "etiqueta": "02 · Ingeniería",
+        "titulo": "Ingeniería",
+        "texto": "Proyectos de climatización, ventilación y calefacción para el área comercial, residencial e industrial, con experiencia en eficiencia energética y ERNC.",
+        "resumen": "Proyectos de climatización, ventilación y calefacción comercial, residencial e industrial, con eficiencia energética y ERNC.",
+        "items": [
+          "Ingeniería básica y de detalles",
+          "Eficiencia energética",
+          "ERNC"
+        ]
+      },
+      {
+        "etiqueta": "03 · Montaje",
+        "titulo": "Instalaciones",
+        "texto": "Montaje de sistemas HVAC: sistemas de agua, expansión directa, refrigerante variable, volumen variable e instalaciones solares.",
+        "resumen": "Sistemas de agua, expansión directa, VRV/VRF, volumen variable e instalaciones solares.",
+        "items": [
+          "Suministro y montaje",
+          "Chiller, fan-coil y UMA",
+          "VRV / VRF y solar térmica"
+        ]
+      }
+    ],
+    "certificaciones": [
+      "Proyectos con certificación LEED",
+      "Eficiencia energética",
+      "ERNC y solar térmica",
+      "Obras sobre 4.800 msnm"
+    ]
+  },
+  "presentacion": {
+    "caja": [
+      {
+        "etiqueta": "01 · Asesoría",
+        "texto": "Informes, evaluación técnico-económica e inspección técnica de obra"
+      },
+      {
+        "etiqueta": "02 · Ingeniería",
+        "texto": "Proyectos de climatización, ventilación y calefacción"
+      },
+      {
+        "etiqueta": "03 · Montaje",
+        "texto": "Suministro e instalación de sistemas HVAC"
+      }
+    ],
+    "servicios": [
+      {
+        "icono": "asesoria",
+        "titulo": "Asesorías Térmicas",
+        "texto": "Informes a proyectos y evaluaciones técnico-económicas, inspecciones técnicas de obra, cálculos de cargas térmicas y consumo de ACS, entre otros.",
+        "tags": [
+          "Evaluación técnico-económica",
+          "Inspección técnica de obra (ITO)",
+          "Cargas térmicas y consumo ACS"
+        ]
+      },
+      {
+        "icono": "ingenieria",
+        "titulo": "Ingeniería",
+        "texto": "Elaboración de proyectos de climatización, ventilación y calefacción para el área comercial, residencial e industrial, con experiencia en eficiencia energética y uso de ERNC.",
+        "tags": [
+          "Ingeniería básica y de detalles",
+          "Eficiencia energética",
+          "Energías renovables no convencionales"
+        ]
+      },
+      {
+        "icono": "montaje",
+        "titulo": "Instalaciones",
+        "texto": "Desarrollo de montajes de diversos sistemas HVAC: sistemas de agua, expansión directa, refrigerante variable, volumen variable e instalaciones solares.",
+        "tags": [
+          "Suministro y montaje",
+          "Chiller, fan-coil y UMA",
+          "VRV / VRF y solar térmica"
+        ]
+      }
+    ],
+    "valorPuntos": [
+      "Eficiencia operacional",
+      "Máxima calidad",
+      "Innovación y desarrollo",
+      "Respuesta superior al cliente"
+    ],
+    "barraAzul": [
+      {
+        "etiqueta": "Modalidad",
+        "texto": "Suministro y montaje"
+      },
+      {
+        "etiqueta": "Usos",
+        "texto": "Privado, comercial y público"
+      },
+      {
+        "etiqueta": "Ubicación",
+        "texto": "Región Metropolitana y regiones"
+      }
+    ]
+  },
+  "catalogos": {
+    "sectores": [
+      {
+        "id": "oficinas",
+        "label": "Oficinas"
+      },
+      {
+        "id": "residencial",
+        "label": "Residencial"
+      },
+      {
+        "id": "retail",
+        "label": "Retail"
+      },
+      {
+        "id": "hoteleria",
+        "label": "Hotelería"
+      },
+      {
+        "id": "mineria",
+        "label": "Minería"
+      },
+      {
+        "id": "salud",
+        "label": "Salud"
+      },
+      {
+        "id": "gobierno",
+        "label": "Gobierno"
+      },
+      {
+        "id": "educacion",
+        "label": "Educación"
+      },
+      {
+        "id": "industrial",
+        "label": "Industrial"
+      },
+      {
+        "id": "logistica",
+        "label": "Logística"
+      }
+    ],
+    "regiones": [
+      {
+        "id": "tarapaca",
+        "label": "Tarapacá"
+      },
+      {
+        "id": "antofagasta",
+        "label": "Antofagasta"
+      },
+      {
+        "id": "atacama",
+        "label": "Atacama"
+      },
+      {
+        "id": "coquimbo",
+        "label": "Coquimbo"
+      },
+      {
+        "id": "valparaiso",
+        "label": "Valparaíso"
+      },
+      {
+        "id": "metropolitana",
+        "label": "Metropolitana"
+      },
+      {
+        "id": "ohiggins",
+        "label": "O'Higgins"
+      },
+      {
+        "id": "maule",
+        "label": "Maule"
+      },
+      {
+        "id": "nuble",
+        "label": "Ñuble"
+      },
+      {
+        "id": "biobio",
+        "label": "Biobío"
+      },
+      {
+        "id": "araucania",
+        "label": "La Araucanía"
+      },
+      {
+        "id": "loslagos",
+        "label": "Los Lagos"
+      }
+    ],
+    "periodos": [
+      {
+        "id": "2024",
+        "label": "2024 +",
+        "desde": 2024,
+        "hasta": 9999
+      },
+      {
+        "id": "2019-2023",
+        "label": "2019 – 2023",
+        "desde": 2019,
+        "hasta": 2023
+      },
+      {
+        "id": "2014-2018",
+        "label": "2014 – 2018",
+        "desde": 2014,
+        "hasta": 2018
+      },
+      {
+        "id": "2010-2013",
+        "label": "2010 – 2013",
+        "desde": 2010,
+        "hasta": 2013
+      }
+    ]
+  },
+  "obras": [
+    {
+      "id": "cen-fach",
+      "nombre": "CEN-FACH",
+      "anio": 2024,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Instalaciones FACH",
+      "sistemas": "Split, chiller y sistemas de ventilación.",
+      "m2": null,
+      "foto": "p-cenfach.jpg",
+      "estado": "ejecucion",
+      "tags": [],
+      "cliente": "Público",
+      "portada": true,
+      "ordenPortada": 1,
+      "textoPortada": "Santiago · Split, chiller y sistemas de ventilación.",
+      "visible": true
+    },
+    {
+      "id": "linea-7-metro",
+      "nombre": "Línea 7 Metro",
+      "anio": 2024,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno",
+        "industrial"
+      ],
+      "uso": "Talleres y cocheras",
+      "sistemas": "VRV, aire acondicionado y extracción en talleres y cocheras.",
+      "m2": null,
+      "foto": "p-linea7.jpg",
+      "estado": "ejecucion",
+      "tags": [],
+      "cliente": "Público",
+      "revisar": "revisar sector",
+      "portada": true,
+      "ordenPortada": 2,
+      "textoPortada": "Santiago · Talleres y cocheras con VRV, aire acondicionado y extracción.",
+      "visible": true
+    },
+    {
+      "id": "aduana-de-quillagua",
+      "nombre": "Aduana de Quillagua",
+      "anio": 2024,
+      "lugar": "Quillagua",
+      "regiones": [
+        "tarapaca"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Complejo aduanero",
+      "sistemas": "Aire acondicionado, refrigeración, ventilación y bombas de calor.",
+      "m2": null,
+      "foto": "p-quillagua.jpg",
+      "estado": "ejecucion",
+      "tags": [],
+      "cliente": "Público",
+      "revisar": "revisar región (Quillagua está en el límite Tarapacá/Antofagasta; el sitio dice Tarapacá)",
+      "portada": true,
+      "ordenPortada": 3,
+      "textoPortada": "Tarapacá · Aire acondicionado, refrigeración, ventilación y bombas de calor.",
+      "visible": true
+    },
+    {
+      "id": "laboratorio-dilaco",
+      "nombre": "Laboratorio Dilaco",
+      "anio": 2024,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud",
+        "industrial"
+      ],
+      "uso": "Laboratorio",
+      "sistemas": "VRV, aire acondicionado y refrigeración de precisión.",
+      "m2": null,
+      "foto": "p-dilaco-ig.jpg",
+      "estado": "ejecucion",
+      "tags": [],
+      "cliente": "Privado",
+      "portada": true,
+      "ordenPortada": 4,
+      "textoPortada": "Santiago · VRV, aire acondicionado y refrigeración de precisión.",
+      "visible": true
+    },
+    {
+      "id": "pf-talca-planta-6",
+      "nombre": "PF Talca planta 6",
+      "anio": 2024,
+      "lugar": "Talca",
+      "regiones": [
+        "maule"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Planta de alimentos",
+      "sistemas": "Aire acondicionado heavy duty.",
+      "m2": null,
+      "foto": "p-pftalca.jpg",
+      "estado": "ejecucion",
+      "tags": [],
+      "cliente": "Privado",
+      "portada": true,
+      "ordenPortada": 6,
+      "textoPortada": "Talca, Maule · Aire acondicionado heavy duty.",
+      "visible": true
+    },
+    {
+      "id": "remodelacion-achs",
+      "nombre": "Remodelación ACHS",
+      "anio": 2023,
+      "lugar": "Alameda, Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud",
+        "oficinas"
+      ],
+      "uso": "Privado",
+      "sistemas": "Climatización mediante chiller, unidades manejadoras de aire y fan-coil.",
+      "m2": null,
+      "foto": "p-achs.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "hotel-debaines",
+      "nombre": "Hotel Debaines",
+      "anio": 2023,
+      "lugar": "Santiago Centro",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "hoteleria"
+      ],
+      "uso": "Comercial · 10 pisos y 2 subterráneos",
+      "sistemas": "Chiller fan-coil, UMAs y ventilación en un edificio de 10 pisos y 2 subterráneos.",
+      "m2": null,
+      "foto": "p-debaines.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "portada": true,
+      "ordenPortada": 5,
+      "textoPortada": "Santiago Centro · Chiller fan-coil, UMAs y ventilación para 10 pisos.",
+      "portadaAncha": true,
+      "visible": true
+    },
+    {
+      "id": "centro-de-distribucion-komatsu",
+      "nombre": "Centro de distribución Komatsu",
+      "anio": 2023,
+      "lugar": "Lampa",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "logistica",
+        "industrial"
+      ],
+      "uso": "Privado",
+      "sistemas": "Equipos split para oficinas y sala de baterías con control de concentración de hidrógeno.",
+      "m2": null,
+      "foto": "p-komatsu.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "dk-home-el-cortijo",
+      "nombre": "DK Home El Cortijo",
+      "anio": 2023,
+      "lugar": "Conchalí",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "retail"
+      ],
+      "uso": "Privado",
+      "sistemas": "Equipos compactos y split; ventilación de inyección y extracción.",
+      "m2": null,
+      "foto": "p-dkhome.jpeg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "revisar": "revisar sector",
+      "visible": true
+    },
+    {
+      "id": "ampliacion-planta-agrichile",
+      "nombre": "Ampliación planta Agrichile",
+      "anio": 2023,
+      "lugar": "Río Claro",
+      "regiones": [
+        "maule"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Privado",
+      "sistemas": "Equipos VRF, refrigeración para nave de almacenamiento y ventilación de extracción.",
+      "m2": null,
+      "foto": "p-agrichile.jpeg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "parque-de-negocios-los-libertadores",
+      "nombre": "Parque de negocios Los Libertadores",
+      "anio": 2023,
+      "lugar": "Quilicura",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "oficinas",
+        "logistica"
+      ],
+      "uso": "Público · oficinas y naves",
+      "sistemas": "Equipos split y ventilación para oficinas y naves.",
+      "m2": null,
+      "foto": "p-loslibertadores.webp",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "centro-de-distribucion-kersting",
+      "nombre": "Centro de distribución Kersting",
+      "anio": 2023,
+      "lugar": "Pudahuel",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "logistica"
+      ],
+      "uso": "Centro de distribución",
+      "sistemas": "Climatización con equipos split y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "centro-de-distribucion-mercado-libre",
+      "nombre": "Centro de distribución Mercado Libre",
+      "anio": 2022,
+      "lugar": "Quilicura",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "logistica"
+      ],
+      "uso": "Bodegas y oficinas",
+      "sistemas": "Rooftop, equipos compactos y split de distintas capacidades, con extracción e inyección de aire fresco.",
+      "m2": 105200,
+      "foto": "p-mercadolibre.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Sistema de climatización con equipos compactos y splits de diferentes capacidades. Integra un sistema de extracción e inyección de aire fresco para los recintos habitables.",
+      "destacado": true,
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "centro-de-distribucion-rosen",
+      "nombre": "Centro de distribución ROSEN",
+      "anio": 2022,
+      "lugar": "Quilicura",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "logistica"
+      ],
+      "uso": "Bodegas y oficinas",
+      "sistemas": "Rooftop, equipos compactos y split de distintas capacidades, con extracción e inyección de aire fresco.",
+      "m2": 27600,
+      "foto": "p-rosen.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Sistema de climatización con equipos compactos y splits de diferentes capacidades. Integra un sistema de extracción e inyección de aire fresco para los recintos habitables.",
+      "destacado": true,
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "planta-ccu-series-100-300-400",
+      "nombre": "Planta CCU series 100-300-400",
+      "anio": 2022,
+      "lugar": "Quilicura",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Camarines y baños",
+      "sistemas": "Calderas eléctricas, chillers, manejadoras de aire, sistema VRV y paneles solares para ACS.",
+      "m2": 7912,
+      "foto": "p-ccu.jpg",
+      "estado": "ejecutado",
+      "tags": [
+        "Solar / ERNC"
+      ],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización y ventilación de los edificios de servicios: calderas eléctricas, manejadoras de aire, sistema VRV y paneles solares para ACS.",
+      "destacado": true,
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "cuartel-policial-pdi-osorno",
+      "nombre": "Cuartel policial PDI Osorno",
+      "anio": 2021,
+      "lugar": "Osorno",
+      "regiones": [
+        "loslagos"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Oficinas y bodega",
+      "sistemas": "Chiller fan-coil, equipos compactos, UMAs y ventilación de inyección y extracción.",
+      "m2": 10380,
+      "foto": "p-pdiosorno.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con chiller fan-coil, equipos compactos, unidades manejadoras de aire y ventilación de inyección y extracción de aire.",
+      "destacado": true,
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "2-etapa-facultad-de-economia-y-administracion-uc",
+      "nombre": "2ª Etapa Facultad de Economía y Administración UC",
+      "anio": 2021,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "educacion"
+      ],
+      "uso": "Salas de clase y oficinas",
+      "sistemas": "Chiller fan-coil y manejadoras de aire, más extracción e inyección de aire fresco.",
+      "m2": 3500,
+      "foto": "n-uc.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con chiller fan-coil y manejadoras de aire, más extracción e inyección de aire fresco.",
+      "destacado": true,
+      "cliente": "Privado",
+      "revisar": "revisar foto (viene de Noticias del sitio)",
+      "visible": true
+    },
+    {
+      "id": "centro-de-importaciones-fast-air",
+      "nombre": "Centro de Importaciones Fast Air",
+      "anio": 2021,
+      "lugar": "Santiago (Aeropuerto)",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "oficinas",
+        "logistica"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Sistema VRV/VRF con recuperación de calor y ventilación de aire fresco.",
+      "m2": 3276,
+      "foto": "p-fastair.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con sistema VRV con recuperación de calor, más extracción e inyección de aire fresco.",
+      "destacado": true,
+      "cliente": "Privado",
+      "revisar": "revisar: el PDF también lista \"Oficinas Fast Air Aeropuerto\" (2021) — se fusionó, confirmar si es la misma obra",
+      "visible": true
+    },
+    {
+      "id": "edificio-corporativo-empresa-portuaria-de-san-antonio",
+      "nombre": "Edificio corporativo Empresa Portuaria de San Antonio",
+      "anio": 2020,
+      "lugar": "San Antonio",
+      "regiones": [
+        "valparaiso"
+      ],
+      "sectores": [
+        "oficinas",
+        "gobierno"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Chiller fan-coil y manejadoras de aire con extracción e inyección de aire fresco.",
+      "m2": 4340,
+      "foto": "n-sanantonio.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con chiller fan-coil y manejadoras de aire, más extracción e inyección de aire fresco.",
+      "destacado": true,
+      "cliente": "Público",
+      "revisar": "revisar foto",
+      "visible": true
+    },
+    {
+      "id": "centro-de-estimulacion-integral",
+      "nombre": "Centro de Estimulación Integral",
+      "anio": 2019,
+      "lugar": "Talagante",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud"
+      ],
+      "uso": "Boxes y piscina temperada",
+      "sistemas": "Split y ventilación de extracción; bomba de calor y deshumidificador para piscina.",
+      "m2": 7288,
+      "foto": "p-estimulacion.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización de boxes de atención con splits y ventilación de extracción. Para la piscina temperada: bomba de calor y deshumidificador.",
+      "destacado": true,
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "colegio-dario-salas",
+      "nombre": "Colegio Darío Salas",
+      "anio": 2018,
+      "lugar": "Carahue",
+      "regiones": [
+        "araucania"
+      ],
+      "sectores": [
+        "educacion"
+      ],
+      "uso": "Educación · 3 pisos",
+      "sistemas": "Calderas a pellets, radiadores y piso radiante en 3 pisos, más ventilación.",
+      "m2": 6708,
+      "foto": "p-dariosalas.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Calefacción de un edificio de 3 pisos (salas y recintos comunes) con calderas a pellets, radiadores y piso radiante, más ventilación de extracción e inyección.",
+      "destacado": true,
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "casino-enjoy-pucon",
+      "nombre": "Casino Enjoy Pucón",
+      "anio": 2022,
+      "lugar": "Pucón",
+      "regiones": [
+        "araucania"
+      ],
+      "sectores": [
+        "hoteleria"
+      ],
+      "uso": "Hotel y casino",
+      "sistemas": "Aire acondicionado rooftop y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "revisar": "revisar sector",
+      "visible": true
+    },
+    {
+      "id": "juzgado-de-osorno",
+      "nombre": "Juzgado de Osorno",
+      "anio": 2022,
+      "lugar": "Osorno",
+      "regiones": [
+        "loslagos"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Tribunales",
+      "sistemas": "VRV, equipos split y ventilación.",
+      "m2": null,
+      "foto": "p-juzgadoosorno.jpeg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "edificio-habitacional-karun",
+      "nombre": "Edificio habitacional Karun",
+      "anio": 2022,
+      "lugar": "Las Condes",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "residencial"
+      ],
+      "uso": "Vivienda",
+      "sistemas": "Generación de ACS y calefacción con calderas.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "ampliacion-cerveceria-kross",
+      "nombre": "Ampliación Cervecería Kross",
+      "anio": 2020,
+      "lugar": "Curacaví",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Oficinas y bodega",
+      "sistemas": "Climatización con equipos split y ventilación.",
+      "m2": 2800,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización de oficina y bodega con equipos splits de diferentes capacidades, más ventilación de inyección y extracción de aire.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "fedex-placilla",
+      "nombre": "Fedex Placilla",
+      "anio": 2020,
+      "lugar": "Placilla, Valparaíso",
+      "regiones": [
+        "valparaiso"
+      ],
+      "sectores": [
+        "logistica"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "VRF, ventilación y equipos de precisión.",
+      "m2": 805,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con sistemas VRV de diferentes capacidades, más extracción e inyección de aire fresco.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "mcdonald-s-vicente-valdes",
+      "nombre": "McDonald's Vicente Valdés",
+      "anio": 2020,
+      "lugar": "La Florida",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "retail"
+      ],
+      "uso": "Restaurante",
+      "sistemas": "Ventilación y equipos rooftop.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "edificio-block-la-dehesa",
+      "nombre": "Edificio Block La Dehesa",
+      "anio": 2020,
+      "lugar": "Lo Barnechea",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "oficinas"
+      ],
+      "uso": "Edificio",
+      "sistemas": "Sistema chiller.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "revisar": "revisar sector",
+      "visible": true
+    },
+    {
+      "id": "laboratorio-braun",
+      "nombre": "Laboratorio Braun",
+      "anio": 2019,
+      "lugar": "San Bernardo",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud",
+        "industrial"
+      ],
+      "uso": "Bodega",
+      "sistemas": "Climatización y ventilación con equipos compactos.",
+      "m2": 1200,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización y ventilación de la bodega con equipos compactos.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "cerro-dominador",
+      "nombre": "Cerro Dominador",
+      "anio": 2018,
+      "lugar": "Sierra Gorda",
+      "regiones": [
+        "antofagasta"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Planta solar",
+      "sistemas": "Climatización con equipos split y ventilación.",
+      "m2": null,
+      "foto": "hero-cerro-dominador.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con equipos split y ventilación.",
+      "cliente": "Privado",
+      "revisar": "revisar sector (energía)",
+      "visible": true
+    },
+    {
+      "id": "planta-solar-cps-cerro-dominador",
+      "nombre": "Planta Solar CPS Cerro Dominador",
+      "anio": 2018,
+      "lugar": "Sierra Gorda",
+      "regiones": [
+        "antofagasta"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Climatización con sistemas VRV y extracción e inyección de aire fresco.",
+      "m2": 3436,
+      "foto": "n-calama.jpg",
+      "estado": "ejecutado",
+      "tags": [
+        "Solar / ERNC"
+      ],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización de los edificios de la planta concentradora solar con sistemas VRV de diferentes capacidades, más extracción e inyección de aire fresco.",
+      "cliente": "Privado",
+      "revisar": "revisar sector (energía)",
+      "visible": true
+    },
+    {
+      "id": "estaciones-metro-ines-de-suarez-y-estadio-nacional",
+      "nombre": "Estaciones Metro Inés de Suárez y Estadio Nacional",
+      "anio": 2018,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Andenes y oficinas",
+      "sistemas": "Ventilación de andenes y oficinas.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "revisar": "revisar sector (transporte)",
+      "visible": true
+    },
+    {
+      "id": "escuela-basica-manuel-orella",
+      "nombre": "Escuela básica Manuel Orella",
+      "anio": 2018,
+      "lugar": "Caldera",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "educacion"
+      ],
+      "uso": "Educación",
+      "sistemas": "Calefacción, ACS y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "fiscalia-de-vina-del-mar",
+      "nombre": "Fiscalía de Viña del Mar",
+      "anio": 2017,
+      "lugar": "Viña del Mar",
+      "regiones": [
+        "valparaiso"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Oficinas públicas",
+      "sistemas": "Chiller / fan-coils y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "edificio-universidad-mayor-odontologia",
+      "nombre": "Edificio Universidad Mayor – Odontología",
+      "anio": 2017,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "educacion",
+        "salud"
+      ],
+      "uso": "Educación",
+      "sistemas": "VRV y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "liga-chilena-contra-la-epilepsia",
+      "nombre": "Liga Chilena contra la Epilepsia",
+      "anio": 2016,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud"
+      ],
+      "uso": "Salud",
+      "sistemas": "VRV y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "fruta-fresca-de-cabrero",
+      "nombre": "Fruta Fresca de Cabrero",
+      "anio": 2016,
+      "lugar": "Cabrero",
+      "regiones": [
+        "biobio"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Planta frutícola",
+      "sistemas": "Chillers, enfriadores y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "cuartel-pdi-linares",
+      "nombre": "Cuartel PDI Linares",
+      "anio": 2017,
+      "lugar": "Linares",
+      "regiones": [
+        "maule"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Chillers fan-coil y ventilación.",
+      "m2": 6430,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con chiller fan-coil y equipos splits, más extracción e inyección de aire fresco.",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "remodelacion-hospital-del-torax",
+      "nombre": "Remodelación Hospital del Tórax",
+      "anio": 2015,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "salud"
+      ],
+      "uso": "Boxes de atención",
+      "sistemas": "Chillers, fan-coil y UMAs.",
+      "m2": 2513,
+      "foto": "n-torax.jpg",
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Climatización con chiller fan-coil y unidades manejadoras de aire, más extracción e inyección de aire fresco.",
+      "cliente": "Público",
+      "revisar": "revisar foto",
+      "visible": true
+    },
+    {
+      "id": "comisaria-de-chillan",
+      "nombre": "Comisaría de Chillán",
+      "anio": 2014,
+      "lugar": "Chillán",
+      "regiones": [
+        "nuble"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Comisaría",
+      "sistemas": "Chillers, fan-coil y UMAs.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "bodega-soprole-rukan",
+      "nombre": "Bodega Soprole Rukan",
+      "anio": 2014,
+      "lugar": "Rukan",
+      "regiones": [],
+      "sectores": [
+        "logistica",
+        "industrial"
+      ],
+      "uso": "Bodega",
+      "sistemas": "Equipos split y refrigeración.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "revisar": "revisar región (el PDF no la indica)",
+      "visible": true
+    },
+    {
+      "id": "proyecto-ogp1-minera-escondida",
+      "nombre": "Proyecto OGP1, Minera Escondida",
+      "anio": 2013,
+      "lugar": "Antofagasta",
+      "regiones": [
+        "antofagasta"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Minería",
+      "sistemas": "Ventilación y calefacción.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "casino-y-comedor-minera-teck-quebrada-blanca",
+      "nombre": "Casino y comedor, Minera Teck Quebrada Blanca",
+      "anio": 2013,
+      "lugar": "Tarapacá",
+      "regiones": [
+        "tarapaca"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Casino y comedor",
+      "sistemas": "Ventilación y calefacción.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "campamento-mel-5400-minera-escondida",
+      "nombre": "Campamento MEL 5400, Minera Escondida",
+      "anio": 2013,
+      "lugar": "Antofagasta",
+      "regiones": [
+        "antofagasta"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Habitacional",
+      "sistemas": "Ventilación y climatización a 3.200 msnm.",
+      "m2": 3914,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Gran altura"
+      ],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Ventilación y climatización de los edificios misceláneos del Campamento 5400, a 170 km al sureste de Antofagasta y 3.200 msnm.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "planta-galletas-carozzi",
+      "nombre": "Planta Galletas, Carozzi",
+      "anio": 2013,
+      "lugar": "Nos, San Bernardo",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Industrial",
+      "sistemas": "Ventilación forzada con extractores axiales para la ampliación de la planta.",
+      "m2": 4500,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Montaje",
+      "detalle": "Sistema de ventilación para la ampliación de la Planta Galletas: los sectores que requieren ventilación forzada cuentan con extractores de aire axiales.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "planta-de-pastas-carozzi",
+      "nombre": "Planta de Pastas, Carozzi",
+      "anio": 2013,
+      "lugar": "Nos, San Bernardo",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "industrial"
+      ],
+      "uso": "Industrial",
+      "sistemas": "Ventilación forzada con extractores axiales.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Montaje",
+      "detalle": "Sistema de ventilación forzada con extractores de aire axiales.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "edificio-torre-del-sol",
+      "nombre": "Edificio Torre del Sol",
+      "anio": 2013,
+      "lugar": "Copiapó",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "residencial"
+      ],
+      "uso": "Habitacional",
+      "sistemas": "Climatización, ventilación, piscinas y ACS.",
+      "m2": 7400,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Ventilación de subterráneos, presurización de caja escala, ventilación de baños, cocina y lavanderías; climatización de dormitorios, gimnasio y piscinas; generación de agua caliente sanitaria.",
+      "cliente": "Privado",
+      "revisar": "revisar sector",
+      "visible": true
+    },
+    {
+      "id": "municipalidad-de-contulmo",
+      "nombre": "Municipalidad de Contulmo",
+      "anio": 2013,
+      "lugar": "Contulmo",
+      "regiones": [
+        "biobio"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Calefacción con calderas a leña y equipos split.",
+      "m2": 1600,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Calefacción con 2 calderas a leña que entregan 180.000 kcal/h; aire acondicionado con equipos split.",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "casino-pucv-campus-curauma",
+      "nombre": "Casino PUCV Campus Curauma",
+      "anio": 2013,
+      "lugar": "Valparaíso",
+      "regiones": [
+        "valparaiso"
+      ],
+      "sectores": [
+        "educacion"
+      ],
+      "uso": "Casino · 2 niveles",
+      "sistemas": "Calefacción con calderas, radiadores y extracción.",
+      "m2": 2432,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Calefacción con cuatro calderas individuales y radiadores; extracción de baños y cocina e inyección de aire fresco; refrigeración de sala de basura y climatización de oficinas.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "hotel-park-plaza-lyon",
+      "nombre": "Hotel Park Plaza Lyon",
+      "anio": 2013,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "hoteleria"
+      ],
+      "uso": "Salones del hotel",
+      "sistemas": "Climatización de salones con equipos VRV.",
+      "m2": 1810,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Sistema de climatización para los salones del hotel con equipos VRV.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "hotel-park-calama",
+      "nombre": "Hotel Park Calama",
+      "anio": 2013,
+      "lugar": "Calama",
+      "regiones": [
+        "antofagasta"
+      ],
+      "sectores": [
+        "hoteleria"
+      ],
+      "uso": "Sala de calderas",
+      "sistemas": "Modificación de la sala de calderas: 4 calderas nuevas.",
+      "m2": 700,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Montaje",
+      "detalle": "Modificación de la sala de calderas del primer piso y cubierta: se reemplazaron 4 calderas y se modificó la estructura de la sala.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "bodega-concentrado-de-cobre-caserones",
+      "nombre": "Bodega concentrado de cobre, Caserones",
+      "anio": 2013,
+      "lugar": "Caserones",
+      "regiones": [
+        "coquimbo"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Bodegas",
+      "sistemas": "Sistema de extracción industrial.",
+      "m2": 3400,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Suministro y montaje",
+      "detalle": "Sistema de extracción en las bodegas de concentrado con ventiladores NOVOVENT, SODECA, S&P o similar.",
+      "cliente": "Privado",
+      "revisar": "revisar región (el PDF dice Coquimbo)",
+      "visible": true
+    },
+    {
+      "id": "planta-adr-kinross-minera-maricunga",
+      "nombre": "Planta ADR – Kinross, Minera Maricunga",
+      "anio": 2012,
+      "lugar": "Atacama, 4.800 msnm",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Planta procesadora de oro · 3 niveles",
+      "sistemas": "Extracción localizada, calefacción y tableros eléctricos.",
+      "m2": 3000,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Gran altura"
+      ],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Extracción localizada y calefacción con ventiladores de inyección de gran caudal y resistencias eléctricas; proyectos eléctricos de fuerza y control centralizado. 60 equipos de ventilación y 10 tableros eléctricos, a 4.800 msnm.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "ampliacion-campamento-kinross-minera-maricunga",
+      "nombre": "Ampliación campamento – Kinross, Minera Maricunga",
+      "anio": 2012,
+      "lugar": "Atacama, 4.800 msnm",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Campamento, administración, ADR y chancado fino",
+      "sistemas": "Extracción localizada, calefacción y control centralizado.",
+      "m2": 5000,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Gran altura"
+      ],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Extracción localizada y calefacción con ventiladores de mediano caudal y resistencias eléctricas; proyectos eléctricos de fuerza y control centralizado. 15 equipos de ventilación y 12 tableros eléctricos, a 4.800 msnm.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "pabellon-del-inca-collahuasi",
+      "nombre": "Pabellón del Inca, Collahuasi",
+      "anio": 2012,
+      "lugar": "Tarapacá",
+      "regiones": [
+        "tarapaca"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Campamento",
+      "sistemas": "Sistema de ACS con aporte solar.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Solar / ERNC"
+      ],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "edificio-moneda-bicentenario",
+      "nombre": "Edificio Moneda Bicentenario",
+      "anio": 2012,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "oficinas",
+        "gobierno"
+      ],
+      "uso": "Oficinas",
+      "sistemas": "Proyecto con certificación LEED.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "LEED"
+      ],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "campamento-3-400-casale",
+      "nombre": "Campamento 3.400 Casale",
+      "anio": 2012,
+      "lugar": "Atacama",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Campamento",
+      "sistemas": "Proyecto con certificación LEED.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "LEED"
+      ],
+      "trabajo": "Suministro y montaje",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "comisaria-de-carabineros-pedro-aguirre-cerda",
+      "nombre": "Comisaría de Carabineros Pedro Aguirre Cerda",
+      "anio": 2012,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Comisaría",
+      "sistemas": "Enfriadores de agua, fan-coils y extracción.",
+      "m2": 2500,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Enfriadores de agua y fan-coils con resistencia eléctrica de apoyo para oficinas y comedores; extracción de dormitorios, baños, lockers y cocina.",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "campamento-barriales-minera-pascua-lama",
+      "nombre": "Campamento Barriales, Minera Pascua Lama",
+      "anio": 2012,
+      "lugar": "Atacama",
+      "regiones": [
+        "atacama"
+      ],
+      "sectores": [
+        "mineria"
+      ],
+      "uso": "Módulos de dormitorio y oficinas",
+      "sistemas": "Calefacción por aire caliente en módulos.",
+      "m2": 2987,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Tres pabellones de dormitorios y uno de oficinas, en módulos, calefaccionados con aire caliente mediante equipos de ventilación y resistencias eléctricas.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "edificio-essbio-rancagua",
+      "nombre": "Edificio Essbio Rancagua",
+      "anio": 2011,
+      "lugar": "Rancagua",
+      "regiones": [
+        "ohiggins"
+      ],
+      "sectores": [
+        "oficinas"
+      ],
+      "uso": "Oficinas administrativas · 3 niveles",
+      "sistemas": "VRF a gas licuado y recuperación de calor (LEED).",
+      "m2": 3450,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "LEED"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Proyecto de climatización con volumen de refrigerante variable a gas licuado y ventilación de aire fresco con recuperación de calor termodinámica activa, según parámetros de certificación LEED.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "centro-de-distribucion-gli",
+      "nombre": "Centro de Distribución GLI",
+      "anio": 2011,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "logistica"
+      ],
+      "uso": "Oficinas centrales · 2 niveles",
+      "sistemas": "25 equipos split y ventilación de aire fresco.",
+      "m2": 1700,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Climatización con 25 equipos split Carrier de diferentes capacidades, más extracción e inyección de aire fresco.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "restaurante-aqui-esta-coco",
+      "nombre": "Restaurante Aquí Está Coco",
+      "anio": 2011,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "retail"
+      ],
+      "uso": "Restaurante",
+      "sistemas": "VRF 245.000 Btu/hr y extracción de cocina.",
+      "m2": 800,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Climatización con equipos de volumen de refrigerante variable LG de 245.000 Btu/h, más extracción de campanas de cocina, baños y sector fumadores.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "condominio-parque-los-encinos",
+      "nombre": "Condominio Parque Los Encinos",
+      "anio": 2011,
+      "lugar": "Chillán",
+      "regiones": [
+        "nuble"
+      ],
+      "sectores": [
+        "residencial"
+      ],
+      "uso": "Habitacional · 5 torres",
+      "sistemas": "Paneles solares termosifón y ventilación.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Solar / ERNC"
+      ],
+      "trabajo": "Proyecto y montaje",
+      "detalle": "Condominio de 5 torres con calentamiento de agua sanitaria por paneles solares termosifón y ventilación de baños y cocinas.",
+      "cliente": "Privado",
+      "visible": true
+    },
+    {
+      "id": "metro-s-a-estacion-tobalaba",
+      "nombre": "Metro S.A., Estación Tobalaba",
+      "anio": 2010,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Estación de metro",
+      "sistemas": "Proyecto de climatización con chiller y fan-coil (solo frío) y calefacción por resistencia eléctrica.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Ingeniería"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Elaboración y desarrollo del proyecto de climatización: enfriadores de agua (chiller) con fan-coil solo frío y calefacción por resistencia eléctrica.",
+      "cliente": "Público",
+      "revisar": "revisar sector (transporte)",
+      "visible": true
+    },
+    {
+      "id": "metro-s-a-estacion-moneda",
+      "nombre": "Metro S.A., Estación Moneda",
+      "anio": 2010,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Estación de metro",
+      "sistemas": "Proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Ingeniería"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Elaboración y desarrollo del proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
+      "cliente": "Público",
+      "revisar": "revisar sector (transporte)",
+      "visible": true
+    },
+    {
+      "id": "metro-s-a-estacion-pedro-de-valdivia",
+      "nombre": "Metro S.A., Estación Pedro de Valdivia",
+      "anio": 2010,
+      "lugar": "Santiago",
+      "regiones": [
+        "metropolitana"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Estación de metro",
+      "sistemas": "Proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Ingeniería"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Elaboración y desarrollo del proyecto de climatización con equipos de refrigerante tipo bomba de calor.",
+      "cliente": "Público",
+      "revisar": "revisar sector (transporte)",
+      "visible": true
+    },
+    {
+      "id": "terminales-portuarios-queilen-chequian-y-quellon-mop",
+      "nombre": "Terminales portuarios Queilén, Chequián y Quellón – MOP",
+      "anio": 2010,
+      "lugar": "Chiloé",
+      "regiones": [
+        "loslagos"
+      ],
+      "sectores": [
+        "gobierno"
+      ],
+      "uso": "Terminales portuarios",
+      "sistemas": "Ingeniería básica y de detalles.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Ingeniería"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Ingeniería básica y de detalles de la climatización de 3 terminales de pasajeros: calderas eléctricas, radiadores extraplanos y extracción de baños y cocina.",
+      "cliente": "Público",
+      "visible": true
+    },
+    {
+      "id": "edificio-alto-lafquen",
+      "nombre": "Edificio Alto Lafquén",
+      "anio": 2010,
+      "lugar": "Los Ángeles",
+      "regiones": [
+        "biobio"
+      ],
+      "sectores": [
+        "residencial"
+      ],
+      "uso": "Habitacional · 2 torres",
+      "sistemas": "Calefacción por radiadores y central solar de ACS.",
+      "m2": null,
+      "foto": null,
+      "estado": "ejecutado",
+      "tags": [
+        "Solar / ERNC"
+      ],
+      "trabajo": "Proyecto",
+      "detalle": "Condominio de 2 torres con calefacción por radiadores y generadores de calor individuales, más central solar para ACS.",
+      "cliente": "Privado",
+      "visible": true
+    }
+  ]
+}

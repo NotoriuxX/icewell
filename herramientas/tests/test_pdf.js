@@ -2,7 +2,7 @@
 // valida aviso/cola/progreso/error. Guarda los PDF en el scratchpad para revisarlos.
 const { JSDOM } = require('jsdom');
 const fs = require('fs'), path = require('path');
-const WEB = 'C:/Users/MANUEL MERY/Desktop/icewell/proyecto/web';
+const WEB = path.join(__dirname, '../../web');
 const OUT = require('path').join(__dirname, 'salida'); require('fs').mkdirSync(OUT, { recursive: true });
 let fallas = 0;
 function ok(c, m){ console.log((c ? 'OK   ' : 'FAIL ') + m); if(!c) fallas++; }

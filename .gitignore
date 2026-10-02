@@ -6,3 +6,8 @@ secret/
 *.env
 .DS_Store
 Thumbs.db
+
+# Servidor del panel: secretos y datos locales (BD SQLite, bandeja de correos, respaldos)
+servidor/config.php
+servidor/datos/
+web/assets/*.tmp-*

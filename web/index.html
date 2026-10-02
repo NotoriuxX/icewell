@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-seo>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -205,6 +205,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .team-card { min-height: 278px; padding: 0 4px; }
 .team-initials { display: flex; align-items: center; justify-content: center; width: 76px; height: 76px; margin-bottom: 28px; border-radius: 50%; color: var(--blue); background: #ebf8fc; font-family: var(--display); font-size: 28px; font-weight: 800; }
+.team-photo { display: block; width: 76px; height: 76px; margin-bottom: 28px; border-radius: 50%; object-fit: cover; background: #ebf8fc; }
 .team-initials--1 { color: #fff; background: var(--blue); }
 .team-initials--3 { color: #fff; background: var(--green); }
 .team-initials--4 { color: #fff; background: var(--dark); }
@@ -218,9 +219,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 .marquee-track { display: flex; align-items: center; gap: 56px; width: max-content; animation: marquee-scroll 34s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee-track img { height: 40px; width: auto; max-width: 160px; object-fit: contain; flex: none; }
-.marquee-track img.flowtech { height: 56px; border-radius: 8px; }
+.marquee-track img.flowtech, .marquee-track img.logo-grande { height: 56px; border-radius: 8px; }
 @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (max-width: 600px) { .marquee-track { gap: 32px; } .marquee-track img { height: 30px; } .marquee-track img.flowtech { height: 42px; } }
+@media (max-width: 600px) { .marquee-track { gap: 32px; } .marquee-track img { height: 30px; } .marquee-track img.flowtech, .marquee-track img.logo-grande { height: 42px; } }
 
 .contact-section { position: relative; overflow: hidden; padding: 135px 0; color: #fff; background: radial-gradient(640px 400px at 97% 10%, rgba(57,178,220,0.38), transparent 65%), var(--dark); }
 .contact-section::after { position: absolute; right: -135px; bottom: -155px; width: 500px; height: 500px; border: 1px solid rgba(155,226,247,0.22); border-radius: 50%; box-shadow: 0 0 0 55px rgba(155,226,247,0.035), 0 0 0 110px rgba(155,226,247,0.026); content: ""; }
@@ -228,14 +229,17 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 .contact-main h2 { max-width: 650px; font-size: clamp(59px, 6.3vw, 88px); }
 .contact-main > p { max-width: 490px; margin: 27px 0 33px; color: #abd8e8; font-size: 16px; line-height: 1.68; }
 .contact-data { align-self: end; padding: 4px 0 0 40px; border-left: 1px solid rgba(201,239,250,0.3); }
-.contact-data > div:not(.contact-mini) { padding: 17px 0; border-bottom: 1px solid rgba(201,239,250,0.19); }
+.contact-data > div:not(.contact-mini):not(.contact-redes) { padding: 17px 0; border-bottom: 1px solid rgba(201,239,250,0.19); }
 .contact-data > div:first-child { padding-top: 0; }
-.contact-data span { display: block; margin-bottom: 7px; color: #8fd7ee; font: 11px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+.contact-data > div > span { display: block; margin-bottom: 7px; color: #8fd7ee; font: 11px var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
 .contact-data p, .contact-data a { color: #fff; font-size: 15px; line-height: 1.55; }
 .contact-data a { transition: color 150ms; }
 .contact-data a:hover { color: #94e3fc; }
 .contact-mini { display: flex; align-items: center; gap: 8px; padding-top: 18px; color: #97dfef; }
 .contact-mini a { color: #a5e4f6; font-size: 13px; }
+.contact-redes { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 14px; }
+.contact-redes[hidden], .contact-redes a[hidden] { display: none; }
+.contact-redes a { color: #a5e4f6; font: 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 3px; }
 
 .site-footer { position: relative; padding: 44px 0 24px; color: #b7d6e1; background: #062132; }
 .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 37px; border-bottom: 1px solid rgba(200,240,251,0.14); }
@@ -380,7 +384,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
       <a href="#contacto">Contacto</a>
     </nav>
     <div class="nav-actions">
-      <a class="nav-contact" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer">
+      <a class="nav-contact" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer">
         Cotizar proyecto
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
       </a>
@@ -407,8 +411,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
     <a href="#contacto" style="transition-delay:225ms"><span>06</span>Contacto<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7v10h10"/><path d="m7 7 10 10"/></svg></a>
   </nav>
   <div class="mobile-menu__bottom site-container">
-    <p>Providencia, Santiago</p>
-    <a href="https://wa.me/56964074519" target="_blank" rel="noreferrer">+56 9 6407 4519</a>
+    <p data-empresa="ubicacion">Providencia, Santiago</p>
+    <a href="https://wa.me/56964074519" data-empresa="whatsapp" target="_blank" rel="noreferrer">+56 9 6407 4519</a>
   </div>
 </div>
 
@@ -418,31 +422,31 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
     <div class="hero-gridline" aria-hidden="true"></div>
     <div class="site-container hero-layout">
       <div class="hero-copy">
-        <p class="eyebrow">Ingeniería HVAC · Chile desde 2009</p>
-        <h1><span>Ingeniería que</span> <em>hace habitable</em> <span>lo extraordinario.</span></h1>
-        <p class="hero-lead">Diseñamos, instalamos y mantenemos soluciones de climatización para proyectos que exigen desempeño, continuidad y precisión.</p>
+        <p class="eyebrow" data-t="hero.eyebrow">Ingeniería HVAC · Chile desde 2009</p>
+        <h1><span data-t="hero.titulo1">Ingeniería que</span> <em data-t="hero.tituloDestacado">hace habitable</em> <span data-t="hero.titulo2">lo extraordinario.</span></h1>
+        <p class="hero-lead" data-t="hero.lead">Diseñamos, instalamos y mantenemos soluciones de climatización para proyectos que exigen desempeño, continuidad y precisión.</p>
         <div class="hero-buttons">
-          <a class="action-btn action-btn--primary" href="#proyectos">Conocer proyectos
+          <a class="action-btn action-btn--primary" href="#proyectos"><span data-t="hero.boton1">Conocer proyectos</span>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
           </a>
-          <a class="action-btn action-btn--secondary" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer">Hablar con un ingeniero
+          <a class="action-btn action-btn--secondary" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer"><span data-t="hero.boton2">Hablar con un ingeniero</span>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
           </a>
         </div>
         <div class="hero-metrics" aria-label="Cifras de Icewell">
           <div><strong class="js-count" data-anios>17</strong><span>Años de<br>trayectoria</span></div>
-          <div><strong class="js-count">51</strong><span>Obras y proyectos<br>registrados</span></div>
-          <div><strong class="js-count metric-wide">+170.000</strong><span>m² en obras<br>destacadas</span></div>
+          <div><strong class="js-count" data-cifra="obras">51</strong><span>Obras y proyectos<br>registrados</span></div>
+          <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span>m² en obras<br>destacadas</span></div>
         </div>
       </div>
       <div class="hero-visual">
         <div class="hero-image-wrap">
-          <img src="assets/hero-cerro-dominador.jpg" alt="Infraestructura industrial de climatización en el norte de Chile">
+          <img src="assets/hero-cerro-dominador.jpg" data-img="heroFoto" alt="Infraestructura industrial de climatización en el norte de Chile">
         </div>
         <div class="hero-case-tag">
-          <span>Proyecto destacado</span>
-          <strong>Cerro Dominador</strong>
-          <p>Antofagasta · Climatización industrial</p>
+          <span data-t="hero.casoEtiqueta">Proyecto destacado</span>
+          <strong data-t="hero.casoTitulo">Cerro Dominador</strong>
+          <p data-t="hero.casoTexto">Antofagasta · Climatización industrial</p>
         </div>
         <div class="hero-stamp" aria-label="Icewell ingeniería HVAC">
           <span>Icewell</span><span>HVAC</span><span>Chile</span>
@@ -458,13 +462,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="intro-section" id="nosotros">
     <div class="site-container intro-layout">
       <div>
-        <p class="eyebrow">Quiénes somos</p>
+        <p class="eyebrow" data-t="nosotros.eyebrow">Quiénes somos</p>
         <p class="vertical-label">ICEWELL / <span data-anios>17</span> AÑOS</p>
       </div>
       <div class="intro-copy">
-        <h2>El clima también se <em>diseña.</em></h2>
-        <p class="intro-large">Más que aire acondicionado: entregamos la confianza de una operación térmicamente estable, eficiente y pensada para durar.</p>
-        <p>Fundada por profesionales con más de 25 años de experiencia en climatización y ventilación, Icewell integra conocimiento técnico, planificación y oficio para responder a los desafíos de cada industria.</p>
+        <h2 data-t="nosotros.titulo">El clima también se <em>diseña.</em></h2>
+        <p class="intro-large" data-t="nosotros.destacado">Más que aire acondicionado: entregamos la confianza de una operación térmicamente estable, eficiente y pensada para durar.</p>
+        <p data-t="nosotros.texto">Fundada por profesionales con más de 25 años de experiencia en climatización y ventilación, Icewell integra conocimiento técnico, planificación y oficio para responder a los desafíos de cada industria.</p>
         <a class="text-link" href="#servicios">Conoce nuestra forma de trabajar
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </a>
@@ -476,12 +480,12 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
     <div class="site-container">
       <div class="section-heading section-heading--wide">
         <div>
-          <p class="eyebrow eyebrow--light">Qué hacemos</p>
-          <h2>Del cálculo a la puesta en marcha.</h2>
+          <p class="eyebrow eyebrow--light" data-t="servicios.eyebrow">Qué hacemos</p>
+          <h2 data-t="servicios.titulo">Del cálculo a la puesta en marcha.</h2>
         </div>
-        <p>Un equipo involucrado en cada fase, con ingeniería aplicada a resultados reales.</p>
+        <p data-t="servicios.lead">Un equipo involucrado en cada fase, con ingeniería aplicada a resultados reales.</p>
       </div>
-      <div class="service-list">
+      <div class="service-list" data-lista="servicios">
         <article class="service-card">
           <div class="service-card__top"><span>01</span><span>Asesorías térmicas</span></div>
           <h3>Diagnóstico</h3>
@@ -501,8 +505,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
           <div class="service-card__arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7v10h10"/><path d="m7 7 10 10"/></svg></div>
         </article>
       </div>
-      <p class="service-footnote">Además desarrollamos soluciones para <b>piscinas, control de humedad, centros de salud, hoteles, retail y oficinas.</b> Revisa nuestras obras por sector:</p>
-      <div class="sector-links">
+      <p class="service-footnote" data-t="servicios.nota">Además desarrollamos soluciones para <b>piscinas, control de humedad, centros de salud, hoteles, retail y oficinas.</b> Revisa nuestras obras por sector:</p>
+      <div class="sector-links" data-lista="sectores">
         <a href="cv.html#sector=hoteleria">Hotelería</a><a href="cv.html#sector=mineria">Minería</a><a href="cv.html#sector=salud">Salud</a><a href="cv.html#sector=gobierno">Gobierno</a><a href="cv.html#sector=educacion">Educación</a><a href="cv.html#sector=industrial">Industrial</a><a href="cv.html#sector=logistica">Logística</a><a href="cv.html#sector=oficinas">Oficinas</a><a href="cv.html#sector=retail">Retail</a><a href="cv.html#sector=residencial">Residencial</a>
       </div>
     </div>
@@ -511,11 +515,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="method-section">
     <div class="site-container method-layout">
       <div class="method-copy">
-        <p class="eyebrow">Por qué Icewell</p>
-        <h2>La respuesta correcta antes del primer plano.</h2>
-        <p>Interpretamos cada necesidad desde la operación. Así construimos soluciones que equilibran eficiencia, calidad y presupuesto sin perder de vista a quienes usarán el espacio.</p>
+        <p class="eyebrow" data-t="metodo.eyebrow">Por qué Icewell</p>
+        <h2 data-t="metodo.titulo">La respuesta correcta antes del primer plano.</h2>
+        <p data-t="metodo.texto">Interpretamos cada necesidad desde la operación. Así construimos soluciones que equilibran eficiencia, calidad y presupuesto sin perder de vista a quienes usarán el espacio.</p>
       </div>
-      <div class="method-list">
+      <div class="method-list" data-lista="metodo">
         <article class="method-item">
           <span>01</span>
           <div><h3>Eficiencia operacional</h3><p>Energía y confort trabajando en el mismo sentido.</p></div>
@@ -542,19 +546,19 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="numbers-section" aria-label="Resultados Icewell">
     <div class="site-container number-grid">
       <div><strong class="js-count" data-anios>17</strong><span>Años de experiencia · desde <span data-desde>2009</span></span></div>
-      <div><strong class="js-count">51</strong><span>Obras y proyectos registrados</span></div>
-      <div><strong class="js-count">12</strong><span>Regiones con proyectos y montajes</span></div>
-      <div><strong class="js-count metric-wide">+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
+      <div><strong class="js-count" data-cifra="obras">51</strong><span>Obras y proyectos registrados</span></div>
+      <div><strong class="js-count" data-cifra="regiones">12</strong><span>Regiones con proyectos y montajes</span></div>
+      <div><strong class="js-count metric-wide" data-cifra="m2">+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
     </div>
   </section>
 
   <section class="journey-section">
     <div class="site-container">
       <div class="section-heading journey-heading">
-        <div><p class="eyebrow">Trayectoria</p><h2>Obra, no promesas.</h2></div>
-        <p>Una historia de proyectos que han crecido junto a la confianza de nuestros clientes.</p>
+        <div><p class="eyebrow" data-t="trayectoria.eyebrow">Trayectoria</p><h2 data-t="trayectoria.titulo">Obra, no promesas.</h2></div>
+        <p data-t="trayectoria.lead">Una historia de proyectos que han crecido junto a la confianza de nuestros clientes.</p>
       </div>
-      <div class="timeline">
+      <div class="timeline" data-lista="hitos">
         <article class="timeline-item"><span class="timeline-dot"></span><span class="timeline-date">2009</span><h3>Nace Icewell</h3><p>Fundación y comienzo de operaciones en Santiago.</p></article>
         <article class="timeline-item"><span class="timeline-dot"></span><span class="timeline-date">2012</span><h3>Primera gran minería</h3><p>Inicio de proyectos de alto estándar en el norte de Chile.</p></article>
         <article class="timeline-item"><span class="timeline-dot"></span><span class="timeline-date">2023</span><h3>Nueva escala</h3><p>Hotel Debaines y remodelación ACHS Alameda.</p></article>
@@ -566,17 +570,17 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="projects-section" id="proyectos">
     <div class="site-container">
       <div class="section-heading projects-heading">
-        <div><p class="eyebrow">Portafolio</p><h2>Soluciones que ya están en marcha.</h2></div>
+        <div><p class="eyebrow" data-t="proyectos.eyebrow">Portafolio</p><h2 data-t="proyectos.titulo">Soluciones que ya están en marcha.</h2></div>
         <div class="projects-links">
         <a class="text-link" href="cv.html">Ver currículum completo
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
-        <a class="text-link" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer">Iniciar un proyecto
+        <a class="text-link" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer">Iniciar un proyecto
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
         </div>
       </div>
-      <div class="project-grid">
+      <div class="project-grid" data-lista="portada">
         <article class="project-card">
           <img src="assets/p-cenfach.jpg" alt="CEN-FACH">
           <div class="project-card__shade"></div>
@@ -620,9 +624,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="team-section" id="equipo">
     <div class="site-container">
       <div class="section-heading team-heading">
-        <div><p class="eyebrow">Equipo directivo</p><h2>Las personas tras cada proyecto.</h2></div>
+        <div><p class="eyebrow" data-t="equipo.eyebrow">Equipo directivo</p><h2 data-t="equipo.titulo">Las personas tras cada proyecto.</h2></div>
       </div>
-      <div class="team-grid">
+      <div class="team-grid" data-lista="equipo">
         <article class="team-card">
           <div class="team-initials team-initials--1">AM</div>
           <div class="team-info"><span>CEO</span><h3>Andrés Mora</h3><p>Ingeniero en Climatización (USACH) e Ingeniería Civil Industrial (U. Mayor).</p></div>
@@ -645,10 +649,10 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
 
   <section class="partners-section">
     <div class="site-container partners-layout">
-      <p class="eyebrow eyebrow--light">Red de especialistas</p>
-      <p>Trabajamos con tecnologías y proveedores líderes para diseñar soluciones a la medida de cada desafío.</p>
+      <p class="eyebrow eyebrow--light" data-t="socios.eyebrow">Red de especialistas</p>
+      <p data-t="socios.texto">Trabajamos con tecnologías y proveedores líderes para diseñar soluciones a la medida de cada desafío.</p>
       <div class="marquee" aria-label="Socios tecnológicos">
-        <div class="marquee-track">
+        <div class="marquee-track" data-lista="socios">
           <img src="assets/p-daikin-trans.png" alt="Daikin">
           <img src="assets/p-lg.png" alt="LG">
           <img src="assets/p-aermec.png" alt="Aermec">
@@ -675,20 +679,23 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
   <section class="contact-section" id="contacto">
     <div class="site-container contact-layout">
       <div class="contact-main">
-        <p class="eyebrow eyebrow--light">Contacto</p>
-        <h2>¿Tienes un proyecto que necesita respirar mejor?</h2>
-        <p>Cuéntanos el alcance. Te responderá un ingeniero, no un formulario automático.</p>
-        <a class="action-btn action-btn--dark" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer">Escribir por WhatsApp
+        <p class="eyebrow eyebrow--light" data-t="contacto.eyebrow">Contacto</p>
+        <h2 data-t="contacto.titulo">¿Tienes un proyecto que necesita respirar mejor?</h2>
+        <p data-t="contacto.texto">Cuéntanos el alcance. Te responderá un ingeniero, no un formulario automático.</p>
+        <a class="action-btn action-btn--dark" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer">Escribir por WhatsApp
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
       </div>
       <div class="contact-data">
-        <div><span>Oficina</span><p>Román Díaz 1363<br>Providencia, Santiago</p></div>
-        <div><span>Teléfono</span><a href="tel:+56228470610">+56 2 2847 0610</a></div>
-        <div><span>Email</span><a href="mailto:contacto@icewell.cl">contacto@icewell.cl</a></div>
+        <div><span>Oficina</span><p><span data-empresa="direccion">Román Díaz 1363</span><br><span data-empresa="ubicacion">Providencia, Santiago</span></p></div>
+        <div><span>Teléfono</span><a href="tel:+56228470610" data-empresa="telefono">+56 2 2847 0610</a></div>
+        <div><span>Email</span><a href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a></div>
         <div class="contact-mini">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
-          <a href="https://wa.me/56964074519" target="_blank" rel="noreferrer">+56 9 6407 4519</a>
+          <a href="https://wa.me/56964074519" data-empresa="whatsapp" target="_blank" rel="noreferrer">+56 9 6407 4519</a>
+        </div>
+        <div class="contact-redes" data-redes hidden>
+          <a data-red="linkedin" target="_blank" rel="noreferrer" hidden>LinkedIn</a><a data-red="instagram" target="_blank" rel="noreferrer" hidden>Instagram</a><a data-red="facebook" target="_blank" rel="noreferrer" hidden>Facebook</a><a data-red="youtube" target="_blank" rel="noreferrer" hidden>YouTube</a>
         </div>
       </div>
     </div>
@@ -710,18 +717,22 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 0.91; l
       </a>
     </div>
     <div class="site-container footer-bottom">
-      <p>© <span data-anio-actual>2026</span> Icewell SpA · Asesorías, ingeniería y montajes térmicos</p>
-      <p>Providencia · Santiago · Chile</p>
+      <p>© <span data-anio-actual>2026</span> <span data-empresa="razonSocial">Icewell SpA</span> · <span data-t="footer.lema">Asesorías, ingeniería y montajes térmicos</span></p>
+      <p data-empresa="ubicacionLarga">Providencia · Santiago · Chile</p>
     </div>
   </footer>
 
-  <a class="wa-float" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
+  <a class="wa-float" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m0 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.82c0 4.55-3.7 8.24-8.24 8.24-1.44 0-2.86-.38-4.1-1.1l-.29-.17-3.14.82.84-3.06-.19-.32a8.19 8.19 0 01-1.26-4.4c0-4.55 3.7-8.25 8.24-8.25M8.53 6.85c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.69 2.7 4.17 3.68 2.06.82 2.48.66 2.93.61.45-.04 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86-.2-.48-.4-.42-.55-.42h-.47z"/></svg>
   </a>
 
 </main>
 
+<script src="assets/borrador.js"></script>
+<script src="assets/sitio-data.js"></script>
 <script src="assets/aniversario.js"></script>
+<script src="assets/cv-data.js"></script>
+<script src="assets/sitio-render.js"></script>
 <script>
   // Años automáticos (assets/aniversario.js): rellenar ANTES de que el contador lea su valor objetivo
   if(window.icewellAniversario) icewellAniversario.rellenar();

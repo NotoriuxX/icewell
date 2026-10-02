@@ -2,6 +2,6 @@
   "name": "icewell-tests",
   "private": true,
   "description": "Pruebas jsdom de cv.html / aniversario / PDF (ver CLAUDE.md del proyecto)",
-  "scripts": { "test": "node test_icewell.js && node test_web_ux.js && node test_pdf.js" },
+  "scripts": { "test": "node test_icewell.js && node test_web_ux.js && node test_sitio.js && node test_pdf.js" },
   "devDependencies": { "jsdom": "^24.0.0" }
 }

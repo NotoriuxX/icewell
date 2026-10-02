@@ -103,13 +103,24 @@
   }
   function pausa(){ return new Promise(function(r){ setTimeout(r, 0); }); }
 
+  // texto del panel con formato → HTML seguro: primero se escapa, después *énfasis* → <em>
+  function htmlRico(t){
+    var IS = window.icewellSitio;
+    return esc(IS.plano(String(t || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '\u0001$1\u0002'), false))
+      .replace(/\u0001/g, '<em>').replace(/\u0002/g, '</em>');
+  }
+
   function construir(cont, o){
     var A = window.CV_PDF_ASSETS, SEC = o.SEC, REG = o.REG, fmtN = new Intl.NumberFormat('es-CL');
+    // Textos y datos de la empresa: los mismos de la página (assets/sitio-data.js, editables en /admin)
+    var IS = window.icewellSitio, D = IS.datos(), E = IS.empresa(), CF = D.cifras || {}, CVD = D.cv || { servicios: [], certificaciones: [] };
+    function T(k){ return IS.t(k) || ''; }
+    var PIE = '© ' + new Date().getFullYear() + ' ' + [E.razonSocial, IS.campoEmpresa('direccionCompleta'), E.telefono, IS.campoEmpresa('webCorta')].filter(Boolean).join(' · ');
     var etiquetaCab = 'Currículum corporativo' + (o.seleccion ? ' · ' + o.seleccion : '');
     function lugar(p){ var r = p.regiones.map(function(x){ return REG[x]; }).join(' / '); return p.lugar + (r && p.lugar.indexOf(r) < 0 ? ' · ' + r : ''); }
     function hoja(){
       var h = el('<section class="wh-hoja"><div class="wh-cab"><img src="' + A.logo + '" alt="Icewell"><span>' + esc(etiquetaCab) + '</span></div>' +
-        '<div class="wh-cuerpo"></div><div class="wh-pie"><span>© ' + new Date().getFullYear() + ' Icewell SpA · Román Díaz 1363, Providencia · +56 2 2847 0610 · icewell.cl</span><span class="wh-n"></span></div></section>');
+        '<div class="wh-cuerpo"></div><div class="wh-pie"><span>' + esc(PIE) + '</span><span class="wh-n"></span></div></section>');
       cont.appendChild(h);
       return h.querySelector('.wh-cuerpo');
     }
@@ -117,28 +128,27 @@
     // 1) hero (parte superior de la página) + "Qué hacemos"
     var h1 = el('<section class="wh-hoja"><div class="wh-cab"><img src="' + A.logo + '" alt="Icewell"><span>' + esc(etiquetaCab) + '</span></div>' +
       '<div class="wh-hero"><div class="wh-hero-in">' +
-        '<p class="wh-eb">Currículum corporativo · Icewell SpA</p>' +
-        '<h1>Ingeniería y montaje de sistemas <em>HVAC.</em></h1>' +
-        '<p class="wh-lead">Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde ' + o.desde + '.</p>' +
+        '<p class="wh-eb">' + htmlRico(T('cv.eyebrow')) + '</p>' +
+        '<h1>' + htmlRico(T('cv.titulo')) + '</h1>' +
+        '<p class="wh-lead">' + htmlRico(T('cv.lead')) + '</p>' +
         (o.seleccion ? '<p class="wh-sel">Selección de obras: ' + esc(o.seleccion) + ' · ' + o.lista.length + (o.lista.length === 1 ? ' obra' : ' obras') + '</p>' : '') +
         '<div class="wh-kpis"><div><strong>' + o.anios + '</strong><span>Años de experiencia · desde ' + o.desde + '</span></div>' +
-          '<div><strong>51</strong><span>Obras y proyectos registrados</span></div>' +
-          '<div><strong>+170.000</strong><span>m² intervenidos en obras destacadas</span></div>' +
-          '<div><strong>12</strong><span>Regiones, de Tarapacá a Los Lagos</span></div></div>' +
+          '<div><strong>' + esc(CF.obras || '') + '</strong><span>Obras y proyectos registrados</span></div>' +
+          '<div><strong>' + esc(CF.m2 || '') + '</strong><span>m² intervenidos en obras destacadas</span></div>' +
+          '<div><strong>' + esc(CF.regiones || '') + '</strong><span>Regiones' + (CF.regionesTexto ? ', ' + esc(CF.regionesTexto) : '') + '</span></div></div>' +
       '</div>' +
-      '<div class="wh-serv"><p class="wh-eb wh-eb--claro">Qué hacemos</p><h2>Tres líneas de servicio, un solo responsable.</h2><div class="wh-serv-g">' +
-        '<div><span>01 · Asesoría</span><h3>Asesorías térmicas</h3><p>Informes y evaluaciones técnico-económicas, inspección técnica de obra, cargas térmicas y consumo de ACS.</p></div>' +
-        '<div><span>02 · Ingeniería</span><h3>Ingeniería</h3><p>Proyectos de climatización, ventilación y calefacción comercial, residencial e industrial, con eficiencia energética y ERNC.</p></div>' +
-        '<div><span>03 · Montaje</span><h3>Instalaciones</h3><p>Sistemas de agua, expansión directa, VRV/VRF, volumen variable e instalaciones solares.</p></div>' +
+      '<div class="wh-serv"><p class="wh-eb wh-eb--claro">Qué hacemos</p><h2>' + htmlRico(T('cv.serviciosTitulo')) + '</h2><div class="wh-serv-g">' +
+        CVD.servicios.slice(0, 3).map(function(x){ return '<div><span>' + esc(x.etiqueta) + '</span><h3>' + htmlRico(x.titulo) + '</h3><p>' + htmlRico(x.resumen || x.texto) + '</p></div>'; }).join('') +
       '</div></div></div>' +
-      '<div class="wh-pie"><span>© ' + new Date().getFullYear() + ' Icewell SpA · Román Díaz 1363, Providencia · +56 2 2847 0610 · icewell.cl</span><span class="wh-n"></span></div></section>');
+      '<div class="wh-pie"><span>' + esc(PIE) + '</span><span class="wh-n"></span></div></section>');
     cont.appendChild(h1);
 
-    // 2) obras: con selección todas como tarjeta; completo: tarjetas (foto, m², 2023+) + trayectoria en lista
+    // 2) obras: con selección todas como tarjeta; completo: tarjetas (las obras CON FOTO) + Trayectoria con TODAS
+    //    (regla de Manuel, igual que cv.html: una obra sin foto solo va en Trayectoria; con foto, en los dos lados)
     var orden = function(a, b){ return (b.estado === 'ejecucion') - (a.estado === 'ejecucion') || b.anio - a.anio || (b.m2 || 0) - (a.m2 || 0); };
     var todas = !!o.seleccion;
-    var fichas = o.lista.filter(function(p){ return todas || p.foto || p.m2 || p.anio >= 2023; }).sort(orden);
-    var filas = o.lista.filter(function(p){ return !(todas || p.foto || p.m2 || p.anio >= 2023); }).sort(function(a, b){ return b.anio - a.anio; });
+    var fichas = o.lista.filter(function(p){ return todas || !!p.foto; }).sort(orden);
+    var filas = todas ? [] : o.lista.slice().sort(function(a, b){ return b.anio - a.anio; });
     var titulo = o.seleccion ? 'Obras · ' + esc(o.seleccion) : 'Obras destacadas y recientes';
     var c = hoja(), nHoja = 1;
     var enTray = false;
@@ -171,7 +181,7 @@
     }
     if(filas.length){
       enTray = true;
-      var sub = el('<p class="wh-sub">Trayectoria · ' + filas.length + ' obras más</p>');
+      var sub = el('<p class="wh-sub">Trayectoria · ' + filas.length + (filas.length === 1 ? ' obra' : ' obras') + '</p>');
       c.appendChild(sub);
       if(desborda(c)){ sub.remove(); nuevaHojaObras(); c.appendChild(sub); }
       var bloque = null, anioBloque = null, hojasFilas = [c];
@@ -203,10 +213,11 @@
       }
     }
     // 3) empresa (final de la página)
-    var emp = el('<div class="wh-emp"><div class="wh-emp-g"><div><p class="wh-eb wh-eb--claro">Datos de la empresa</p><h2>Conversemos su próximo proyecto.</h2><p>Cuéntenos el alcance. Le responderá un ingeniero. WhatsApp +56 9 6407 4519.</p></div>' +
-      '<dl><dt>Razón social</dt><dd>Icewell SpA</dd><dt>Giro</dt><dd>Asesorías, ingeniería y montajes térmicos</dd><dt>RUT</dt><dd>76.059.117-3</dd>' +
-      '<dt>Dirección</dt><dd>Román Díaz #1363, Providencia, Santiago</dd><dt>Teléfono</dt><dd>+56 2 2847 0610</dd>' +
-      '<dt>Contacto</dt><dd>contacto@icewell.cl<br>gonzalo.diaz@icewell.cl</dd><dt>Sitio web</dt><dd>www.icewell.cl</dd></dl></div></div>');
+    var datos = [['Razón social', E.razonSocial], ['Giro', E.giro], ['RUT', E.rut],
+      ['Dirección', IS.campoEmpresa('direccionCompleta') + (E.ciudad ? ', ' + E.ciudad : '')], ['Teléfono', E.telefono],
+      ['Contacto', [E.correo, E.correoComercial].filter(Boolean).map(esc).join('<br>'), true], ['Sitio web', E.web]];
+    var emp = el('<div class="wh-emp"><div class="wh-emp-g"><div><p class="wh-eb wh-eb--claro">Datos de la empresa</p><h2>' + htmlRico(T('cv.empresaTitulo')) + '</h2><p>' + htmlRico(T('cv.empresaLead')) + (E.whatsapp ? ' WhatsApp ' + esc(E.whatsapp) + '.' : '') + '</p></div>' +
+      '<dl>' + datos.filter(function(d){ return d[1]; }).map(function(d){ return '<dt>' + d[0] + '</dt><dd>' + (d[2] ? d[1] : esc(d[1])) + '</dd>'; }).join('') + '</dl></div></div>');
     c.appendChild(emp);
     if(desborda(c)){ emp.remove(); c = hoja(); c.appendChild(emp); }
 

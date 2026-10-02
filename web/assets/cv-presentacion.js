@@ -19,6 +19,11 @@
   // Años de experiencia exactos, calculados desde la fundación (assets/aniversario.js); cambian solos cada aniversario
   var ANIOS = window.icewellAniversario ? icewellAniversario.anios : new Date().getFullYear() - 2009;
   var LOGO = document.getElementById('tplLogo').innerHTML;
+  // Textos y datos de la empresa: assets/sitio-data.js (editables en /admin). H(k) = HTML seguro del texto k.
+  var IS = window.icewellSitio, D = IS.datos(), E = IS.empresa(), CF = D.cifras || {}, PR = D.presentacion || {};
+  function H(k){ return IS.html(IS.t(k) || ''); }
+  var FUNDACION = IS.valor('desde');
+  var PIE = esc(E.razonSocial || '') + ' · <b>' + esc(IS.campoEmpresa('webCorta')) + '</b> · ' + esc(E.correo || '');
   var ISO = document.getElementById('tplIso').innerHTML;
 
   // ---------- utilidades ----------
@@ -81,7 +86,7 @@
     var h = el('<section class="hoja">' +
       (cab ? '<div class="h-cab"><div class="h-cab__logo">' + LOGO + '</div><p class="h-cab__txt">' + esc(cab) + '</p></div>' : '') +
       '<div class="h-cuerpo"></div>' +
-      '<div class="h-pie"><span>Icewell SpA · <b>icewell.cl</b> · contacto@icewell.cl</span><span class="h-pie__n"></span></div></section>');
+      '<div class="h-pie"><span>' + PIE + '</span><span class="h-pie__n"></span></div></section>');
     montar(h);
     return { hoja: h, cuerpo: h.querySelector('.h-cuerpo') };
   }
@@ -98,38 +103,36 @@
     var h = el('<section class="hoja">' +
       '<div class="h-portada__iso">' + ISO + '</div>' +
       '<div class="h-portada__logo">' + LOGO + '</div>' +
-      '<h1 class="h-portada__t">Ingeniería y montaje<br>de sistemas HVAC</h1>' +
-      '<p class="h-portada__l">Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile.</p>' +
+      '<h1 class="h-portada__t">' + H('pres.portadaTitulo') + '</h1>' +
+      '<p class="h-portada__l">' + H('pres.portadaLead') + '</p>' +
       '<div class="h-portada__banda"><div class="tri"><i></i><i></i><i></i></div>' +
         '<div class="h-portada__datos">' +
-          '<div><p class="lbl">Desde</p><p>2009</p></div>' +
+          '<div><p class="lbl">Desde</p><p>' + FUNDACION + '</p></div>' +
           '<div><p class="lbl">Experiencia</p><p><span data-anios>' + ANIOS + '</span> años</p></div>' +
-          '<div><p class="lbl">Cobertura</p><p>Todo el país</p></div>' +
-          '<div><p class="lbl">Especialidad</p><p>Asesorías,<br>ingeniería y<br>montajes térmicos</p></div>' +
+          '<div><p class="lbl">Cobertura</p><p>' + H('pres.cobertura') + '</p></div>' +
+          '<div><p class="lbl">Especialidad</p><p>' + H('pres.especialidad') + '</p></div>' +
         '</div>' +
-        '<div class="h-portada__pie"><span>Presentación corporativa</span><span>Santiago · Chile</span></div>' +
+        '<div class="h-portada__pie"><span>Presentación corporativa</span><span>' + esc([E.ciudad, E.pais].filter(Boolean).join(' · ')) + '</span></div>' +
       '</div></section>');
     montar(h);
   }
 
   function hojaQuienes(montar){
     var h = nuevaHoja(montar, 'Quiénes somos'), c = h.cuerpo;
-    c.appendChild(encabezado('La empresa', 'Respuesta ágil y responsable<br>en climatización'));
-    c.appendChild(el('<p class="lead">Icewell SpA fue creada a principios de 2009 para responder de manera ágil y responsable a las crecientes necesidades del mercado de aire acondicionado, ventilación y calefacción (HVAC), de acuerdo con los nuevos estándares de calidad, tecnología y cumplimiento de objetivos.</p>'));
-    c.appendChild(el('<p class="lead" style="margin-top:4.3mm!important">La compañía está conformada por ingenieros civiles industriales e ingenieros mecánicos jóvenes, dinámicos y comprometidos con las necesidades de sus clientes. Cuentan con la experiencia acumulada durante más de 15 años trabajando para las principales empresas de climatización del país, ejecutando obras de relevancia y realizando proyectos de ingeniería e inspecciones técnicas en construcciones de diversos usos a lo largo de todo Chile.</p>'));
+    c.appendChild(encabezado('La empresa', H('pres.quienesTitulo')));
+    c.appendChild(el('<p class="lead">' + H('pres.quienes1') + '</p>'));
+    if(IS.t('pres.quienes2')) c.appendChild(el('<p class="lead" style="margin-top:4.3mm!important">' + H('pres.quienes2') + '</p>'));
     c.appendChild(el('<div class="kpis">' +
-      '<div class="kpi"><strong>2009</strong><span>Año de fundación</span></div>' +
+      '<div class="kpi"><strong>' + FUNDACION + '</strong><span>Año de fundación</span></div>' +
       '<div class="kpi"><strong data-anios>' + ANIOS + '</strong><span>Años de<br>experiencia</span></div>' +
-      '<div class="kpi"><strong>51</strong><span>Obras y proyectos<br>registrados</span></div>' +
-      '<div class="kpi"><strong>+170.000</strong><span>m² intervenidos en<br>obras destacadas</span></div></div>'));
+      '<div class="kpi"><strong>' + esc(CF.obras || '') + '</strong><span>Obras y proyectos<br>registrados</span></div>' +
+      '<div class="kpi"><strong>' + esc(CF.m2 || '') + '</strong><span>m² intervenidos en<br>obras destacadas</span></div></div>'));
     var cert = el('<div class="bloque-h2 bloque-h2--primero"><p class="eb">Certificaciones y estándares</p></div>');
-    cert.appendChild(el('<div class="chips">' + ['Proyectos con certificación LEED', 'Eficiencia energética', 'ERNC y solar térmica', 'Obras sobre 4.800 msnm']
-      .map(function(t){ return '<span class="chip">' + t + '</span>'; }).join('') + '</div>'));
+    cert.appendChild(el('<div class="chips">' + ((D.cv && D.cv.certificaciones) || [])
+      .map(function(t){ return '<span class="chip">' + IS.html(t) + '</span>'; }).join('') + '</div>'));
     c.appendChild(cert);
-    c.appendChild(el('<div class="caja caja-3">' +
-      '<div><p class="lbl">01 · Asesoría</p><p>Informes, evaluación técnico-económica e inspección técnica de obra</p></div>' +
-      '<div><p class="lbl">02 · Ingeniería</p><p>Proyectos de climatización, ventilación y calefacción</p></div>' +
-      '<div><p class="lbl">03 · Montaje</p><p>Suministro e instalación de sistemas HVAC</p></div></div>'));
+    c.appendChild(el('<div class="caja caja-3">' + (PR.caja || []).map(function(x){
+      return '<div><p class="lbl">' + esc(x.etiqueta) + '</p><p>' + IS.html(x.texto) + '</p></div>'; }).join('') + '</div>'));
   }
 
   // Van como <img src=data:…>: html2canvas no dibuja SVG en línea hechos solo de trazos (stroke); una imagen data: sí, y no "ensucia" el canvas en file://
@@ -140,17 +143,14 @@
   };
   function hojaServicios(montar){
     var h = nuevaHoja(montar, 'Servicios'), c = h.cuerpo;
-    c.appendChild(encabezado('Qué hacemos', 'Tres líneas de servicio,<br>un solo responsable'));
-    [['asesoria', 'Asesorías Térmicas', 'Informes a proyectos y evaluaciones técnico-económicas, inspecciones técnicas de obra, cálculos de cargas térmicas y consumo de ACS, entre otros.', ['Evaluación técnico-económica', 'Inspección técnica de obra (ITO)', 'Cargas térmicas y consumo ACS']],
-     ['ingenieria', 'Ingeniería', 'Elaboración de proyectos de climatización, ventilación y calefacción para el área comercial, residencial e industrial, con experiencia en eficiencia energética y uso de ERNC.', ['Ingeniería básica y de detalles', 'Eficiencia energética', 'Energías renovables no convencionales']],
-     ['montaje', 'Instalaciones', 'Desarrollo de montajes de diversos sistemas HVAC: sistemas de agua, expansión directa, refrigerante variable, volumen variable e instalaciones solares.', ['Suministro y montaje', 'Chiller, fan-coil y UMA', 'VRV / VRF y solar térmica']]
-    ].forEach(function(s){
-      c.appendChild(el('<article class="srv"><img class="srv__ico" alt="" src="data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ICONOS[s[0]]) + '"><h3>' + s[1] + '</h3><p>' + s[2] + '</p><div class="tags">' +
-        s[3].map(function(t){ return '<span class="tag">' + t + '</span>'; }).join('') + '</div></article>'));
+    c.appendChild(encabezado('Qué hacemos', H('pres.serviciosTitulo')));
+    (PR.servicios || []).forEach(function(s){
+      c.appendChild(el('<article class="srv"><img class="srv__ico" alt="" src="data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ICONOS[s.icono] || ICONOS.asesoria) + '"><h3>' + IS.html(s.titulo) + '</h3><p>' + IS.html(s.texto) + '</p><div class="tags">' +
+        (s.tags || []).map(function(t){ return '<span class="tag">' + IS.html(t) + '</span>'; }).join('') + '</div></article>'));
     });
     c.appendChild(el('<div class="caja valor"><h3>Propuesta de valor</h3>' +
-      '<p>Proyectamos, estudiamos y proponemos soluciones a los requerimientos de nuestros clientes, considerando las mejores alternativas de precios y equipos disponibles en el mercado, para acompañarlos en todas las etapas de ejecución de un proyecto, cumpliendo plazos, estándares de calidad y presupuestos de costos.</p>' +
-      '<div class="valor__4"><div>Eficiencia operacional</div><div>Máxima calidad</div><div>Innovación y desarrollo</div><div>Respuesta superior al cliente</div></div></div>'));
+      '<p>' + H('pres.valorTexto') + '</p>' +
+      '<div class="valor__4">' + (PR.valorPuntos || []).map(function(t){ return '<div>' + IS.html(t) + '</div>'; }).join('') + '</div></div>'));
   }
 
   // Conteo facetado: obras que habría eligiendo esa opción, con los OTROS filtros aplicados
@@ -238,8 +238,7 @@
   function flujoPortafolio(montar, recientes, destacados, st){
     var h = nuevaHoja(montar, 'Portafolio'), numHoja = 1, grid;
     tomarPre(h);
-    h.cuerpo.appendChild(encabezado('Portafolio', 'Proyectos',
-      'Obras de suministro y montaje en ejecución, recientes y destacadas, en usos privados, comerciales y públicos.'));
+    h.cuerpo.appendChild(encabezado('Portafolio', 'Proyectos', H('pres.portafolioLead')));
     function hojaSiguiente(){
       numHoja++;
       h = nuevaHoja(montar, 'Portafolio');
@@ -265,10 +264,8 @@
     }
     grupo('En ejecución y recientes', recientes);
     grupo('Proyectos destacados', destacados);
-    var azul = el('<div class="caja barra-azul">' +
-      '<div><p class="lbl">Modalidad</p><p>Suministro y montaje</p></div>' +
-      '<div><p class="lbl">Usos</p><p>Privado, comercial y público</p></div>' +
-      '<div><p class="lbl">Ubicación</p><p>Región Metropolitana y regiones</p></div></div>');
+    var azul = el('<div class="caja barra-azul">' + (PR.barraAzul || []).map(function(x){
+      return '<div><p class="lbl">' + esc(x.etiqueta) + '</p><p>' + IS.html(x.texto) + '</p></div>'; }).join('') + '</div>');
     h.cuerpo.appendChild(azul);
     if(desborda(h.cuerpo)) azul.remove();
   }
@@ -302,18 +299,18 @@
 
   function hojaDatos(montar){
     var h = el('<section class="hoja">' +
-      '<div class="h-datos__top"><div class="h-datos__iso">' + ISO + '</div><h2 class="h-datos__t">Conversemos su<br>próximo proyecto</h2></div>' +
+      '<div class="h-datos__top"><div class="h-datos__iso">' + ISO + '</div><h2 class="h-datos__t">' + H('pres.datosTitulo') + '</h2></div>' +
       '<div class="tri h-datos__tri"><i></i><i></i><i></i></div>' +
       '<div class="h-datos__tabla"><p class="eb">Datos de la empresa</p><dl class="dl">' +
-        '<dt>Razón social</dt><dd>Icewell SpA</dd>' +
-        '<dt>Giro</dt><dd>Asesorías, ingeniería y montajes térmicos</dd>' +
-        '<dt>RUT</dt><dd>76.059.117-3</dd>' +
-        '<dt>Dirección</dt><dd>Román Díaz #1363, Providencia<small>Santiago, Chile</small></dd>' +
-        '<dt>Teléfono</dt><dd>+56 2 2847 0610</dd>' +
-        '<dt>Contacto</dt><dd>contacto@icewell.cl<small>gonzalo.diaz@icewell.cl</small></dd>' +
-        '<dt>Sitio web</dt><dd>www.icewell.cl</dd>' +
+        '<dt>Razón social</dt><dd>' + esc(E.razonSocial || '') + '</dd>' +
+        (E.giro ? '<dt>Giro</dt><dd>' + esc(E.giro) + '</dd>' : '') +
+        (E.rut ? '<dt>RUT</dt><dd>' + esc(E.rut) + '</dd>' : '') +
+        '<dt>Dirección</dt><dd>' + esc(IS.campoEmpresa('direccionCompleta')) + '<small>' + esc(IS.campoEmpresa('ciudadPais')) + '</small></dd>' +
+        '<dt>Teléfono</dt><dd>' + esc(E.telefono || '') + '</dd>' +
+        '<dt>Contacto</dt><dd>' + esc(E.correo || '') + (E.correoComercial ? '<small>' + esc(E.correoComercial) + '</small>' : '') + '</dd>' +
+        (E.web ? '<dt>Sitio web</dt><dd>' + esc(E.web) + '</dd>' : '') +
       '</dl></div>' +
-      '<div class="h-pie"><span>Icewell SpA · <b>icewell.cl</b> · contacto@icewell.cl</span><span class="h-pie__n"></span></div></section>');
+      '<div class="h-pie"><span>' + PIE + '</span><span class="h-pie__n"></span></div></section>');
     montar(h);
   }
 
@@ -349,9 +346,10 @@
       var recientes = lista.filter(function(p){ return p.anio >= 2023 && !p.destacado; })
         .sort(function(a, b){ return (b.estado === 'ejecucion') - (a.estado === 'ejecucion') || b.anio - a.anio; });
       var destacados = lista.filter(function(p){ return p.destacado; }).sort(function(a, b){ return b.anio - a.anio || b.m2 - a.m2; });
-      var tray = lista.filter(function(p){ return p.anio < 2023 && !p.destacado; }).sort(function(a, b){ return b.anio - a.anio; });
+      // Trayectoria = TODAS las obras (regla de Manuel, paridad con cv.html: las fichas de arriba también se repiten acá)
+      var tray = lista.slice().sort(function(a, b){ return b.anio - a.anio; });
       flujoPortafolio(montar, recientes, destacados, vacio);
-      if(tray.length) flujoTrayectoria(montar, tray, 'Proyectos y montajes desarrollados por Icewell SpA a lo largo de Chile.');
+      if(tray.length) flujoTrayectoria(montar, tray, H('pres.trayectoriaNota'));
     }
     PRE = null;
     hojaDatos(montar);

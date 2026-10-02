@@ -75,7 +75,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 .cover-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px 26px; padding-top: 22px; border-top: 1px solid rgba(17,37,54,0.14); }
 .kpi strong { display: block; margin-bottom: 10px; color: var(--blue); font: 800 clamp(44px, 4.6vw, 66px)/0.8 var(--display); letter-spacing: -0.03em; }
-.kpi span { display: block; max-width: 210px; color: var(--ink-soft); font-size: 12px; line-height: 1.35; text-transform: uppercase; letter-spacing: 0.04em; }
+.kpi > span { display: block; max-width: 210px; color: var(--ink-soft); font-size: 12px; line-height: 1.35; text-transform: uppercase; letter-spacing: 0.04em; }
 
 /* ---------- servicios ---------- */
 .services { padding: 80px 0; color: #effbff; background: var(--dark); }
@@ -266,7 +266,7 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
   .cover-lead { margin: 12px 0 0; font-size: 12.5px; }
   .kpis { gap: 14px; }
   .kpi strong { font-size: 34px; }
-  .kpi span { font-size: 9.5px; }
+  .kpi > span { font-size: 9.5px; }
   .services, .company { padding: 22px 18px; border-radius: 6px; }
   .services { margin-bottom: 16px; }
   .services-head { margin-bottom: 14px; }
@@ -335,15 +335,15 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
   <img src="assets/icewell-logo.svg" alt="Icewell">
   <div><strong>Currículum Icewell</strong><span id="printFilter">Todas las obras</span></div>
 </div>
-<div class="print-only print-foot"><span>Icewell SpA · Román Díaz 1363, Providencia · +56 2 2847 0610 · contacto@icewell.cl</span><span>www.icewell.cl</span></div>
+<div class="print-only print-foot"><span><span data-empresa="razonSocial">Icewell SpA</span> · <span data-empresa="direccionCompleta">Román Díaz 1363, Providencia</span> · <span data-empresa="telefono">+56 2 2847 0610</span> · <span data-empresa="correo">contacto@icewell.cl</span></span><span data-empresa="web">www.icewell.cl</span></div>
 
 <main>
   <section class="cover">
     <div class="wrap cover-layout">
       <div>
-        <p class="eyebrow">Currículum corporativo · Icewell SpA</p>
-        <h1>Ingeniería y montaje de sistemas <em>HVAC.</em></h1>
-        <p class="cover-lead">Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde 2009.</p>
+        <p class="eyebrow" data-t="cv.eyebrow">Currículum corporativo · Icewell SpA</p>
+        <h1 data-t="cv.titulo">Ingeniería y montaje de sistemas <em>HVAC.</em></h1>
+        <p class="cover-lead" data-t="cv.lead">Asesorías térmicas, ingeniería e instalaciones de climatización, ventilación y calefacción para proyectos en todo Chile. Un equipo de ingenieros civiles industriales y mecánicos con experiencia en obras de relevancia desde 2009.</p>
         <div class="cover-buttons">
           <a class="btn btn--primary" href="#obras">Explorar obras por sector
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
@@ -353,9 +353,9 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
       </div>
       <div class="kpis" aria-label="Cifras de Icewell">
         <div class="kpi"><strong data-anios>17</strong><span>Años de experiencia · desde <span data-desde>2009</span></span></div>
-        <div class="kpi"><strong>51</strong><span>Obras y proyectos registrados</span></div>
-        <div class="kpi"><strong>+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
-        <div class="kpi"><strong>12</strong><span>Regiones, de Tarapacá a Los Lagos</span></div>
+        <div class="kpi"><strong data-cifra="obras">51</strong><span>Obras y proyectos registrados</span></div>
+        <div class="kpi"><strong data-cifra="m2">+170.000</strong><span>m² intervenidos en obras destacadas</span></div>
+        <div class="kpi"><strong data-cifra="regiones">12</strong><span>Regiones, <span data-cifra="regionesTexto">de Tarapacá a Los Lagos</span></span></div>
       </div>
     </div>
   </section>
@@ -363,10 +363,10 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
   <section class="services">
     <div class="wrap">
       <div class="services-head">
-        <div><p class="eyebrow eyebrow--light">Qué hacemos</p><h2>Tres líneas de servicio, un solo responsable.</h2></div>
-        <p>Proyectamos, estudiamos y proponemos soluciones considerando las mejores alternativas de precios y equipos del mercado, cumpliendo plazos, estándares de calidad y presupuestos.</p>
+        <div><p class="eyebrow eyebrow--light">Qué hacemos</p><h2 data-t="cv.serviciosTitulo">Tres líneas de servicio, un solo responsable.</h2></div>
+        <p data-t="cv.serviciosLead">Proyectamos, estudiamos y proponemos soluciones considerando las mejores alternativas de precios y equipos del mercado, cumpliendo plazos, estándares de calidad y presupuestos.</p>
       </div>
-      <div class="service-grid">
+      <div class="service-grid" data-lista="cv-servicios">
         <article class="service">
           <span>01 · Asesoría</span><h3>Asesorías térmicas</h3>
           <p>Informes a proyectos y evaluaciones técnico-económicas, inspecciones técnicas de obra, cálculos de cargas térmicas y consumo de ACS.</p>
@@ -389,8 +389,8 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
   <section class="explorer" id="obras">
     <div class="wrap">
       <div class="explorer-head">
-        <div><p class="eyebrow">Portafolio</p><h2>Obras por sector.</h2></div>
-        <p>Elige uno o más sectores, un período o una región. El PDF se descarga con lo que tengas seleccionado.</p>
+        <div><p class="eyebrow">Portafolio</p><h2 data-t="cv.obrasTitulo">Obras por sector.</h2></div>
+        <p data-t="cv.obrasLead">Elige uno o más sectores, un período o una región. El PDF se descarga con lo que tengas seleccionado.</p>
       </div>
 
       <div class="filters" role="group" aria-label="Filtros de obras">
@@ -422,8 +422,8 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
     <div class="wrap extras-grid">
       <div>
         <p class="eyebrow">Certificaciones y estándares</p>
-        <h2>Obras que exigen más.</h2>
-        <div class="cert-list">
+        <h2 data-t="cv.certTitulo">Obras que exigen más.</h2>
+        <div class="cert-list" data-lista="cv-cert">
           <div>Proyectos con certificación LEED</div>
           <div>Eficiencia energética</div>
           <div>ERNC y solar térmica</div>
@@ -432,8 +432,8 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
       </div>
       <div>
         <p class="eyebrow">Cobertura territorial</p>
-        <h2>De Tarapacá a Los Lagos.</h2>
-        <p class="note">Regiones con proyectos y montajes de Icewell. Toca una para ver sus obras.</p>
+        <h2 data-t="cv.coberturaTitulo">De Tarapacá a Los Lagos.</h2>
+        <p class="note" data-t="cv.coberturaNota">Regiones con proyectos y montajes de Icewell. Toca una para ver sus obras.</p>
         <div class="chips chips--plain" id="chipsCobertura"></div>
       </div>
     </div>
@@ -443,18 +443,18 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
     <div class="wrap company-layout">
       <div>
         <p class="eyebrow eyebrow--light">Datos de la empresa</p>
-        <h2>Conversemos su próximo proyecto.</h2>
-        <p>Cuéntenos el alcance. Le responderá un ingeniero.</p>
-        <a class="btn btn--light" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20vi%20su%20curr%C3%ADculum%20y%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
+        <h2 data-t="cv.empresaTitulo">Conversemos su próximo proyecto.</h2>
+        <p data-t="cv.empresaLead">Cuéntenos el alcance. Le responderá un ingeniero.</p>
+        <a class="btn btn--light" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20vi%20su%20curr%C3%ADculum%20y%20quiero%20cotizar%20un%20proyecto" data-wa="cv" target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
       </div>
       <dl>
-        <dt>Razón social</dt><dd>Icewell SpA</dd>
-        <dt>Giro</dt><dd>Asesorías, ingeniería y montajes térmicos</dd>
-        <dt>RUT</dt><dd>76.059.117-3</dd>
-        <dt>Dirección</dt><dd>Román Díaz #1363, Providencia<br>Santiago, Chile</dd>
-        <dt>Teléfono</dt><dd><a href="tel:+56228470610">+56 2 2847 0610</a></dd>
-        <dt>Contacto</dt><dd><a href="mailto:contacto@icewell.cl">contacto@icewell.cl</a><br><a href="mailto:gonzalo.diaz@icewell.cl">gonzalo.diaz@icewell.cl</a></dd>
-        <dt>Sitio web</dt><dd>www.icewell.cl</dd>
+        <dt>Razón social</dt><dd data-empresa="razonSocial">Icewell SpA</dd>
+        <dt>Giro</dt><dd data-empresa="giro">Asesorías, ingeniería y montajes térmicos</dd>
+        <dt>RUT</dt><dd data-empresa="rut">76.059.117-3</dd>
+        <dt>Dirección</dt><dd><span data-empresa="direccionCompleta">Román Díaz #1363, Providencia</span><br><span data-empresa="ciudadPais">Santiago, Chile</span></dd>
+        <dt>Teléfono</dt><dd><a href="tel:+56228470610" data-empresa="telefono">+56 2 2847 0610</a></dd>
+        <dt>Contacto</dt><dd><a href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a><br><a href="mailto:gonzalo.diaz@icewell.cl" data-empresa="correoComercial" data-ocultar-vacio>gonzalo.diaz@icewell.cl</a></dd>
+        <dt>Sitio web</dt><dd data-empresa="web">www.icewell.cl</dd>
       </dl>
     </div>
   </section>
@@ -462,19 +462,22 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
 
 <footer class="cv-footer">
   <div class="wrap">
-    <p>© <span data-anio-actual>2026</span> Icewell SpA</p>
+    <p>© <span data-anio-actual>2026</span> <span data-empresa="razonSocial">Icewell SpA</span></p>
     <a href="index.html">icewell · sitio principal</a>
   </div>
 </footer>
 
 <div class="pdf-toasts" id="pdfToasts" aria-live="polite" aria-label="Descargas de PDF"></div>
 
-<a class="wa-float" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
+<a class="wa-float" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39c1.44.79 3.06 1.2 4.71 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m0 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.82c0 4.55-3.7 8.24-8.24 8.24-1.44 0-2.86-.38-4.1-1.1l-.29-.17-3.14.82.84-3.06-.19-.32a8.19 8.19 0 01-1.26-4.4c0-4.55 3.7-8.25 8.24-8.25M8.53 6.85c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.69 2.7 4.17 3.68 2.06.82 2.48.66 2.93.61.45-.04 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86-.2-.48-.4-.42-.55-.42h-.47z"/></svg>
 </a>
 
+<script src="assets/borrador.js"></script>
+<script src="assets/sitio-data.js"></script>
 <script src="assets/aniversario.js"></script>
 <script src="assets/cv-data.js"></script>
+<script src="assets/sitio-render.js"></script>
 <script src="assets/pdf-cola.js"></script>
 <script>
 (function(){
@@ -496,7 +499,9 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
     p._periodo = periodoDe(p);
     p._texto = norm([p.nombre, p.lugar, p.uso, p.sistemas, p.anio, p.tags.join(' '), p.trabajo || '', p.detalle || '',
       p.sectores.map(function(s){ return SEC[s]; }).join(' '), p.regiones.map(function(r){ return REG[r]; }).join(' ')].join(' '));
-    p._destacado = !!(p.foto || p.m2 || p.anio >= 2023);
+    // Regla de Manuel: la tarjeta necesita foto. Las sin foto quedan solo en Trayectoria; si después
+    // se les agrega foto, aparecen también arriba (Trayectoria lista TODAS las obras).
+    p._destacado = !!p.foto;
     p._id = PROYECTOS.indexOf(p);
   });
 
@@ -641,11 +646,11 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.92; lette
         lista.slice().sort(orden).map(function(p, i){ return cardHtml(p, i); }).join('') + '</div>';
     } else {
       var dest = lista.filter(function(p){ return p._destacado; }).sort(orden);
-      var resto = lista.filter(function(p){ return !p._destacado; });
+      var resto = lista;   // Trayectoria = todas las obras, con y sin foto
       if(dest.length) out += '<p class="result-title">Obras destacadas y recientes · ' + dest.length + '</p><div class="card-grid">' + dest.map(function(p, i){ return cardHtml(p, i); }).join('') + '</div>';
       if(resto.length){
         var anios = {}; resto.forEach(function(p){ (anios[p.anio] = anios[p.anio] || []).push(p); });
-        out += '<p class="result-title">Trayectoria · ' + resto.length + ' obras más</p>';
+        out += '<p class="result-title">Trayectoria · ' + resto.length + (resto.length === 1 ? ' obra' : ' obras') + '</p>';
         Object.keys(anios).sort(function(a, b){ return b - a; }).forEach(function(a){
           out += '<div class="year-block"><h3>' + a + '</h3><div class="rows">' + anios[a].map(function(p){
             return '<div class="row" data-id="' + p._id + '"><h4>' + esc(p.nombre) + '</h4><span class="row-meta">' + metaTxt(p) + '</span><p>' + lugarHtml(p) + ' · ' + esc(p.sistemas) + '</p></div>';

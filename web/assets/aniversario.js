@@ -2,7 +2,7 @@
    ICEWELL — Años de experiencia automáticos + tema de aniversario
    Portado de cuvolt/proyecto/assets/aniversario.js. Lo usan index.html y cv.html.
 
-   ÚNICO dato a mantener: la fecha de fundación (abajo).
+   ÚNICO dato a mantener: la fecha de fundación (panel /admin → Empresa; llega por sitio-data.js).
    - Los años cambian solos el día exacto del aniversario.
    - Desde ese día y durante 1 mes (hasta el mismo día del mes siguiente,
      sin incluirlo) la página muestra el tema de aniversario: modal de bienvenida
@@ -15,8 +15,11 @@
      Botón flotante 'Vista previa · Aniversario' (siempre visible mientras MOSTRAR_BOTON = true; ?preview=0 lo oculta)
    ========================================================================== */
 
-const MOSTRAR_BOTON = true;              // botón 'Vista previa · Aniversario' abajo al centro (false al publicar)
-const ICEWELL_FUNDACION = '2009-01-01'; // ⚠ PLACEHOLDER — el PDF solo dice "principios de 2009"; reemplazar por la fecha real (aaaa-mm-dd)
+// Ambos datos se editan en el panel (/admin → Empresa → Configuración) y llegan en assets/sitio-data.js,
+// que debe cargarse ANTES que este archivo. Los valores de acá son solo el respaldo si falta.
+const _CFG_SITIO = (window.ICEWELL_SITIO && window.ICEWELL_SITIO.config) || {};
+const MOSTRAR_BOTON = _CFG_SITIO.botonAniversario != null ? !!_CFG_SITIO.botonAniversario : true;   // botón 'Vista previa · Aniversario' (false al publicar)
+const ICEWELL_FUNDACION = /^\d{4}-\d{2}-\d{2}$/.test(_CFG_SITIO.fundacion || '') ? _CFG_SITIO.fundacion : '2009-01-01'; // ⚠ placeholder: el PDF solo dice "principios de 2009"
 
 (function(){
   const [FY, FM, FD] = ICEWELL_FUNDACION.split('-').map(Number);

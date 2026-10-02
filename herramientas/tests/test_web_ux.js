@@ -1,7 +1,7 @@
 // Mejoras de experiencia llevadas a cv.html (versión web)
 const { JSDOM } = require('jsdom');
 const fs = require('fs'), path = require('path');
-const WEB = 'C:/Users/MANUEL MERY/Desktop/icewell/proyecto/web';
+const WEB = path.join(__dirname, '../../web');
 let fallas = 0;
 function ok(c, m){ console.log((c ? 'OK   ' : 'FAIL ') + m); if(!c) fallas++; }
 let html = fs.readFileSync(path.join(WEB, 'cv.html'), 'utf8')
@@ -12,10 +12,11 @@ const dom = new JSDOM(html, { url: 'http://localhost/cv.html', runScripts: 'dang
 const w = dom.window, d = w.document;
 const P = w.eval('PROYECTOS');
 
-// sin filtro: tarjetas (foto, m² o reciente) + trayectoria en lista
+// sin filtro: tarjetas = obras con foto; Trayectoria = TODAS (una obra con foto sale en los dos lados)
 const cards0 = d.querySelectorAll('#results .card').length, rows0 = d.querySelectorAll('#results .row').length;
-ok(cards0 + rows0 === P.length && rows0 > 0, `sin filtro: ${cards0} tarjetas + ${rows0} filas = ${P.length}`);
-ok([...d.querySelectorAll('#results [data-id]')].length === P.length, 'todas las obras llevan data-id');
+const conFoto = P.filter(p => p.foto).length;
+ok(cards0 === conFoto && rows0 === P.length, `sin filtro: ${cards0} tarjetas (con foto: ${conFoto}) + ${rows0} filas (todas: ${P.length})`);
+ok(new Set([...d.querySelectorAll('#results .row[data-id]')].map(n => n.dataset.id)).size === P.length, 'todas las obras llevan data-id en Trayectoria');
 
 // etiqueta Público/Privado según p.cliente
 const malas = [...d.querySelectorAll('#results .card')].filter(c => { const p = P[+c.dataset.id]; return c.querySelector('.card-cli').textContent !== (p.cliente === 'Público' ? 'Público' : 'Privado'); });
