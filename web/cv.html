@@ -204,8 +204,6 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.98; lette
 .cv-footer a:hover { color: #fff; }
 .credito a { color: rgba(241,244,247,0.92); border-bottom: 1px solid rgba(241,244,247,0.3); }
 .red-li { display: inline-flex; align-items: center; gap: 8px; }
-.dl-fila { display: contents; }   /* dt + dd juntos, para mostrarlos/ocultarlos de una vez (data-redes) */
-.dl-fila[hidden] { display: none; }
 .red-li svg { flex: none; }
 
 /* ---------- WhatsApp (patrón cuvolt) ---------- */
@@ -469,11 +467,10 @@ h1, h2 { font-family: var(--display); font-weight: 800; line-height: 0.98; lette
         <dt>Razón social</dt><dd data-empresa="razonSocial">Icewell SpA</dd>
         <dt>Giro</dt><dd data-empresa="giro">Asesorías, ingeniería y montajes térmicos</dd>
         <dt>RUT</dt><dd data-empresa="rut">76.059.117-3</dd>
-        <dt>Dirección</dt><dd><span data-empresa="direccionCompleta">Román Díaz #1363, Providencia</span><br><span data-empresa="ciudadPais">Santiago, Chile</span></dd>
+        <dt>Dirección</dt><dd><a data-mapa href="https://www.google.com/maps/dir/?api=1&amp;destination=Rom%C3%A1n%20D%C3%ADaz%201363%2C%20Providencia%2C%20Santiago%2C%20Chile" target="_blank" rel="noopener"><span data-empresa="direccionCompleta">Román Díaz #1363, Providencia</span><br><span data-empresa="ciudadPais">Santiago, Chile</span></a></dd>
         <dt>Teléfono</dt><dd><a href="tel:+56228470610" data-empresa="telefono">+56 2 2847 0610</a></dd>
         <dt>Contacto</dt><dd><a href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a><br><a href="mailto:gonzalo.diaz@icewell.cl" data-empresa="correoComercial" data-ocultar-vacio>gonzalo.diaz@icewell.cl</a></dd>
         <dt>Sitio web</dt><dd data-empresa="web">www.icewell.cl</dd>
-        <div class="dl-fila" data-redes hidden><dt>LinkedIn</dt><dd><a class="red-li" data-red="linkedin" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Icewell en LinkedIn</a></dd></div>
       </dl>
     </div>
   </section>

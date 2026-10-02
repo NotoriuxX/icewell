@@ -125,7 +125,7 @@
     T(s, 'Texto', 'contacto.texto', { multi: true, max: 300 });
     T(s, 'Botón del formulario', 'contacto.formBoton', { max: 40, ayuda: 'Abre el formulario paso a paso. Las solicitudes llegan al correo de la empresa (Empresa y contacto) y quedan en la pestaña Solicitudes.' });
     T(s, 'Lema del pie de página', 'footer.lema', { max: 100 });
-    F.nota(s, 'Dirección, teléfono, correo, WhatsApp y redes se editan en «Empresa y contacto» y cambian en todas las páginas y los PDF.');
+    F.nota(s, 'Dirección, teléfono, correo y WhatsApp se editan en «Empresa y contacto» y cambian en todas las páginas y los PDF.');
 
     s = F.seccion(p, 'Google y redes sociales (SEO)', { clave: 'ini-seo', abierta: false, ayuda: 'Lo que aparece en la pestaña del navegador y en los resultados de Google.' });
     F.texto(s, 'Título de la página', d.seo, 'titulo', { max: 90, ruta: 'seo:titulo', ayuda: 'Ideal: menos de 60 caracteres.' });
@@ -229,11 +229,6 @@
     F.texto(s, 'Desde la página principal y el botón flotante', e.wa, 'cotizar', { multi: true, max: 300 });
     F.texto(s, 'Desde el currículum', e.wa, 'cv', { multi: true, max: 300 });
     F.texto(s, 'Desde la presentación', e.wa, 'presentacion', { multi: true, max: 300 });
-
-    s = F.seccion(p, 'Redes sociales', { clave: 'emp-redes', abierta: false, ayuda: 'Pega la dirección completa (https://…). Las vacías no se muestran.' });
-    [['linkedin', 'LinkedIn'], ['instagram', 'Instagram'], ['facebook', 'Facebook'], ['youtube', 'YouTube']].forEach(function(r){
-      F.texto(s, r[1], e.redes, r[0], { max: 300, tipoInput: 'url', placeholder: 'https://', ruta: 'empresa:redes.' + r[0] });
-    });
 
     s = F.seccion(p, 'Datos legales', { clave: 'emp-legal', abierta: false });
     g = F.grilla(s);

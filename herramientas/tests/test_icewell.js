@@ -9,7 +9,9 @@ function ok(cond, msg){ console.log((cond ? 'OK   ' : 'FAIL ') + msg); if(!cond)
 function cargar(archivo, query, hash){
   let html = fs.readFileSync(path.join(WEB, archivo), 'utf8');
   html = html.replace(/<script src="(assets\/[^"]+)"><\/script>/g, (m, src) =>
-    '<script>' + fs.readFileSync(path.join(WEB, src), 'utf8') + '\n</script>');
+    '<script>' + fs.readFileSync(path.join(WEB, src), 'utf8') +
+    // el botón de vista previa es una opción del panel (puede estar apagado al publicar): la prueba lo enciende
+    (src === 'assets/sitio-data.js' ? '\nICEWELL_SITIO.config.botonAniversario = true;' : '') + '\n</script>');
   html = html.replace(/<link[^>]+fonts[^>]*>/g, '');
   const errores = [];
   const dom = new JSDOM(html, {
@@ -40,7 +42,7 @@ function cargar(archivo, query, hash){
   ok(m2.includes(51) && m2.includes(170000), 'cifras PDF 51 y 170.000 en hero: ' + m2.join(','));
   ok(!/\+150|400k|400\.000/.test(d.body.innerHTML), 'sin cifras viejas (+150 / 400k)');
   ok(d.querySelector('.wa-float svg path') && !d.querySelector('.whatsapp-float'), 'WhatsApp flotante nuevo presente');
-  ok(d.querySelectorAll('a[href="curriculum"]').length >= 4, 'links a /curriculum, sin .html (nav, menú móvil, footer, CTA)');
+  ok(d.querySelectorAll('a[href="curriculum"]').length >= 3, 'links a /curriculum, sin .html (nav, menú móvil, CTA; el pie ya no lleva enlaces)');
   ok(d.querySelectorAll('.sector-links a[href^="curriculum#sector="]').length === 10, '10 links de sector al CV');
   ok(!d.documentElement.classList.contains('aniversario'), 'sin tema aniversario el 27-sep');
 }

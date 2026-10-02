@@ -203,12 +203,16 @@ Pedidos de Manuel:
 - **Pruebas:** `test_api.php` (envío válido, aviso solo a la empresa, trampa, tiempo, validaciones, 429, permisos y CSRF) y `test_sitio.js` (los 5 pasos, validaciones, texto sin HTML, envío y respaldo `mailto`).
 
 ### Lo demás
-- **LinkedIn de la empresa:** https://www.linkedin.com/company/icewell-cuvolt/ en `empresa.redes.linkedin`. Se ve en Contacto y en el pie del sitio, y en Datos de la empresa del CV. Lo agrega `Contenido` con el esquema 3, solo si estaba vacío, así llega también al panel que ya está en uso.
+- **Redes sociales: fuera del sitio (Manuel, 02-oct).** Se sacaron LinkedIn, Instagram, Facebook y YouTube del index (Contacto y pie), del CV y la sección «Redes sociales» del panel. `Contenido.php` sigue aceptando `empresa.redes`, así los datos guardados no se rompen (el LinkedIn de la empresa sigue en la BD por si vuelve).
+- **Contacto (02-oct):** 2 botones, WhatsApp + «Cuéntanos tu proyecto» (con el estilo claro `btn-ghost-light` que tenía el del correo). Se sacó el botón del correo (el correo sigue en la ficha de datos). La dirección es un enlace `data-mapa` → Google Maps «cómo llegar» (`sitio-render.js` → `mapaUrl()`, arma la dirección con dirección + comuna + ciudad + país del panel). En el CV también.
+- **Pie (02-oct):** solo © + crédito, centrado (`.footer-legal`). Se sacaron el logo, los enlaces y «Cuéntanos tu proyecto →».
 - **Crédito:** «Diseño y desarrollo: Manuel Mery» va en el pie del sitio y del CV, con enlace a su LinkedIn. Es fijo en el HTML: no se edita desde el panel.
 - **Menú:**
   - el enlace de la sección en pantalla queda en blanco pleno, con una barra cian que crece desde el centro y `aria-current`; en celular lleva un punto cian;
+  - el activo **no** cambia `font-weight` (ensanchaba el texto y corría a los vecinos); se marca con `text-shadow` fino, que no cambia el ancho;
   - en el hero no se marca nada;
   - «Currículum» va como botón con borde cian e ícono, al final del menú, porque abre otra página.
+- **Hero:** se sacó el degradado azul y oscuro sobre la foto (`.frame::after`, 02-oct). La foto sigue con su `filter` (algo desaturada y oscurecida).
 - **El botón «Vista previa · Aniversario»** ya no tapa el final del pie: agrega espacio abajo solo mientras se muestra.
 
 ## Direcciones limpias (02-oct)

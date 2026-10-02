@@ -92,6 +92,10 @@
     var e = empresa(), msg = (e.wa && e.wa[contexto]) || '';
     return 'https://wa.me/' + soloDigitos(e.whatsapp) + (msg ? '?text=' + encodeURIComponent(msg) : '');
   }
+  function mapaUrl(){
+    var e = empresa(), dir = [e.direccion, e.comuna, e.ciudad, e.pais].filter(Boolean).join(', ');
+    return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(dir);
+  }
   // campos derivados para no repetir la dirección armada en cada página
   function campoEmpresa(k){
     var e = empresa();
@@ -332,14 +336,8 @@
       while(cont.firstChild) cont.removeChild(cont.firstChild);
       f(doc, s, cont);
     });
-    // Redes sociales: se muestran solo las que tienen dirección
-    raiz.querySelectorAll('[data-red]').forEach(function(a){
-      var u = (empresa().redes || {})[a.getAttribute('data-red')];
-      if(u && /^https:\/\//i.test(u)){ a.href = u; a.hidden = false; } else { a.hidden = true; a.removeAttribute('href'); }
-    });
-    raiz.querySelectorAll('[data-redes]').forEach(function(c){
-      c.hidden = !c.querySelector('[data-red]:not([hidden])');
-    });
+    // Dirección → Google Maps "cómo llegar" (sigue la dirección que se edita en el panel)
+    raiz.querySelectorAll('[data-mapa]').forEach(function(a){ a.setAttribute('href', mapaUrl()); });
     // <title> y descripción solo en la página que lo pide (<html data-seo>)
     if(doc.documentElement.hasAttribute('data-seo') && s.seo){
       if(s.seo.titulo) doc.title = plano(s.seo.titulo);

@@ -39,7 +39,11 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
   ok(cards.every(c => c.querySelector('img').getAttribute('src').startsWith('assets/')), 'cada tarjeta de portada tiene foto');
   ok(d.querySelectorAll('.marquee-track img').length === S.inicio.socios.length * 2, 'socios: la marquesina se duplica sola (' + d.querySelectorAll('.marquee-track img').length + ')');
   ok(d.querySelectorAll('.marquee-track img[aria-hidden="true"]').length === S.inicio.socios.length, 'la copia de la marquesina va oculta a lectores de pantalla');
-  ok([...d.querySelectorAll('.team-initials')].map(e => e.textContent).join() === 'AM,FM,GD,JC', 'equipo: iniciales calculadas (AM, FM, GD, JC)');
+  { // iniciales solo para quien no tiene foto (hoy: Andrés Mora → AM)
+    const ini = n => n.split(/\s+/).slice(0, 2).map(x => x[0]).join('').toUpperCase();
+    const esperadas = S.inicio.equipo.filter(x => !x.foto).map(x => ini(x.nombre)).join();
+    ok([...d.querySelectorAll('.team-initials')].map(e => e.textContent).join() === esperadas, 'equipo: iniciales para quien no tiene foto (' + esperadas + ')');
+  }
   // Diseño 2 (02-oct): lema, 4 cifras en el hero y las 4 vistas del equipo desde los mismos datos
   ok(/^Somos confianza y profesionalismo para tus proyectos de climatización\.$/.test(texto(d.querySelector('h1'))), 'hero: el lema nuevo en el h1');
   ok(/ágil y responsable/.test(texto(d.querySelector('.hero-lead'))), 'hero: la bajada');
@@ -69,7 +73,13 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
   ok(/51 obras registradas en 12 regiones/.test(texto(d.querySelector('.timeline'))), 'línea de tiempo con cifras automáticas');
   ok(d.querySelectorAll('.service-list .service-card').length === 3 && d.querySelectorAll('.method-list .method-item').length === 3, 'servicios y método desde los datos');
   ok(d.querySelector('.hero-section h1 em').textContent === 'confianza y profesionalismo', 'título del hero con énfasis (lema)');
-  ok(!d.querySelector('.contact-redes').hidden && d.querySelector('.contact-redes [data-red="instagram"]').hidden, 'redes: se ve LinkedIn (cargado) y no las que están vacías');
+  ok(!d.querySelector('[data-red], [data-redes], .contact-redes, .footer-redes'), 'sin redes sociales en el index (pedido Manuel 02-oct)');
+  const acc = d.querySelectorAll('.contact-actions > a, .contact-actions > button');
+  ok(acc.length === 2 && !d.querySelector('.contact-actions a[href^="mailto:"]') && d.querySelector('.contact-actions [data-abrir-formulario]').classList.contains('btn-ghost-light'), 'Contacto: 2 botones (WhatsApp + formulario con el estilo claro), sin el de correo');
+  const mapa = d.querySelector('.contact-data a[data-mapa]');
+  const dirMapa = [S.empresa.direccion, S.empresa.comuna, S.empresa.ciudad, S.empresa.pais].filter(Boolean).join(', ');
+  ok(mapa && mapa.href === 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(dirMapa) && mapa.target === '_blank', 'Dirección abre Google Maps «cómo llegar»');
+  ok(!d.querySelector('.footer-form, .footer-acciones') && d.querySelector('.site-footer .footer-legal .credito'), 'pie en una barra: sin botón de formulario, con el crédito');
   ok([...d.querySelectorAll('a[data-wa="cotizar"]')].every(a => a.href === 'https://wa.me/56964074519?text=' + encodeURIComponent(S.empresa.wa.cotizar)), 'links de WhatsApp armados con el número y el mensaje de los datos');
 }
 
@@ -77,9 +87,7 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
 (async () => {
   const { w, d, errores } = cargar('index.html');
   ok(!errores.length, 'index (formulario) sin errores ' + errores.join(' | '));
-  // LinkedIn de la empresa y crédito
-  const li = [...d.querySelectorAll('a[data-red="linkedin"]')];
-  ok(li.length === 2 && li.every(a => !a.hidden && a.href === 'https://www.linkedin.com/company/icewell-cuvolt/'), 'LinkedIn de la empresa en Contacto y en el pie');
+  // crédito (las redes de la empresa se sacaron del sitio)
   const cred = d.querySelector('.site-footer .credito a');
   ok(cred && cred.textContent === 'Manuel Mery' && cred.href === 'https://www.linkedin.com/in/manuel-mery-413874119/' && cred.rel === 'noopener', 'crédito «Diseño y desarrollo: Manuel Mery» con su LinkedIn');
   // menú: Currículum destacado y marca de la sección al tocar un enlace
@@ -89,7 +97,7 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
     && !d.querySelector('.desktop-nav a[href="#nosotros"]').classList.contains('activo'), 'menú: la sección elegida queda marcada (aria-current)');
   // formulario
   const botones = d.querySelectorAll('[data-abrir-formulario]');
-  ok(botones.length === 2 && botones[0].textContent.trim() === 'Cuéntanos tu proyecto', 'botón «Cuéntanos tu proyecto» en Contacto y en el pie');
+  ok(botones.length === 1 && botones[0].closest('.contact-actions') && botones[0].textContent.trim() === 'Cuéntanos tu proyecto', 'botón «Cuéntanos tu proyecto» solo en Contacto (se sacó del pie)');
   botones[0].click();
   const cf = d.getElementById('formularioContacto');
   ok(cf && !cf.hidden && cf.getAttribute('role') === 'dialog' && cf.getAttribute('aria-modal') === 'true', 'abre un diálogo modal');
@@ -125,7 +133,7 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
   cf.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   ok(cf.hidden, 'Esc cierra');
   // sin servidor: respaldo por correo / WhatsApp con todo escrito
-  botones[1].click();
+  botones[0].click();
   ok(visible() === '1' && cf.querySelector('#cfNombre').value === '', 'después de enviar, uno nuevo empieza de cero');
   cf.querySelector('#cfNombre').value = 'Pedro'; sig(); cf.querySelector('#cfCorreo').value = 'pedro@x.cl'; sig();
   const o2 = cf.querySelector('input[value="otro"]'); o2.checked = true; o2.dispatchEvent(new w.Event('change', { bubbles: true }));
@@ -140,7 +148,7 @@ const texto = n => n ? n.textContent.replace(/\s+/g, ' ').trim() : '';
 const PARCHE = `
   ICEWELL_SITIO.empresa.telefono = '+56 2 2999 1234';
   ICEWELL_SITIO.empresa.whatsapp = '+56 9 1111 2222';
-  ICEWELL_SITIO.empresa.redes.linkedin = 'https://www.linkedin.com/company/icewell';
+  ICEWELL_SITIO.empresa.direccion = 'Av. Prueba 99';
   ICEWELL_SITIO.cifras.obras = '77';
   ICEWELL_SITIO.textos['hero.lead'] = 'Texto nuevo <img src=x onerror="window.__xss=1"> con *énfasis*';
   ICEWELL_SITIO.textos['cv.titulo'] = 'Título <b>raro</b> *HVAC.*';
@@ -155,7 +163,7 @@ const PARCHE = `
   const lead = d.querySelector('.hero-lead');
   ok(!lead.querySelector('img') && /<img src=x/.test(lead.textContent) && !w.__xss, 'XSS: un texto con HTML se muestra como texto, no se ejecuta');
   ok(lead.querySelector('em') && lead.querySelector('em').textContent === 'énfasis', 'formato *énfasis* sí funciona');
-  ok(!d.querySelector('.contact-redes').hidden && d.querySelector('[data-red="linkedin"]').href === 'https://www.linkedin.com/company/icewell' && d.querySelector('[data-red="instagram"]').hidden, 'redes: solo aparece la que tiene dirección');
+  ok(d.querySelector('a[data-mapa]').href.includes(encodeURIComponent('Av. Prueba 99')), 'index: el enlace a Maps sigue la dirección nueva');
   ok(d.title === 'Icewell · prueba', 'index: <title> desde los datos SEO');
 }
 {
@@ -163,6 +171,7 @@ const PARCHE = `
   ok(!errores.length, 'cv sin errores ' + errores.join(' | '));
   ok(texto(d.querySelector('.company a[data-empresa="telefono"]')) === '+56 2 2999 1234', 'cv: teléfono nuevo en Datos de la empresa');
   ok(/2999 1234/.test(texto(d.querySelector('.print-foot'))), 'cv: teléfono nuevo en el pie de impresión');
+  ok(!d.querySelector('[data-red], [data-redes]') && d.querySelector('.company a[data-mapa]').href.includes(encodeURIComponent('Av. Prueba 99')), 'cv: sin fila LinkedIn y la dirección abre Maps con la dirección nueva');
   ok(d.querySelector('.cover h1 em').textContent === 'HVAC.' && !d.querySelector('.cover h1 b') && /<b>raro<\/b>/.test(d.querySelector('.cover h1').textContent), 'cv: título con énfasis y sin HTML colado');
   ok(d.title !== 'Icewell · prueba', 'cv: el SEO del index no pisa el <title> del CV');
   // PDF modo foto: se arma con los mismos datos

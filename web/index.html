@@ -60,7 +60,7 @@
   .btn:hover{transform:translateY(-2px);}
   .btn-brand{background:var(--brand);color:#fff;}
   .btn-brand:hover{background:var(--brand-2);}
-  .btn-ghost-light{border-color:rgba(241,244,247,.4);color:var(--paper);}
+  .btn-ghost-light{background:transparent;border-color:rgba(241,244,247,.4);color:var(--paper);}  /* transparent: también sirve en <button> */
   .btn-ghost-light:hover{border-color:var(--paper);}
   section{padding:110px 0;}
   @media (max-width:720px){ section{padding:72px 0;} }
@@ -78,7 +78,7 @@
   .desktop-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--ice);transform:scaleX(0);transform-origin:center;transition:transform .3s var(--ease), opacity .3s var(--ease);}
   .desktop-nav a:hover{opacity:1;}
   .desktop-nav a:hover::after{transform:scaleX(.45);opacity:.5;}
-  .desktop-nav a.activo{opacity:1;font-weight:600;}
+  .desktop-nav a.activo{opacity:1;text-shadow:0 0 .6px currentColor;}  /* sin font-weight: no cambia el ancho ni corre a los vecinos */
   .desktop-nav a.activo::after{transform:scaleX(1);opacity:1;}
   /* Currículum: otra página, va destacado como botón */
   .desktop-nav a.nav-cv{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1.5px solid var(--ice);border-radius:var(--radius);color:var(--ice);opacity:1;font-weight:600;transition:background .2s, color .2s;}
@@ -117,7 +117,6 @@
   .hero-visual{position:relative;}
   .hero-visual .frame{clip-path:polygon(10% 0,100% 0,100% 88%,90% 100%,0 100%,0 12%);aspect-ratio:4/5;position:relative;background:#000;}
   .hero-visual .frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) contrast(1.08) brightness(.82) saturate(1.15);opacity:.92;}
-  .hero-visual .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg, rgba(0,98,168,.45), rgba(12,20,28,.62) 70%);mix-blend-mode:multiply;}
   .hero-visual .tag{position:absolute;left:-16px;bottom:34px;background:var(--paper);color:var(--ink);padding:14px 18px;max-width:240px;font-size:13px;box-shadow:0 18px 40px rgba(0,0,0,.35);z-index:2;}
   .hero-visual .tag strong{display:block;font-family:var(--display);font-size:17px;text-transform:uppercase;margin-bottom:2px;}
   .hero-stamp{position:absolute;top:20px;right:-14px;background:var(--brand);color:#fff;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;padding:8px 12px;text-transform:uppercase;z-index:2;}
@@ -300,34 +299,23 @@
   .contact-data .fila > span{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ice);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
   .contact-data .fila a, .contact-data .fila div{font-size:16px;color:#fff;overflow-wrap:anywhere;}
   .contact-data .fila a:hover{color:var(--ice);}
-  .contact-redes{display:flex;gap:16px;flex-wrap:wrap;padding-top:18px;}
-  .contact-redes a{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ice);text-transform:uppercase;letter-spacing:.06em;}
-  .contact-redes a:hover{color:#fff;}
   @media (max-width:860px){
     .contact-layout{grid-template-columns:1fr;}
     .contact-data{border-left:0;border-top:1px solid var(--line-dark);padding-left:0;padding-top:34px;}
   }
 
   /* ---------- PIE ---------- */
-  .site-footer{background:#091220;color:rgba(241,244,247,.68);padding:52px 0 30px;position:relative;}
-  .site-footer .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;}
-  .site-footer .brand img{height:24px;}
-  .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;font-size:13.5px;}
-  .footer-links a:hover{color:#fff;}
+  .site-footer{background:#091220;color:rgba(241,244,247,.68);padding:26px 0;position:relative;}
+  /* una sola barra: logo · enlaces · legal; en celular se apila centrado */
+  /* pie: solo © + crédito, centrado (Manuel, 02-oct) */
+  .site-footer .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;}
+  .footer-legal{display:flex;flex-direction:column;align-items:center;gap:4px;}
   .fine{font-size:12.5px;}
-  .footer-acciones{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 22px;}
-  .footer-form{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--ice);background:none;border:0;cursor:pointer;padding:6px 0;border-bottom:1.5px solid currentColor;}
-  .footer-form:hover{color:#fff;}
-  .footer-redes{display:flex;gap:10px;}
-  .footer-redes a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line-dark);border-radius:var(--radius);color:rgba(241,244,247,.85);transition:color .2s, border-color .2s;}
-  .footer-redes a:hover{color:var(--ice);border-color:var(--ice);}
   .credito{font-size:12px;color:rgba(241,244,247,.6);}
   .credito a{color:rgba(241,244,247,.9);font-weight:600;border-bottom:1px solid rgba(241,244,247,.3);}
   .credito a:hover{color:var(--ice);border-color:var(--ice);}
 
   /* ---------- FORMULARIO «Cuéntanos tu proyecto» (assets/contacto-form.js) ---------- */
-  .btn-form{background:transparent;border-color:var(--ice);color:var(--ice);}
-  .btn-form:hover{background:var(--ice);color:var(--ink);}
   html.cf-abierto, html.cf-abierto body{overflow:hidden;}
   .cf{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;background:var(--ink);color:#fff;overflow-y:auto;}
   .cf[hidden]{display:none;}
@@ -631,37 +619,25 @@
       <p class="contact-lead" data-t="contacto.texto">Cuéntanos el alcance y te responderá un especialista.</p>
       <div class="contact-actions">
         <a class="btn btn-brand" href="https://wa.me/56964074519?text=Hola%20Icewell%2C%20quiero%20cotizar%20un%20proyecto%20de%20climatizaci%C3%B3n" data-wa="cotizar" target="_blank" rel="noopener">Escribir por WhatsApp</a>
-        <button class="btn btn-form" type="button" data-abrir-formulario><span data-t="contacto.formBoton">Cuéntanos tu proyecto</span></button>
-        <a class="btn btn-ghost-light" href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a>
+        <button class="btn btn-ghost-light" type="button" data-abrir-formulario><span data-t="contacto.formBoton">Cuéntanos tu proyecto</span></button>
       </div>
     </div>
     <div class="contact-data">
-      <div class="fila"><span>Dirección</span><div><span data-empresa="direccion">Román Díaz 1363</span>, <span data-empresa="ubicacion">Providencia, Santiago</span></div></div>
+      <div class="fila"><span>Dirección</span><a data-mapa href="https://www.google.com/maps/dir/?api=1&amp;destination=Rom%C3%A1n%20D%C3%ADaz%201363%2C%20Providencia%2C%20Santiago%2C%20Chile" target="_blank" rel="noopener"><span data-empresa="direccion">Román Díaz 1363</span>, <span data-empresa="ubicacion">Providencia, Santiago</span></a></div>
       <div class="fila"><span>Teléfono</span><a href="tel:+56228470610" data-empresa="telefono">+56 2 2847 0610</a></div>
       <div class="fila"><span>WhatsApp</span><a href="https://wa.me/56964074519" data-empresa="whatsapp" target="_blank" rel="noopener">+56 9 6407 4519</a></div>
       <div class="fila"><span>Email</span><a href="mailto:contacto@icewell.cl" data-empresa="correo">contacto@icewell.cl</a></div>
-      <div class="contact-redes" data-redes hidden>
-        <a data-red="linkedin" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a><a data-red="instagram" target="_blank" rel="noopener" hidden>Instagram</a><a data-red="facebook" target="_blank" rel="noopener" hidden>Facebook</a><a data-red="youtube" target="_blank" rel="noopener" hidden>YouTube</a>
-      </div>
     </div>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="wrap">
-    <a class="brand" href="#inicio" aria-label="Icewell, volver al inicio"><img src="assets/icewell-logo-oscuro.svg" alt="Icewell" width="95" height="24"></a>
-    <nav class="footer-links" aria-label="Pie de página">
-      <a href="#nosotros">Nosotros</a><a href="#servicios">Servicios</a><a href="#proyectos">Proyectos</a><a href="#equipo">Equipo</a><a href="curriculum">Currículum</a><a href="#contacto">Contacto</a>
-    </nav>
-    <div class="footer-acciones">
-      <button class="footer-form" type="button" data-abrir-formulario><span data-t="contacto.formBoton">Cuéntanos tu proyecto</span> →</button>
-      <div class="footer-redes" data-redes hidden>
-        <a data-red="linkedin" target="_blank" rel="noopener" aria-label="Icewell en LinkedIn" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-      </div>
-    </div>
+    <div class="footer-legal">
     <p class="fine">© <span data-anio-actual>2026</span> <span data-empresa="razonSocial">Icewell SpA</span> · <span data-t="footer.lema">Ingeniería en climatización</span> · <span data-empresa="ubicacionLarga">Providencia · Santiago · Chile</span></p>
     <!-- Crédito fijo (no se edita desde el panel) -->
     <p class="credito">Diseño y desarrollo: <a href="https://www.linkedin.com/in/manuel-mery-413874119/" target="_blank" rel="noopener">Manuel Mery</a></p>
+    </div>
   </div>
 </footer>
 
